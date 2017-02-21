@@ -26,3 +26,7 @@
 *.log
 *.sql
 *.sqlite
+
+# Directories #
+################
+Hadr03-build/CMakeFiles/
