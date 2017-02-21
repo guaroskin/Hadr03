@@ -1,0 +1,53 @@
+cmake -DGeant4_DIR=/usr/share/Geant4-10.3.0 /home/nicolas/Documentos/Geant4/Practice/Examples-Geant4/extended/hadronic/Modificado-Hadr03/Hadr03
+
+
+sudo cp -r examples /home/nicolas/Documentos/Programacion-Simulacion/Geant4/ejemplos/
+sudo chown -R nicolas examples
+sudo chgrp -R users examples
+mkdir Hadr03-build
+cd Hadr03-build/
+cmake -DGeant4_DIR=/usr/share/Geant4-10.3.0 ../Hadr03
+make -j2
+
+cmake -DGeant4_DIR=/home/nicolas/Path/geant4.10.01.p01-install/lib64/Geant4-10.1.1 /home/nicolas/Path/geant4.10.01.p01-install/share/Geant4-10.1.1/examples/extended/hadronic/Hadr01
+
+
+export G4NEUTRONHP_PRODUCE_FISSION_FRAGMENTS=1
+export G4NEUTRONHP_SKIP_MISSING_ISOTOPES=1
+export G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=1 (never used)
+
+
+
+*** export G4NEUTRON_HP_USE_WENDT_FISSION_MODEL=1 *** mejor NO USAR
+
+
+env | grep G4NEUTRONHP
+
+
+#Para ver los planos y utilizar el MT muy bueno*******************************
+cmake -DGEANT4_BUILD_MULTITHREADED=ON -DGeant4_DIR=/usr/share/Geant4-10.1.1 /home/nicolas/Documentos/Geant4/Practice/Examples-Geant4/extended/hadronic/Hadr06
+
+#Para ver los Histogramas utilizando root *************************************
+cmake -DGeant4_DIR=/home/nicolas/Path/geant4.10.01.p01-install/lib64/Geant4-10.1.1 /home/nicolas/Documentos/Geant4/Practice/Examples-Geant4/extended/hadronic/Hadr06
+
+#Otra forma de usar el MT
+cmake -DG4MULTITHREADED=2 -DGeant4_DIR=/usr/share/Geant4-10.1.0 /home/nicolas/Documentos/Geant4/REACTOR/Back_up/16_03_2015/FissionFragment 
+
+export G4FORCENUMBEROFTHREADS=6 
+
+
+
+
+
+
+
+
+
+When you create your geometries, you can view them using many drivers as they call them. Different drivers work for different purposes. The HepRep is probably the preferred one when you are developing your geometry because it allows you to rotate it, zoom and and the like.
+But if you want to show your already constructed geometry, let's say in a conference, it is better to use another: for example DAWN.
+
+DAWN renders very nicely ghostscripts (.ps) files -hence the gv dependence- with textures and shadows... and if you use it properly in conjunction with the 'david' software you can find non trivial overlaps in your geometry.
+
+Maybe I did not use the correct word... it is not 'additional dependencies'. What I wanted to say was 'optional dependencies'.
+There are many more optional dependencies (openGL, wired3, JAS, root, etc), I just wanted to point out the fact that it will be nice to include some of the 'visualization' dependencies.
+
