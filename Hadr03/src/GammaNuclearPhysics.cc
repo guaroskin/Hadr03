@@ -60,13 +60,39 @@ void GammaNuclearPhysics::ConstructProcess()
 {
    G4ProcessManager* pManager = G4Gamma::Gamma()->GetProcessManager();
    //
-   G4PhotoNuclearProcess* process = new G4PhotoNuclearProcess();
+   G4PhotoElectricEffect * thePhotoElectricEffect = new G4PhotoElectricEffect();
+   G4ComptonScattering * theComptonScattering = new G4ComptonScattering();
+   G4GammaConversion* theGammaConversion = new G4GammaConversion();
+   G4PhotoNuclearProcess* PhotoNuclear = new G4PhotoNuclearProcess();
    //
    G4CascadeInterface* bertini = new G4CascadeInterface();
    bertini->SetMaxEnergy(10*GeV);
    process->RegisterMe(bertini);
    //
-   pManager->AddDiscreteProcess(process);
+   pManager->AddDiscreteProcess(PhotoNuclear);
+   pManager->AddDiscreteProcess(thePhotoElectricEffect);
+   pManager->AddDiscreteProcess(theComptonScattering);
+   pManager->AddDiscreteProcess(theGammaConversion);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+/* una forma para obtener todos los efectos electromagneticos es en el ejemplo B3
+   esto deberia ir en la phyisics list en vez de 
+   ** RegisterPhysics( new GammaNuclearPhysics("gamma"));**
+   lo cual (supongo) elimina la necesidad de este archivo y da todos los efectos EM de una.
+   ¿dudas? mira el ejemplo B3b ;)
+
+   #include "G4EmStandardPhysics.hh"
+   
+   // link http://www.apc.univ-paris7.fr/~franco/g4doxy/html/classG4EmStandardPhysics.html
+   // aqui esta todos los efectos EM. por ahora vamos solo con los de gammas.
+   B3PhysicsList::B3PhysicsList() 
+   : G4VModularPhysicsList(){
+   SetVerboseLevel(1);
+   
+   // EM physics
+   RegisterPhysics(new G4EmStandardPhysics());
+   }*/

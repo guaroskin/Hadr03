@@ -69,7 +69,9 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //this function is called at the begining of event
   //
   G4double halfSize = 0.5*(fDetector->GetSize());
-  G4double x0 = - halfSize;
+  //El haz no es emitido desde el borde del cubo sino r/8 mas adentro para que no muestre particulas transmitidas que no lo son en verdad
+  G4double x0 = - halfSize + halfSize/8.;
+  
   
   //randomize (y0,z0)
   //

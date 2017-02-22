@@ -47,7 +47,7 @@ Run::Run(DetectorConstruction* det)
 : G4Run(),
   fDetector(det), fParticle(0), fEkin(0.),
   fTotalCount(0), fGammaCount(0),
-  fSumTrack(0.), fSumTrack2(0.),
+  fSumTrack(0.), fSumTrack2(0.), Tneutron(0),
   fTargetXXX(false)
 {
   for (G4int i=0; i<3; i++) { fPbalance[i] = 0. ; } 
@@ -94,6 +94,10 @@ void Run::SumTrack(G4double trackl)
   fSumTrack += trackl; fSumTrack2 += trackl*trackl;  
 }
 
+//Numero de neutrones sobrevivientes
+void Run::NSurvive(){
+  Tneutron = Tneutron + 1;
+}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void Run::CountNuclearChannel(G4String name, G4double Q)
@@ -165,7 +169,8 @@ void Run::Merge(const G4Run* run)
   // accumulate sums
   //
   fTotalCount   += localRun->fTotalCount;
-  fGammaCount   += localRun->fGammaCount;   
+  fGammaCount   += localRun->fGammaCount;
+  Tneutron += localRun->Tneutron;
   fSumTrack += localRun->fSumTrack;
   fSumTrack2 += localRun->fSumTrack2;    
 
@@ -202,7 +207,7 @@ void Run::Merge(const G4Run* run)
       data.fQ     += localData.fQ;
     }   
   } 
-        
+  /*
   //map: particles count
   std::map<G4String,ParticleData>::const_iterator itn;
   for (itn = localRun->fParticleDataMap.begin(); 
@@ -227,7 +232,7 @@ void Run::Merge(const G4Run* run)
       if (emax > data.fEmax) data.fEmax = emax; 
     }   
   }
-  
+  */
   G4Run::Merge(run); 
 } 
 
@@ -255,16 +260,16 @@ void Run::EndOfRun(G4bool print)
   //frequency of processes
   //
   G4cout << "\n Process calls frequency:" << G4endl;  
-  G4int survive = 0;
+  //G4int survive = 0;
   std::map<G4String,G4int>::iterator it;    
   for (it = fProcCounter.begin(); it != fProcCounter.end(); it++) {
      G4String procName = it->first;
      G4int    count    = it->second;
      G4cout << "\t" << procName << "= " << count;
-     if (procName == "Transportation") survive = count;
+     //if (procName == "Transportation") survive = count;
   }
   G4cout << G4endl;
-      
+  G4cout << "Tneutron = " << Tneutron << G4endl;   
   if (survive > 0) {
     G4cout << "\n Nb of incident particles surviving after "
            << G4BestUnit(fDetector->GetSize(),"Length") << " of "
@@ -301,7 +306,7 @@ void Run::EndOfRun(G4bool print)
   }         
   //check cross section from G4HadronicProcessStore
   //
-  G4cout << "\n Verification: "
+  /*G4cout << "\n Verification: "
          << "crossSections from G4HadronicProcessStore:";
   
   G4ProcessTable* processTable  = G4ProcessTable::GetProcessTable();
@@ -341,7 +346,7 @@ void Run::EndOfRun(G4bool print)
     G4cout << "\n" << std::setw(20) << "total" << "= " 
            << G4BestUnit(sumc1, "Surface/Mass") << G4endl;  
   }
-              
+  */
  //nuclear channel count
  //
  G4cout << "\n List of nuclear reactions: \n" << G4endl; 

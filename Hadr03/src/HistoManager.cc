@@ -74,8 +74,8 @@ void HistoManager::Book()
                   "kinetic energy of deuterons",                    //5
                   "kinetic energy of alphas",                       //6
                   "kinetic energy of nuclei",                       //7
-                  "kinetic energy of mesons",                       //8
-                  "kinetic energy of baryons",                      //9
+                  "kinetic energy of baryons",                       //8
+                  "kinetic energy of electrons",                    //9
                   "Q = Ekin out - Ekin in",                         //10
                   "Pbalance = mag(P_out - P_in)",                   //11
                   "atomic mass of nuclei"                           //12
