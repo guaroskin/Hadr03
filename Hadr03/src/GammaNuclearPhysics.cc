@@ -40,6 +40,9 @@
 
 #include "G4PhotoNuclearProcess.hh"
 #include "G4CascadeInterface.hh"
+#include "G4ComptonScattering.hh"
+#include "G4GammaConversion.hh"
+#include "G4PhotoElectricEffect.hh"
 
 #include "G4SystemOfUnits.hh"
 
