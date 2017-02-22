@@ -9,6 +9,8 @@
 *~
 #executable
 Hadr03-build/Hadr03
+*.root
+*.ascii
 
 # Packages #
 ############
