@@ -207,7 +207,7 @@ void Run::Merge(const G4Run* run)
       data.fQ     += localData.fQ;
     }   
   } 
-  /*
+  
   //map: particles count
   std::map<G4String,ParticleData>::const_iterator itn;
   for (itn = localRun->fParticleDataMap.begin(); 
@@ -232,7 +232,7 @@ void Run::Merge(const G4Run* run)
       if (emax > data.fEmax) data.fEmax = emax; 
     }   
   }
-  */
+  
   G4Run::Merge(run); 
 } 
 
@@ -269,9 +269,9 @@ void Run::EndOfRun(G4bool print)
      //if (procName == "Transportation") survive = count;
   }
   G4cout << G4endl;
-  G4cout << "Tneutron = " << Tneutron << G4endl;   
+  G4cout << "Tneutron = " << Tneutron << G4endl;
   if (Tneutron > 0) {
-    G4cout << "\n Nb of incident particles surviving after "
+    G4cout << "\n Nb of incident neutron surviving after "
            << G4BestUnit(fDetector->GetSize(),"Length") << " of "
            << material->GetName() << " : " << Tneutron << G4endl;
   }

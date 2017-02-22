@@ -38,11 +38,12 @@
 #include "G4ParticleTypes.hh"
 #include "G4RunManager.hh"
 #include "G4HadronicProcess.hh"
+#include "G4UnitsTable.hh"
                            
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 SteppingAction::SteppingAction()
-: G4UserSteppingAction(), gammas(0), gammasec(0), contador(0)
+  : G4UserSteppingAction(), gammas(0), gammasec(0), contador(0)
 { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -56,7 +57,6 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 {
  Run* run 
    = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
-         
 
   //Algunas definiciones
  //
@@ -130,7 +130,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   //secondaries
   //
   const std::vector<const G4Track*>* secondary 
-                                    = aStep->GetSecondaryInCurrentStep();  
+                                    = aStep->GetSecondaryInCurrentStep();
   for (size_t lp=0; lp<(*secondary).size(); lp++) {
     particle = (*secondary)[lp]->GetDefinition(); 
     G4String name   = particle->GetParticleName();
@@ -139,7 +139,10 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     run->ParticleCount(name,energy);
     //energy spectrum
     ih = 0; 
-         if (particle == G4Gamma::Gamma())       ih = 2;
+    if (particle == G4Gamma::Gamma()){
+      gammasec++;
+      ih = 2;
+    }
     else if (particle == G4Neutron::Neutron())   ih = 3;
     else if (particle == G4Proton::Proton())     ih = 4;
     else if (particle == G4Deuteron::Deuteron()) ih = 5;
@@ -204,7 +207,6 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
       return;
     }
   }
- 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -221,7 +223,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 	   << std::setw(10) << "Volume"    << "  "
 	   << std::setw(10) << "ID"   << G4endl;                  
     
-    
+    x
     G4cout << std::setw( 5) << track->GetCurrentStepNumber() << " "
 	   << std::setw(6) << G4BestUnit(track->GetPosition().x(),"Length")
 	   << std::setw(6) << G4BestUnit(track->GetPosition().y(),"Length")

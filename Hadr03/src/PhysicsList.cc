@@ -131,7 +131,7 @@ void PhysicsList::ConstructParticle()
 
 void PhysicsList::SetCuts()
 {
-  SetCutValue(1*mm, "proton");
+  SetCutValue(1.*mm, "proton");
   //SetCutValue(0.*mm, "gamma");
 }
 
