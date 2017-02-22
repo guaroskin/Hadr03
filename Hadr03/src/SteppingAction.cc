@@ -42,7 +42,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 SteppingAction::SteppingAction()
-: G4UserSteppingAction()
+: G4UserSteppingAction(), gammas(0), gammasec(0), contador(0)
 { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -57,33 +57,52 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
  Run* run 
    = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
          
-  // count processes
-  // 
-  const G4StepPoint* endPoint = aStep->GetPostStepPoint();
+
+  //Algunas definiciones
+ //
+ const G4StepPoint* endPoint = aStep->GetPostStepPoint();
   G4VProcess* process   = 
                    const_cast<G4VProcess*>(endPoint->GetProcessDefinedStep());
-  run->CountProcesses(process);
-  
-  // check that an real interaction occured (eg. not a transportation)
+  G4String procName = process->GetProcessName();
   G4StepStatus stepStatus = endPoint->GetStepStatus();
   G4bool transmit = (stepStatus==fGeomBoundary || stepStatus==fWorldBoundary);
-  if (transmit) return;
-                      
-  //real processes : sum track length
-  //
+  G4Track* track = aStep->GetTrack();
+  G4ParticleDefinition* particle = track->GetDefinition();
+  G4String PartName = particle->GetParticleName();
+  G4String PartType = particle->GetParticleType();
+  G4String PartSubType = particle->GetParticleSubType();
+  
+  
+  //Si la particula no es un neutron o un gamma, que se destruya
+  if(partName != "neutron" && partName != "gamma"){    
+    track->SetTrackStatus(fStopAndKill);
+    return;
+  }
+
+  // Se suma el proceso, solo para gammas y neutrones
+  // 
+  run->CountProcesses(process);
+
+  // Suma los neutrones que sobrevivieron
+  if (transmit){
+    if(partName == "neutron"){
+      run->NSurvive();
+    }
+    return;
+  }                  
+  //real processes : sum track length 
+  // ESTA MAL PORQUE NO DIFERENCIA ENTRE EL STEP DE GAMMAS O NEUTRONES
   G4double stepLength = aStep->GetStepLength();
   run->SumTrack(stepLength);
   
   //energy-momentum balance initialisation
-  //
+  //CREO QUE ES INUTIL, REVISAR DESPUES
   const G4StepPoint* prePoint = aStep->GetPreStepPoint();
   G4double Q             = - prePoint->GetKineticEnergy();
   G4ThreeVector Pbalance = - prePoint->GetMomentum();
   
   //initialisation of the nuclear channel identification
-  //
-  G4ParticleDefinition* particle = aStep->GetTrack()->GetDefinition();
-  G4String partName = particle->GetParticleName();
+  // NO ENTIENDO ESTAS LINEAS
   G4String nuclearChannel = partName;
   G4HadronicProcess* hproc = dynamic_cast<G4HadronicProcess*>(process);
   const G4Isotope* target = NULL;
@@ -94,10 +113,10 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   if (targetName == "XXXX") run->SetTargetXXX(true);
     
   //scattered primary particle (if any)
-  //
+  // REVISAR DESPUES
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
   G4int ih = 1;
-  if (aStep->GetTrack()->GetTrackStatus() == fAlive) {
+  if (track->GetTrackStatus() == fAlive) {
     G4double energy = endPoint->GetKineticEnergy();      
     analysis->FillH1(ih,energy);
     //
@@ -126,8 +145,8 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     else if (particle == G4Deuteron::Deuteron()) ih = 5;
     else if (particle == G4Alpha::Alpha())       ih = 6;       
     else if (type == "nucleus")                  ih = 7;
-    else if (type == "meson")                    ih = 8;
-    else if (type == "baryon")                   ih = 9;        
+    else if (type == "baryon")                   ih = 8;
+    else if (particle == G4Electron::Electron()) ih = 9;
     if (ih > 0) analysis->FillH1(ih,energy);
     //atomic mass
     if (type == "nucleus") {
@@ -173,11 +192,43 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   run->CountNuclearChannel(nuclearChannel, Q);
     
   fParticleFlag.clear();
-              
-  // kill event after first interaction
-  //
-  G4RunManager::GetRunManager()->AbortEvent();  
+
+  //ELIMINA LOS GAMMAS FANTASMAS
+  if(PartName == "gamma"){
+    if( procName != "compt"){
+      gammas ++;
+      //G4cout << "ID" << "= " << track->GetParentID() << G4endl;
+    }
+    if(gammas > gammasec){
+      track->SetTrackStatus(fStopAndKill);
+      return;
+    }
+  }
+ 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+/*G4cout << G4endl;    
+    G4cout << std::setw( 5) << "#Step#"     << " "
+	   << std::setw( 6) << "X"          << "    "
+	   << std::setw( 6) << "Y"          << "    "  
+	   << std::setw( 6) << "Z"          << "    "
+	   << std::setw( 9) << "KineE"      << " "
+	   << std::setw( 9) << "dEStep"     << " "  
+	   << std::setw(10) << "StepLeng"     
+	   << std::setw(10) << "TrakLeng" 
+	   << std::setw(10) << "Volume"    << "  "
+	   << std::setw(10) << "ID"   << G4endl;                  
+    
+    
+    G4cout << std::setw( 5) << track->GetCurrentStepNumber() << " "
+	   << std::setw(6) << G4BestUnit(track->GetPosition().x(),"Length")
+	   << std::setw(6) << G4BestUnit(track->GetPosition().y(),"Length")
+	   << std::setw(6) << G4BestUnit(track->GetPosition().z(),"Length")
+	   << std::setw(6) << G4BestUnit(track->GetKineticEnergy(),"Energy")
+	   << std::setw(6) << G4BestUnit(aStep->GetTotalEnergyDeposit(),"Energy")
+	   << std::setw(6) << G4BestUnit(aStep->GetStepLength(),"Length")
+	   << std::setw(6) << G4BestUnit(track->GetTrackLength(),"Length")
+	   << std::setw(10) << track->GetVolume()->GetName()
+      	   << std::setw(6) << track->GetParentID() << G4endl;*/

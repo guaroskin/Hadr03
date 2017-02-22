@@ -54,7 +54,8 @@ class Run : public G4Run
     void SetPrimary(G4ParticleDefinition* particle, G4double energy);
     void SetTargetXXX(G4bool);        
     void CountProcesses(G4VProcess* process);
-    void SumTrack (G4double);    
+    void SumTrack (G4double);
+    void NSurvive();
     void CountNuclearChannel(G4String, G4double);                          
     void ParticleCount(G4String, G4double);
     void Balance(G4double);
@@ -95,6 +96,7 @@ class Run : public G4Run
     G4int fGammaCount;      //nb of events with gamma
     G4double fSumTrack;     //sum of trackLength
     G4double fSumTrack2;    //sum of trackLength*trackLength
+    G4double Tneutron;      //Numero de neutrones transportados
          
     std::map<G4String,NuclChannel>  fNuclChannelMap;    
     std::map<G4String,ParticleData> fParticleDataMap;
