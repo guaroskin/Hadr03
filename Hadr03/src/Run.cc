@@ -270,10 +270,10 @@ void Run::EndOfRun(G4bool print)
   }
   G4cout << G4endl;
   G4cout << "Tneutron = " << Tneutron << G4endl;   
-  if (survive > 0) {
+  if (Tneutron > 0) {
     G4cout << "\n Nb of incident particles surviving after "
            << G4BestUnit(fDetector->GetSize(),"Length") << " of "
-           << material->GetName() << " : " << survive << G4endl;
+           << material->GetName() << " : " << Tneutron << G4endl;
   }
   
   if (fTotalCount == 0) fTotalCount = 1;   //force printing anyway

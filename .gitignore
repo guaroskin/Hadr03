@@ -7,6 +7,8 @@
 *.[oa]
 *.so
 *~
+#executable
+Hadr03-build/Hadr03
 
 # Packages #
 ############

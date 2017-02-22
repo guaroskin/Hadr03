@@ -68,7 +68,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4bool transmit = (stepStatus==fGeomBoundary || stepStatus==fWorldBoundary);
   G4Track* track = aStep->GetTrack();
   G4ParticleDefinition* particle = track->GetDefinition();
-  G4String PartName = particle->GetParticleName();
+  G4String partName = particle->GetParticleName();
   G4String PartType = particle->GetParticleType();
   G4String PartSubType = particle->GetParticleSubType();
   
@@ -194,7 +194,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   fParticleFlag.clear();
 
   //ELIMINA LOS GAMMAS FANTASMAS
-  if(PartName == "gamma"){
+  if(partName == "gamma"){
     if( procName != "compt"){
       gammas ++;
       //G4cout << "ID" << "= " << track->GetParentID() << G4endl;
