@@ -70,7 +70,7 @@ void GammaNuclearPhysics::ConstructProcess()
    //
    G4CascadeInterface* bertini = new G4CascadeInterface();
    bertini->SetMaxEnergy(10*GeV);
-   process->RegisterMe(bertini);
+   PhotoNuclear->RegisterMe(bertini);
    //
    pManager->AddDiscreteProcess(PhotoNuclear);
    pManager->AddDiscreteProcess(thePhotoElectricEffect);
