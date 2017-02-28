@@ -35,19 +35,20 @@
 #include "G4SystemOfUnits.hh"
 #include "G4UnitsTable.hh"
 
-#include "G4HadronElasticPhysicsHP.hh"
-
-#include "G4HadronPhysicsFTFP_BERT_HP.hh"
 #include "G4HadronPhysicsQGSP_BIC_HP.hh"
-#include "G4HadronPhysicsQGSP_BIC_AllHP.hh"
-#include "G4HadronInelasticQBBC.hh"
-#include "G4HadronPhysicsINCLXX.hh"
+#include "G4HadronPhysicsFTFP_BERT_HP.hh"
 
 #include "G4IonElasticPhysics.hh"
 #include "G4IonPhysics.hh"
 #include "G4IonPhysicsPHP.hh"
 #include "G4IonINCLXXPhysics.hh"
-#include "GammaNuclearPhysics.hh"
+//#include "G4StoppingPhysics.hh"
+
+#include "NeutronHPphysics.hh"
+#include "ElectromagneticPhysics.hh"
+#include "G4DecayPhysics.hh"
+#include "G4RadioactiveDecayPhysics.hh"
+//#include "GammaNuclearPhysics.hh"
 
 // particles
 
@@ -64,39 +65,59 @@
 PhysicsList::PhysicsList()
 :G4VModularPhysicsList()
 {
-  G4int verb = 0;  
+  G4int verb = 1;  
   SetVerboseLevel(verb);
+
+  //AddTransportation(); //no sé si es necesario?
   
-  //add new units for cross sections
-  // 
+  //add new units
+  //
+  new G4UnitDefinition( "millielectronVolt", "meV", "Energy", 1.e-3*eV);
   new G4UnitDefinition( "mm2/g",  "mm2/g", "Surface/Mass", mm2/g);
   new G4UnitDefinition( "um2/mg", "um2/mg","Surface/Mass", um*um/mg);  
-  
-  // Hadron Elastic scattering
-  //
-  RegisterPhysics( new G4HadronElasticPhysicsHP(verb));
 
-  // Hadron Inelastic physics
-  //
-  ////RegisterPhysics( new G4HadronPhysicsFTFP_BERT_HP(verb));
-  RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
-  ////RegisterPhysics( new G4HadronPhysicsQGSP_BIC_AllHP(verb));
-  ////RegisterPhysics( new G4HadronInelasticQBBC(verb));
-  ////RegisterPhysics( new G4HadronPhysicsINCLXX(verb));
-  
+
+  // Hadron scattering
+  RegisterPhysics( new NeutronHPphysics("neutronHP") );
+
+  // Hadron Inelastic Physics EN TEORIA NO ES NECESARIO... ESPERO
+  // RegisterPhysics( new G4HadronPhysicsFTFP_BERT_HP(verb));
+  ////RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
+
   // Ion Elastic scattering
-  //
   RegisterPhysics( new G4IonElasticPhysics(verb));
   
-  // Ion Inelastic physics
-  //
+  // Ion Inelastic Physics
   RegisterPhysics( new G4IonPhysics(verb));
   ////RegisterPhysics( new G4IonPhysicsPHP(verb));
   ////RegisterPhysics( new G4IonINCLXXPhysics(verb));
-    
+  
+  // EM Physics
+  RegisterPhysics( new ElectromagneticPhysics("standard EM"));
+  ////RegisterPhysics(new G4EmStandardPhysics());
+
   // Gamma physics
-  //
-  RegisterPhysics( new GammaNuclearPhysics("gamma"));
+  //RegisterPhysics( new GammaNuclearPhysics("gamma"));
+  
+  // stopping Particles --- NO SÉ PARA QUÉ SIRVE
+  // RegisterPhysics( new G4StoppingPhysics(verb));
+
+  // Step Max
+  //RegisterPhysics(new StepMaxBuilder());
+  
+  /* --- PARTE II ---
+  // Optic Physics   
+  RegisterPhysics( new LXeGeneralPhysics("Optics") );
+
+  // Muon Physics 
+  RegisterPhysics( new LXeMuonPhysics("muon"));
+
+  // Decay
+  RegisterPhysics(new G4DecayPhysics());
+
+  // Radioactive decay
+  RegisterPhysics(new G4RadioactiveDecayPhysics());
+  */
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -133,6 +154,16 @@ void PhysicsList::SetCuts()
 {
   SetCutValue(1.*mm, "proton");
   //SetCutValue(0.*mm, "gamma");
+  //SetCutValue(10*km, "e-");
+  //SetCutValue(10*km, "e+");
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+
+/*Para tener en cuenta:
+The interaction of thermal neutrons (E n = 0.025 eV) with matter needs to be treated in
+detail as a function of the temperature of the material for obtaining accurate results from
+Monte Carlo simulations. Such a treatment is important for a wide range of applications:
+neutron shielding problemes –polyethylene or water–, neutron detectors, dosimetry,
+reactors, ultra cold neutron applications – liquid methane or helium moderators – ....*/

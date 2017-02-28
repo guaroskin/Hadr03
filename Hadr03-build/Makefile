@@ -275,32 +275,32 @@ src/DetectorMessenger.cc.s:
 	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/DetectorMessenger.cc.s
 .PHONY : src/DetectorMessenger.cc.s
 
-src/GammaNuclearPhysics.o: src/GammaNuclearPhysics.cc.o
+src/ElectromagneticPhysics.o: src/ElectromagneticPhysics.cc.o
 
-.PHONY : src/GammaNuclearPhysics.o
+.PHONY : src/ElectromagneticPhysics.o
 
 # target to build an object file
-src/GammaNuclearPhysics.cc.o:
-	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/GammaNuclearPhysics.cc.o
-.PHONY : src/GammaNuclearPhysics.cc.o
+src/ElectromagneticPhysics.cc.o:
+	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/ElectromagneticPhysics.cc.o
+.PHONY : src/ElectromagneticPhysics.cc.o
 
-src/GammaNuclearPhysics.i: src/GammaNuclearPhysics.cc.i
+src/ElectromagneticPhysics.i: src/ElectromagneticPhysics.cc.i
 
-.PHONY : src/GammaNuclearPhysics.i
+.PHONY : src/ElectromagneticPhysics.i
 
 # target to preprocess a source file
-src/GammaNuclearPhysics.cc.i:
-	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/GammaNuclearPhysics.cc.i
-.PHONY : src/GammaNuclearPhysics.cc.i
+src/ElectromagneticPhysics.cc.i:
+	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/ElectromagneticPhysics.cc.i
+.PHONY : src/ElectromagneticPhysics.cc.i
 
-src/GammaNuclearPhysics.s: src/GammaNuclearPhysics.cc.s
+src/ElectromagneticPhysics.s: src/ElectromagneticPhysics.cc.s
 
-.PHONY : src/GammaNuclearPhysics.s
+.PHONY : src/ElectromagneticPhysics.s
 
 # target to generate assembly for a file
-src/GammaNuclearPhysics.cc.s:
-	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/GammaNuclearPhysics.cc.s
-.PHONY : src/GammaNuclearPhysics.cc.s
+src/ElectromagneticPhysics.cc.s:
+	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/ElectromagneticPhysics.cc.s
+.PHONY : src/ElectromagneticPhysics.cc.s
 
 src/HistoManager.o: src/HistoManager.cc.o
 
@@ -328,6 +328,33 @@ src/HistoManager.s: src/HistoManager.cc.s
 src/HistoManager.cc.s:
 	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/HistoManager.cc.s
 .PHONY : src/HistoManager.cc.s
+
+src/NeutronHPphysics.o: src/NeutronHPphysics.cc.o
+
+.PHONY : src/NeutronHPphysics.o
+
+# target to build an object file
+src/NeutronHPphysics.cc.o:
+	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/NeutronHPphysics.cc.o
+.PHONY : src/NeutronHPphysics.cc.o
+
+src/NeutronHPphysics.i: src/NeutronHPphysics.cc.i
+
+.PHONY : src/NeutronHPphysics.i
+
+# target to preprocess a source file
+src/NeutronHPphysics.cc.i:
+	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/NeutronHPphysics.cc.i
+.PHONY : src/NeutronHPphysics.cc.i
+
+src/NeutronHPphysics.s: src/NeutronHPphysics.cc.s
+
+.PHONY : src/NeutronHPphysics.s
+
+# target to generate assembly for a file
+src/NeutronHPphysics.cc.s:
+	$(MAKE) -f CMakeFiles/Hadr03.dir/build.make CMakeFiles/Hadr03.dir/src/NeutronHPphysics.cc.s
+.PHONY : src/NeutronHPphysics.cc.s
 
 src/PhysicsList.o: src/PhysicsList.cc.o
 
@@ -543,12 +570,15 @@ help:
 	@echo "... src/DetectorMessenger.o"
 	@echo "... src/DetectorMessenger.i"
 	@echo "... src/DetectorMessenger.s"
-	@echo "... src/GammaNuclearPhysics.o"
-	@echo "... src/GammaNuclearPhysics.i"
-	@echo "... src/GammaNuclearPhysics.s"
+	@echo "... src/ElectromagneticPhysics.o"
+	@echo "... src/ElectromagneticPhysics.i"
+	@echo "... src/ElectromagneticPhysics.s"
 	@echo "... src/HistoManager.o"
 	@echo "... src/HistoManager.i"
 	@echo "... src/HistoManager.s"
+	@echo "... src/NeutronHPphysics.o"
+	@echo "... src/NeutronHPphysics.i"
+	@echo "... src/NeutronHPphysics.s"
 	@echo "... src/PhysicsList.o"
 	@echo "... src/PhysicsList.i"
 	@echo "... src/PhysicsList.s"
