@@ -49,12 +49,12 @@
 /analysis/h1/set 10 250   0  250 MeV	#Q
 /analysis/h1/set 11 500   0  2500 keV	#Pbalance
 /analysis/h1/set 12 240   0  240 none   #A
-/run/printProgress 10
+/run/printProgress 100
 #
-/run/beamOn 200
+/run/beamOn 10
 #
 #
 #/control/execute vis.mac
 #/control/execute hadr03_mod.in
-#export G4FORCENUMBEROFTHREADS=4
+#
 #./Hadr03 hadr03.in > terminal.txt 

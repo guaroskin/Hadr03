@@ -196,16 +196,16 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     
   fParticleFlag.clear();
 
-  //ELIMINA LOS GAMMAS FANTASMAS
   if(partName == "gamma"){
     if( procName != "compt"){
       gammas ++;
       //G4cout << "ID" << "= " << track->GetParentID() << G4endl;
     }
-    if(gammas > gammasec){
+    //ELIMINA LOS GAMMAS FANTASMAS
+    /*if(gammas > gammasec){
       track->SetTrackStatus(fStopAndKill);
       return;
-    }
+      }*/
   }
 }
 
