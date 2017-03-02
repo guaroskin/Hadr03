@@ -24,7 +24,7 @@
 /gun/energy 10 MeV
 #
 # Histogramas
-/analysis/setFileName 1m-1MeV-2e6-Total
+/analysis/setFileName 1m-10MeV-1e6-Total
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -51,7 +51,7 @@
 /analysis/h1/set 12 240   0  240 none   #A
 /run/printProgress 100
 #
-/run/beamOn 10
+/run/beamOn 1000
 #
 #
 #/control/execute vis.mac

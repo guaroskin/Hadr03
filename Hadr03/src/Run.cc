@@ -47,7 +47,7 @@ Run::Run(DetectorConstruction* det)
 : G4Run(),
   fDetector(det), fParticle(0), fEkin(0.),
   fTotalCount(0), fGammaCount(0),
-  fSumTrack(0.), fSumTrack2(0.), Tneutron(0),
+  fSumTrack(0.), fSumTrack2(0.), Tneutron(0), Tgamma(0),
   fTargetXXX(false)
 {
   for (G4int i=0; i<3; i++) { fPbalance[i] = 0. ; } 
@@ -94,9 +94,11 @@ void Run::SumTrack(G4double trackl)
   fSumTrack += trackl; fSumTrack2 += trackl*trackl;  
 }
 
-//Numero de neutrones sobrevivientes
-void Run::NSurvive(){
-  Tneutron = Tneutron + 1;
+//Numero de neutrones y gammas sobrevivientes
+void Run::NSurvive(bool neutron){
+  if(neutron) Tneutron++;
+  else 
+    Tgamma++;
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -171,6 +173,7 @@ void Run::Merge(const G4Run* run)
   fTotalCount   += localRun->fTotalCount;
   fGammaCount   += localRun->fGammaCount;
   Tneutron += localRun->Tneutron;
+  Tgamma += localRun->Tgamma;
   fSumTrack += localRun->fSumTrack;
   fSumTrack2 += localRun->fSumTrack2;    
 
@@ -270,7 +273,9 @@ void Run::EndOfRun(G4bool print)
   }
   G4cout << G4endl;
   G4cout << "Tneutron = " << Tneutron << G4endl;
-  if (Tneutron > 0) {
+  G4cout << "Tgamma = " << Tgamma << G4endl;
+  
+  if (Tneutron  > 0) {
     G4cout << "\n Nb of incident neutron surviving after "
            << G4BestUnit(fDetector->GetSize(),"Length") << " of "
            << material->GetName() << " : " << Tneutron << G4endl;

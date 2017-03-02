@@ -73,8 +73,8 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4String PartSubType = particle->GetParticleSubType();
   
   
-  //Si la particula no es un neutron o un gamma, que se destruya
-  if(partName != "neutron" && partName != "gamma"){    
+  //Si la particula es un nucleo que sea eliminada
+  if(PartType == "nucleus"){    
     track->SetTrackStatus(fStopAndKill);
     return;
   }
@@ -85,15 +85,17 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
   // Suma los neutrones que sobrevivieron
   if (transmit){
-    if(partName == "neutron"){
-      run->NSurvive();
-    }
+    if(partName == "neutron") { run->NSurvive(true); }
+    if (partName == "gamma") {
+      gammas ++;
+      run->NSurvive(false); }
     return;
   }                  
-  //real processes : sum track length 
-  // ESTA MAL PORQUE NO DIFERENCIA ENTRE EL STEP DE GAMMAS O NEUTRONES
-  G4double stepLength = aStep->GetStepLength();
-  run->SumTrack(stepLength);
+  //real processes : sum track length of neutron
+  if(partName == "neutron"){
+    G4double stepLength = aStep->GetStepLength();
+    run->SumTrack(stepLength);
+  }
   
   //energy-momentum balance initialisation
   //CREO QUE ES INUTIL, REVISAR DESPUES
@@ -199,13 +201,15 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   if(partName == "gamma"){
     if( procName != "compt"){
       gammas ++;
-      //G4cout << "ID" << "= " << track->GetParentID() << G4endl;
+      //G4cout << "gammas Existen" << "= " << gammas << G4endl;
+      //G4cout << "gammas Secunda" << "= " << gammasec << G4endl;
     }
     //ELIMINA LOS GAMMAS FANTASMAS
-    /*if(gammas > gammasec){
+    if(gammas > gammasec){
       track->SetTrackStatus(fStopAndKill);
+      //G4cout << "elID" << "= " << track->GetParentID() << G4endl;
       return;
-      }*/
+    }
   }
 }
 
