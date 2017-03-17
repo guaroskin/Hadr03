@@ -11,7 +11,7 @@
 Hadr03-build/Hadr03
 *.root
 *.ascii
-
+*.txt
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
