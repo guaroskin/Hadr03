@@ -1540,14 +1540,157 @@ G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=	1
 GAMMAS FANTASMAS -------------------	ON
 //////////////////////////////////////////
 
+Run Summary
+  Number of events processed : 1000
+  User=7.98s Real=8.71s Sys=0.02s
+
+ The run is 1000 neutron of 10 MeV through 1 m   of G4_WATER (density: 1 g/cm3 )
+
+ Process calls frequency:
+	Transportation= 898	annihil= 26	compt= 6658	conv= 26	eBrem= 150	eIoni= 10228	hIoni= 5426	hadElastic= 143624	msc= 15	nCapture= 735	neutronInelastic= 264	phot= 454
+Tneutron = 147
+Tgamma = 742
+
+ Nb of incident neutron surviving after 1 m   of G4_WATER : 147
+
+
+ MeanFreePath:	5.067 mm  +- 1.4671 cm 	massic: 506.7 mg/cm2
+ CrossSection:	1.9735 cm^-1 		massic: 1.9735 cm2/g 
+
+ List of nuclear reactions: 
+
+                                      e+ + XXXX --> :      24   Q = -171.99 keV
+                               e+ + XXXX --> N gamma:      26   Q =  1.0049 MeV
+                                 e+ + XXXX --> e+ + :      89   Q = -517.26 keV
+                          e+ + XXXX --> e+ + N gamma:       7   Q = -357.15 keV
+                               e+ + XXXX --> e+ + e-:       3   Q = -247.85 keV
+                                      e- + XXXX --> :    7171   Q = -61.121 keV
+                                 e- + XXXX --> e- + :    2889   Q = -459.24 keV
+                          e- + XXXX --> e- + N gamma:     131   Q = -274.67 keV
+                               e- + XXXX --> e- + e-:      79   Q = -283.57 keV
+                                 gamma + XXXX --> e-:     454   Q =  -543.1 eV 
+                            gamma + XXXX --> e- + e+:      26   Q =  -1.022 MeV
+                           gamma + XXXX --> gamma + :      40   Q =  -46.56 eV 
+                         gamma + XXXX --> gamma + e-:    6618   Q =       0 meV
+                 neutron + H1 --> N gamma + deuteron:     735   Q =   2.226 MeV
+                         neutron + H1 --> neutron + :  137579   Q = -567.05 eV 
+                   neutron + H1 --> neutron + proton:    3430   Q =   1.109 keV
+                         neutron + H2 --> neutron + :      16   Q = -5.5344 meV
+             neutron + O16 --> N gamma + alpha + C13:     117   Q =  -1.126 MeV
+           neutron + O16 --> N gamma + neutron + O16:     146   Q = -174.84 keV
+                        neutron + O16 --> neutron + :    1927   Q = -14.545 keV
+                     neutron + O16 --> neutron + O16:     671   Q =  170.58 eV 
+                       neutron + O17 --> alpha + C14:       1   Q =  1.8196 MeV
+                        neutron + O17 --> neutron + :       1   Q = -25.044 eV 
+                                  proton + XXXX --> :    3430   Q = -831.42 keV
+                         proton + XXXX --> proton + :    1996   Q = -2.0911 MeV
+
+                                     Number of gamma: N = 0 --> 0
+
+ List of generated particles:
+            C13:     117  Emean =  1.3574 MeV	( 161.22 keV --> 3.375 MeV)
+            C14:       1  Emean =  1.4967 MeV	( 1.4967 MeV --> 1.4967 MeV)
+            O16:     817  Emean =   628.6 keV	( 90.002 keV --> 2.2413 MeV)
+          alpha:     118  Emean =  3.4311 MeV	( 1.1144 MeV --> 10.323 MeV)
+       deuteron:     735  Emean =  1.3201 keV	( 1.2925 keV --> 1.5209 keV)
+             e+:      26  Emean =  2.1916 MeV	( 390.7 keV --> 4.6463 MeV)
+             e-:    7180  Emean =  263.79 keV	( 100.16 eV  --> 8.1458 MeV)
+          gamma:    1221  Emean =  2.4769 MeV	( 2.9638 keV --> 6.9155 MeV)
+        neutron:     146  Emean =  2.2986 MeV	( 87.297 keV --> 3.7737 MeV)
+         proton:    3430  Emean =  2.0483 MeV	( 100.07 keV --> 9.986 MeV)
+
+   Momentum balance: Pmean =       0 meV	( 0 meV --> 0 meV) 
 
 
 
 
+******************************************
+******************************************
+VALOR A USAR EN LA SIMULACIÓN
+Neutrones incidentes ---------------	1e6
+Energía neu primario ---------------	10 MeV
+SetCutValue 'proton' ---------------	1 mm
+/testhadr/det/setSize --------------	1 m
+G4FORCEDNUMBEROFTHREADS=------------	1
+G4NEUTRONHP_SKIP_MISSING_ISOTOPES= -	1
+G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=	1
+GAMMAS FANTASMAS -------------------	ON
+//////////////////////////////////////////
+
+Run Summary
+  Number of events processed : 200000
+  User=1509.39s Real=1510.77s Sys=0.05s
+
+ The run is 200000 neutron of 10 MeV through 1 m   of G4_WATER (density: 1 g/cm3 )
+
+ Process calls frequency:
+	Transportation= 174305	annihil= 5413	compt= 1424109	conv= 5447	eBrem= 33849	eIoni= 2155564	hIoni= 1091289	hadElastic= 28534918	msc= 4304	nCapture= 153176	neutronInelastic= 53344	phot= 101313
+Tneutron = 25094
+Tgamma = 147343
+
+ Nb of incident neutron surviving after 1 m   of G4_WATER : 25094
 
 
+ MeanFreePath:	5.1788 mm  +- 1.5567 cm 	massic: 517.88 mg/cm2
+ CrossSection:	1.931 cm^-1 		massic: 1.931 cm2/g 
 
+ List of nuclear reactions: 
 
+                                      e+ + XXXX --> :    5165   Q = -201.85 keV
+                               e+ + XXXX --> N gamma:    5402   Q =  1.0112 MeV
+                                 e+ + XXXX --> e+ + :   14916   Q = -510.82 keV
+                          e+ + XXXX --> e+ + N gamma:     840   Q = -294.17 keV
+                               e+ + XXXX --> e+ + e-:     420   Q = -351.52 keV
+                                      e- + XXXX --> : 1533654   Q = -60.645 keV
+                                 e- + XXXX --> e- + :  594563   Q =  -462.7 keV
+                          e- + XXXX --> e- + N gamma:   29416   Q = -264.17 keV
+                               e- + XXXX --> e- + e-:   14754   Q = -337.61 keV
+                                 gamma + XXXX --> e-:  101313   Q = -542.94 eV 
+                            gamma + XXXX --> e- + e+:    5447   Q =  -1.022 MeV
+                           gamma + XXXX --> gamma + :   10577   Q =  -49.55 eV 
+                         gamma + XXXX --> gamma + e-: 1413532   Q =       0 meV
+                                   neutron + H1 --> :       1   Q = -2.1662 meV
+                 neutron + H1 --> N gamma + deuteron:  153086   Q =   2.226 MeV
+                         neutron + H1 --> neutron + : 27293976   Q = -589.95 eV 
+                   neutron + H1 --> neutron + proton:  695514   Q =   1.093 keV
+                         neutron + H2 --> neutron + :    2912   Q = -154.31 eV 
+                 neutron + H2 --> neutron + deuteron:      62   Q =  499.19 eV 
+                 neutron + H2 --> proton + 2 neutron:       6   Q = -1.9197 MeV
+                     neutron + O16 --> N gamma + O17:      86   Q =  3.5388 MeV
+             neutron + O16 --> N gamma + alpha + C13:   21666   Q =  -1.146 MeV
+           neutron + O16 --> N gamma + neutron + O16:   31434   Q = -158.61 keV
+                               neutron + O16 --> O17:       4   Q = -2.4662 meV
+                        neutron + O16 --> neutron + :  403149   Q = -14.645 keV
+                     neutron + O16 --> neutron + O16:  139126   Q =  168.86 eV 
+           neutron + O17 --> N gamma + neutron + O17:      26   Q =  463.59 keV
+                       neutron + O17 --> alpha + C14:      12   Q =  1.8238 MeV
+                        neutron + O17 --> neutron + :     142   Q = -12.002 keV
+                     neutron + O17 --> neutron + O17:      36   Q =  122.32 eV 
+                   neutron + O17 --> neutron + alpha:       1   Q = -8.5193 MeV
+                         neutron + O18 --> 2 neutron:       3   Q = -8.4929 MeV
+           neutron + O18 --> N gamma + neutron + O18:     132   Q =  72.757 keV
+                       neutron + O18 --> alpha + C15:      64   Q = -3.2913 MeV
+                                  proton + XXXX --> :  695509   Q =  -830.9 keV
+                         proton + XXXX --> proton + :  395780   Q =  -2.087 MeV
+
+                                     Number of gamma: N = 0 --> 0
+
+ List of generated particles:
+            C13:   21666  Emean =  1.4053 MeV	( 6.3549 keV --> 3.9556 MeV)
+            C14:      12  Emean =  2.5702 MeV	( 404.13 keV --> 4.802 MeV)
+            C15:      64  Emean =   803.6 keV	( 1.4297 meV --> 2.5837 MeV)
+            O16:  170560  Emean =  627.45 keV	( 74.879 keV --> 2.2422 MeV)
+            O17:     152  Emean =  257.55 keV	( 2.2901 meV --> 1.2139 MeV)
+            O18:     132  Emean =  610.93 keV	( 17.91 keV --> 1.8965 MeV)
+          alpha:   21743  Emean =  3.2933 MeV	( 0.37335 meV --> 10.323 MeV)
+       deuteron:  153148  Emean =  2.1849 keV	( 316.2 eV  --> 8.2215 MeV)
+             e+:    5447  Emean =  1.8101 MeV	( 5.4933 keV --> 7.5816 MeV)
+             e-: 1535466  Emean =  257.97 keV	( 30.183 eV  --> 9.9923 MeV)
+          gamma:  254102  Emean =   2.474 MeV	( 2.9416 keV --> 10.205 MeV)
+        neutron:   31611  Emean =  2.4093 MeV	( 13.19 keV --> 8.851 MeV)
+         proton:  695520  Emean =  2.0186 MeV	( 100 keV --> 10.005 MeV)
+
+   Momentum balance: Pmean =       0 meV	( 0 meV --> 0 meV) 
 
 
 

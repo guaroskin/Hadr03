@@ -21,10 +21,10 @@
 #/process/inactivate nCapture
 #
 /gun/particle neutron
-/gun/energy 10 MeV
+/gun/energy 15 MeV
 #
 # Histogramas
-/analysis/setFileName 1m-10MeV-1e6-Total
+/analysis/setFileName 1m-15MeV-1e5
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -49,9 +49,9 @@
 /analysis/h1/set 10 250   0  250 MeV	#Q
 /analysis/h1/set 11 500   0  2500 keV	#Pbalance
 /analysis/h1/set 12 240   0  240 none   #A
-/run/printProgress 100
+/run/printProgress 10000
 #
-/run/beamOn 1000
+/run/beamOn 100000
 #
 #
 #/control/execute vis.mac

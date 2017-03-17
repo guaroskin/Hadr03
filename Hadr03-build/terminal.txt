@@ -7,12 +7,12 @@
                             WWW : http://cern.ch/geant4
 *************************************************************
 
-### Number of threads is forced to 1 by Environment variable G4FORCENUMBEROFTHREADS.
+### Number of threads is forced to 4 by Environment variable G4FORCENUMBEROFTHREADS.
 
 -------- WWWW ------- G4Exception-START -------- WWWW -------
 *** G4Exception : Run0113
       issued by : G4MTRunManager::SetNumberOfThreads(G4int)
-Number of threads is forced to 1 by G4FORCENUMBEROFTHREADS shell variable.
+Number of threads is forced to 4 by G4FORCENUMBEROFTHREADS shell variable.
 Method ignored.
 *** This is just a warning message. ***
 -------- WWWW -------- G4Exception-END --------- WWWW -------
@@ -238,15 +238,39 @@ G4WT0 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 G4WT0 >  Local thread RunManagerKernel version Name: geant4-10-03 [MT]
 G4WT0 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 G4WT0 > 
+G4WT2 > 
+G4WT2 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+G4WT2 >  Local thread RunManagerKernel version Name: geant4-10-03 [MT]
+G4WT2 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+G4WT2 > 
+G4WT1 > 
+G4WT1 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+G4WT1 >  Local thread RunManagerKernel version Name: geant4-10-03 [MT]
+G4WT1 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+G4WT1 > 
+G4WT3 > 
+G4WT3 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+G4WT3 >  Local thread RunManagerKernel version Name: geant4-10-03 [MT]
+G4WT3 > ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+G4WT3 > 
 G4WT0 > @@@ G4ParticleHPInelasticData instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5/
 G4WT0 > /usr/share/geant4-neutronhpdata/G4NDL4.5/
 G4WT0 > @@@ G4ParticleHPInelastic instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5//Inelastic
+G4WT2 > @@@ G4ParticleHPInelasticData instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5/
+G4WT2 > /usr/share/geant4-neutronhpdata/G4NDL4.5/
+G4WT2 > @@@ G4ParticleHPInelastic instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5//Inelastic
+G4WT1 > @@@ G4ParticleHPInelasticData instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5/
+G4WT1 > /usr/share/geant4-neutronhpdata/G4NDL4.5/
+G4WT1 > @@@ G4ParticleHPInelastic instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5//Inelastic
+G4WT3 > @@@ G4ParticleHPInelasticData instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5/
+G4WT3 > /usr/share/geant4-neutronhpdata/G4NDL4.5/
+G4WT3 > @@@ G4ParticleHPInelastic instantiated for particle neutron data directory variable is G4NEUTRONHPDATA pointing to /usr/share/geant4-neutronhpdata/G4NDL4.5//Inelastic
      Transportation,         hadElastic,   neutronInelastic,           nCapture
          ionElastic,         dInelastic,         tInelastic,       He3Inelastic
      alphaInelastic,       ionInelastic,               phot,              compt
                conv,                msc,              eIoni,              eBrem
             annihil,              hIoni
-Set file name: 1m-10MeV-1e6-Total
+Set file name: 1m-15MeV-1e5
 
 ========= Table of registered couples ==============================
 
@@ -265,103 +289,180 @@ Index : 0     used in the geometry : Yes
  Initial seed (index) = 0
  Current couple of seeds = 9876, 54321
 ----------------------------------------
-... open Root analysis file : 1m-10MeV-1e6-Total.root - done
+... open Root analysis file : 1m-15MeV-1e5.root - done
+G4WT3 > ### Run 0 starts on worker thread 3.
+G4WT2 > ### Run 0 starts on worker thread 2.
 G4WT0 > ### Run 0 starts on worker thread 0.
-G4WT0 > ... open Root analysis file : 1m-10MeV-1e6-Total_t0.root - done
-G4WT0 > --> Event 0 starts with initial seeds (15470735,58711377).
-G4WT0 > --> Event 100 starts with initial seeds (94651619,77817948).
-G4WT0 > --> Event 200 starts with initial seeds (54325673,23191597).
-G4WT0 > --> Event 300 starts with initial seeds (61861915,89974803).
-G4WT0 > --> Event 400 starts with initial seeds (54454752,3743942).
-G4WT0 > --> Event 500 starts with initial seeds (11481005,71149785).
-G4WT0 > --> Event 600 starts with initial seeds (37844090,80676144).
-G4WT0 > --> Event 700 starts with initial seeds (53737979,40459558).
-G4WT0 > --> Event 800 starts with initial seeds (17870526,37945701).
-G4WT0 > --> Event 900 starts with initial seeds (46299214,3661534).
+G4WT1 > ### Run 0 starts on worker thread 1.
+G4WT3 > ... open Root analysis file : 1m-15MeV-1e5_t3.root - done
+G4WT0 > ... open Root analysis file : 1m-15MeV-1e5_t0.root - done
+G4WT3 > --> Event 0 starts with initial seeds (15470735,58711377).
+G4WT1 > ... open Root analysis file : 1m-15MeV-1e5_t1.root - done
+G4WT2 > ... open Root analysis file : 1m-15MeV-1e5_t2.root - done
+G4WT3 > --> Event 10000 starts with initial seeds (70080443,31196376).
+G4WT3 > --> Event 20000 starts with initial seeds (48784868,24719173).
+G4WT3 > --> Event 30000 starts with initial seeds (40050759,4637579).
+G4WT1 > --> Event 40000 starts with initial seeds (38519389,69113162).
+G4WT1 > --> Event 50000 starts with initial seeds (84661923,52920252).
+G4WT2 > --> Event 60000 starts with initial seeds (42226813,68012736).
+G4WT2 > --> Event 70000 starts with initial seeds (66209573,26709054).
+G4WT2 > --> Event 80000 starts with initial seeds (27602171,67134714).
+G4WT2 > --> Event 90000 starts with initial seeds (211811,67170964).
+G4WT1 > Thread-local run terminated.
+G4WT1 > Run Summary
+G4WT1 >   Number of events processed : 24964
+G4WT1 >   User=784.92s Real=196.3s Sys=0.11s
+G4WT1 > ... merge Root all H1 :  - done
+G4WT1 > ... write Root file : 1m-15MeV-1e5_t1.root - done
+G4WT1 > ... write ASCII Root file : 1m-15MeV-1e5.ascii - done
+G4WT1 > ... close Root file : 1m-15MeV-1e5_t1.root - done
+G4WT3 > Thread-local run terminated.
+G4WT3 > Run Summary
+G4WT3 >   Number of events processed : 25122
+G4WT3 >   User=786.52s Real=196.83s Sys=0.14s
+G4WT3 > ... merge Root all H1 :  - done
 G4WT0 > Thread-local run terminated.
 G4WT0 > Run Summary
-G4WT0 >   Number of events processed : 1000
-G4WT0 >   User=7.97s Real=7.97s Sys=0s
+G4WT0 >   Number of events processed : 24806
+G4WT0 >   User=786.61s Real=196.87s Sys=0.14s
 G4WT0 > ... merge Root all H1 :  - done
-G4WT0 > ... write Root file : 1m-10MeV-1e6-Total_t0.root - done
-G4WT0 > ... write ASCII Root file : 1m-10MeV-1e6-Total.ascii - done
-G4WT0 > ... close Root file : 1m-10MeV-1e6-Total_t0.root - done
+G4WT3 > ... write Root file : 1m-15MeV-1e5_t3.root - done
+G4WT3 > ... write ASCII Root file : 1m-15MeV-1e5.ascii - done
+G4WT0 > ... write Root file : 1m-15MeV-1e5_t0.root - done
+G4WT2 > Thread-local run terminated.
+G4WT2 > Run Summary
+G4WT2 >   Number of events processed : 25108
+G4WT2 >   User=786.78s Real=197.03s Sys=0.16s
+G4WT2 > ... merge Root all H1 :  - done
+G4WT0 > ... write ASCII Root file : 1m-15MeV-1e5.ascii - done
+G4WT2 > ... write Root file : 1m-15MeV-1e5_t2.root - done
+G4WT2 > ... write ASCII Root file : 1m-15MeV-1e5.ascii - done
+G4WT3 > ... close Root file : 1m-15MeV-1e5_t3.root - done
+G4WT0 > ... close Root file : 1m-15MeV-1e5_t0.root - done
+G4WT2 > ... close Root file : 1m-15MeV-1e5_t2.root - done
  Run terminated.
 Run Summary
-  Number of events processed : 1000
-  User=7.98s Real=8.71s Sys=0.02s
+  Number of events processed : 100000
+  User=786.82s Real=197.63s Sys=0.19s
 
- The run is 1000 neutron of 10 MeV through 1 m   of G4_WATER (density: 1 g/cm3 )
+ The run is 100000 neutron of 15 MeV through 1 m   of G4_WATER (density: 1 g/cm3 )
 
  Process calls frequency:
-	Transportation= 898	annihil= 26	compt= 6658	conv= 26	eBrem= 150	eIoni= 10228	hIoni= 5426	hadElastic= 143624	msc= 15	nCapture= 735	neutronInelastic= 264	phot= 454
-Tneutron = 147
-Tgamma = 742
+	Transportation= 105265	annihil= 4521	compt= 852712	conv= 4560	eBrem= 24568	eIoni= 1347009	hIoni= 637454	hadElastic= 13321780	msc= 2317	nCapture= 71469	neutronInelastic= 45029	phot= 64413
+Tneutron = 14653
+Tgamma = 89342
 
- Nb of incident neutron surviving after 1 m   of G4_WATER : 147
+ Nb of incident neutron surviving after 1 m   of G4_WATER : 14653
 
 
- MeanFreePath:	5.067 mm  +- 1.4671 cm 	massic: 506.7 mg/cm2
- CrossSection:	1.9735 cm^-1 		massic: 1.9735 cm2/g 
+ MeanFreePath:	5.6567 mm  +- 1.8257 cm 	massic: 565.67 mg/cm2
+ CrossSection:	1.7678 cm^-1 		massic: 1.7678 cm2/g 
 
  List of nuclear reactions: 
 
-                                      e+ + XXXX --> :      24   Q = -171.99 keV
-                               e+ + XXXX --> N gamma:      26   Q =  1.0049 MeV
-                                 e+ + XXXX --> e+ + :      89   Q = -517.26 keV
-                          e+ + XXXX --> e+ + N gamma:       7   Q = -357.15 keV
-                               e+ + XXXX --> e+ + e-:       3   Q = -247.85 keV
-                                      e- + XXXX --> :    7171   Q = -61.121 keV
-                                 e- + XXXX --> e- + :    2889   Q = -459.24 keV
-                          e- + XXXX --> e- + N gamma:     131   Q = -274.67 keV
-                               e- + XXXX --> e- + e-:      79   Q = -283.57 keV
-                                 gamma + XXXX --> e-:     454   Q =  -543.1 eV 
-                            gamma + XXXX --> e- + e+:      26   Q =  -1.022 MeV
-                           gamma + XXXX --> gamma + :      40   Q =  -46.56 eV 
-                         gamma + XXXX --> gamma + e-:    6618   Q =       0 meV
-                 neutron + H1 --> N gamma + deuteron:     735   Q =   2.226 MeV
-                         neutron + H1 --> neutron + :  137579   Q = -567.05 eV 
-                   neutron + H1 --> neutron + proton:    3430   Q =   1.109 keV
-                         neutron + H2 --> neutron + :      16   Q = -5.5344 meV
-             neutron + O16 --> N gamma + alpha + C13:     117   Q =  -1.126 MeV
-           neutron + O16 --> N gamma + neutron + O16:     146   Q = -174.84 keV
-                        neutron + O16 --> neutron + :    1927   Q = -14.545 keV
-                     neutron + O16 --> neutron + O16:     671   Q =  170.58 eV 
-                       neutron + O17 --> alpha + C14:       1   Q =  1.8196 MeV
-                        neutron + O17 --> neutron + :       1   Q = -25.044 eV 
-                                  proton + XXXX --> :    3430   Q = -831.42 keV
-                         proton + XXXX --> proton + :    1996   Q = -2.0911 MeV
+                                      e+ + XXXX --> :    4279   Q = -201.12 keV
+                               e+ + XXXX --> N gamma:    4511   Q =   1.009 MeV
+                                 e+ + XXXX --> e+ + :   13709   Q = -526.57 keV
+                          e+ + XXXX --> e+ + N gamma:     816   Q = -316.43 keV
+                               e+ + XXXX --> e+ + e-:     422   Q = -353.95 keV
+                                      e- + XXXX --> :  926481   Q = -61.403 keV
+                                 e- + XXXX --> e- + :  395344   Q = -484.91 keV
+                          e- + XXXX --> e- + N gamma:   20964   Q = -288.73 keV
+                               e- + XXXX --> e- + e-:   11889   Q = -362.04 keV
+                                   gamma + XXXX --> :       2   Q = -543.65 eV 
+                                 gamma + XXXX --> e-:   64411   Q = -539.49 eV 
+                            gamma + XXXX --> e- + e+:    4560   Q =  -1.022 MeV
+                           gamma + XXXX --> gamma + :    6298   Q = -49.115 eV 
+                         gamma + XXXX --> gamma + e-:  846414   Q =       0 meV
+                                   neutron + H1 --> :       1   Q = -1.5578 meV
+                 neutron + H1 --> N gamma + deuteron:   71421   Q =   2.226 MeV
+                         neutron + H1 --> neutron + : 12693780   Q = -592.84 eV 
+                   neutron + H1 --> neutron + proton:  339412   Q =  1.4225 keV
+                         neutron + H2 --> neutron + :    1298   Q = -154.39 eV 
+                 neutron + H2 --> neutron + deuteron:      24   Q =  533.16 eV 
+                 neutron + H2 --> proton + 2 neutron:       6   Q =  1.5168 MeV
+                     neutron + O16 --> N gamma + O17:      47   Q =  2.2365 MeV
+             neutron + O16 --> N gamma + alpha + C13:   10716   Q = -1.4171 MeV
+          neutron + O16 --> N gamma + deuteron + N15:    1002   Q = -68.269 keV
+           neutron + O16 --> N gamma + neutron + O16:   21735   Q = -199.79 keV
+   neutron + O16 --> N gamma + neutron + alpha + C12:    8575   Q = -3.8165 MeV
+            neutron + O16 --> N gamma + proton + N16:    2132   Q = -9.6156 MeV
+                               neutron + O16 --> O17:       1   Q = -4.4912 meV
+                        neutron + O16 --> neutron + :  201537   Q = -16.664 keV
+                     neutron + O16 --> neutron + O16:   86115   Q = -57.745 keV
+            neutron + O16 --> proton + neutron + N15:     195   Q =  -11.78 MeV
+                         neutron + O17 --> 2 neutron:       3   Q =  -11.11 MeV
+           neutron + O17 --> N gamma + neutron + O17:      17   Q =  234.22 keV
+                       neutron + O17 --> alpha + C14:      10   Q =  1.8265 MeV
+                        neutron + O17 --> neutron + :      72   Q =  -9.343 keV
+                     neutron + O17 --> neutron + O17:      25   Q =  156.64 eV 
+                   neutron + O17 --> neutron + alpha:       1   Q = -14.554 MeV
+                      neutron + O17 --> proton + N17:       1   Q = -7.8931 MeV
+                         neutron + O18 --> 2 neutron:       8   Q = -13.021 MeV
+           neutron + O18 --> N gamma + neutron + O18:      88   Q =  560.72 keV
+                       neutron + O18 --> alpha + C15:      43   Q = -3.7543 MeV
+                    neutron + O18 --> deuteron + N17:       4   Q = -13.539 MeV
+                   neutron + O18 --> neutron + alpha:       4   Q = -13.037 MeV
+                      neutron + O18 --> proton + N18:       5   Q = -13.107 MeV
+                                  proton + XXXX --> :  341853   Q = -850.66 keV
+                         proton + XXXX --> proton + :  295601   Q = -2.0674 MeV
 
                                      Number of gamma: N = 0 --> 0
 
  List of generated particles:
-            C13:     117  Emean =  1.3574 MeV	( 161.22 keV --> 3.375 MeV)
-            C14:       1  Emean =  1.4967 MeV	( 1.4967 MeV --> 1.4967 MeV)
-            O16:     817  Emean =   628.6 keV	( 90.002 keV --> 2.2413 MeV)
-          alpha:     118  Emean =  3.4311 MeV	( 1.1144 MeV --> 10.323 MeV)
-       deuteron:     735  Emean =  1.3201 keV	( 1.2925 keV --> 1.5209 keV)
-             e+:      26  Emean =  2.1916 MeV	( 390.7 keV --> 4.6463 MeV)
-             e-:    7180  Emean =  263.79 keV	( 100.16 eV  --> 8.1458 MeV)
-          gamma:    1221  Emean =  2.4769 MeV	( 2.9638 keV --> 6.9155 MeV)
-        neutron:     146  Emean =  2.2986 MeV	( 87.297 keV --> 3.7737 MeV)
-         proton:    3430  Emean =  2.0483 MeV	( 100.07 keV --> 9.986 MeV)
+            C12:    8575  Emean =  883.69 keV	( 15.547 keV --> 3.6365 MeV)
+            C13:   10716  Emean =  2.2483 MeV	( 16.803 keV --> 6.3081 MeV)
+            C14:      10  Emean =  2.9968 MeV	( 404.3 keV --> 6.9326 MeV)
+            C15:      43  Emean =  1.7082 MeV	( 6.8867 meV --> 4.7533 MeV)
+            N15:    1197  Emean =  1.1887 MeV	( 38.007 keV --> 2.6934 MeV)
+            N16:    2132  Emean =  1.0448 MeV	( 164.7 keV --> 2.0505 MeV)
+            N17:       5  Emean =   588.6 keV	( 335.29 keV --> 717.47 keV)
+            N18:       5  Emean =  866.44 keV	( 490.37 keV --> 1.1247 MeV)
+            O16:  107850  Emean =  707.74 keV	( 38.724 keV --> 3.37 MeV)
+            O17:      90  Emean =   411.9 keV	( 24.227 meV --> 2.5759 MeV)
+            O18:      88  Emean =  904.05 keV	( 99.686 keV --> 2.3928 MeV)
+          alpha:   19349  Emean =  4.4315 MeV	( 1.6985 meV --> 14.718 MeV)
+       deuteron:   72451  Emean =  52.538 keV	( 269.79 eV  --> 12.17 MeV)
+             e+:    4560  Emean =  2.0526 MeV	( 2.5276 keV --> 10.486 MeV)
+             e-:  927696  Emean =  292.65 keV	( 2.7386 eV  --> 12.14 MeV)
+          gamma:  158311  Emean =  2.6384 MeV	( 1.7622 keV --> 12.535 MeV)
+        neutron:   31133  Emean =  4.2804 MeV	( 3.4535 keV --> 11.1 MeV)
+         proton:  341751  Emean =  2.6381 MeV	( 38.632 keV --> 15.007 MeV)
 
    Momentum balance: Pmean =       0 meV	( 0 meV --> 0 meV) 
 
-... write Root file : 1m-10MeV-1e6-Total.root - done
-... write ASCII Root file : 1m-10MeV-1e6-Total.ascii - done
-... close Root file : 1m-10MeV-1e6-Total.root - done
+... write Root file : 1m-15MeV-1e5.root - done
+... write ASCII Root file : 1m-15MeV-1e5.ascii - done
+... close Root file : 1m-15MeV-1e5.root - done
 
 --------- Ranecu engine status ---------
  Initial seed (index) = 0
- Current couple of seeds = 78028937, 1993498816
+ Current couple of seeds = 682301806, 653046312
 ----------------------------------------
+G4WT1 > ================== Deleting memory pools ===================
+G4WT1 > Number of memory pools allocated: 11; of which, static: 0
+G4WT1 > Dynamic pools deleted: 11 / Total memory freed: 0.046 MB
+G4WT1 > ============================================================
+G4WT1 > Thread-local UImanager is to be deleted.
+G4WT1 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT3 > ================== Deleting memory pools ===================
+G4WT3 > Number of memory pools allocated: 11; of which, static: 0
+G4WT3 > Dynamic pools deleted: 11 / Total memory freed: 0.043 MB
+G4WT3 > ============================================================
+G4WT3 > Thread-local UImanager is to be deleted.
+G4WT3 > There should not be any thread-local G4cout/G4cerr hereafter.
 G4WT0 > ================== Deleting memory pools ===================
 G4WT0 > Number of memory pools allocated: 11; of which, static: 0
-G4WT0 > Dynamic pools deleted: 11 / Total memory freed: 0.029 MB
+G4WT0 > Dynamic pools deleted: 11 / Total memory freed: 0.042 MB
 G4WT0 > ============================================================
 G4WT0 > Thread-local UImanager is to be deleted.
 G4WT0 > There should not be any thread-local G4cout/G4cerr hereafter.
+G4WT2 > ================== Deleting memory pools ===================
+G4WT2 > Number of memory pools allocated: 11; of which, static: 0
+G4WT2 > Dynamic pools deleted: 11 / Total memory freed: 0.039 MB
+G4WT2 > ============================================================
+G4WT2 > Thread-local UImanager is to be deleted.
+G4WT2 > There should not be any thread-local G4cout/G4cerr hereafter.
 G4 kernel has come to Quit state.
 ================== Deleting memory pools ===================
 Number of memory pools allocated: 3; of which, static: 0
