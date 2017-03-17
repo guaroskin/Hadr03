@@ -43,16 +43,15 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* det)
+PrimaryGeneratorAction::PrimaryGeneratorAction()
 :G4VUserPrimaryGeneratorAction(),
- fParticleGun(0), fDetector(det)                                               
+ fParticleGun(0)                                    
 {
   fParticleGun  = new G4ParticleGun(1);
   G4ParticleDefinition* particle
            = G4ParticleTable::GetParticleTable()->FindParticle("neutron");
   fParticleGun->SetParticleDefinition(particle);
   fParticleGun->SetParticleEnergy(1*MeV);    
-  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -68,19 +67,10 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //this function is called at the begining of event
   //
-  G4double halfSize = 0.5*(fDetector->GetSize());
-  //El haz no es emitido desde el borde del cubo sino r/8 mas adentro para que no muestre particulas transmitidas que no lo son en verdad
-  G4double x0 = - halfSize + halfSize/8.;
-  
-  
-  //randomize (y0,z0)
-  //
-  G4double beam = 0.8*halfSize; 
-  G4double y0 = (2*G4UniformRand()-1.)*beam;
-  G4double z0 = (2*G4UniformRand()-1.)*beam;
-  
-  fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
+
+  fParticleGun->SetParticlePosition(G4ThreeVector(148 *cm, 0, -40 * cm));
   fParticleGun->GeneratePrimaryVertex(anEvent);
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(-1.,0.,0.));
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

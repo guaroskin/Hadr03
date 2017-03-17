@@ -248,15 +248,9 @@ void Run::EndOfRun(G4bool print)
   
   //run condition
   //
-  G4Material* material = fDetector->GetMaterial();
-  G4double density = material->GetDensity();
-   
   G4String Particle = fParticle->GetParticleName();    
   G4cout << "\n The run is " << numberOfEvent << " "<< Particle << " of "
-         << G4BestUnit(fEkin,"Energy") << " through " 
-         << G4BestUnit(fDetector->GetSize(),"Length") << " of "
-         << material->GetName() << " (density: " 
-         << G4BestUnit(density,"Volumic Mass") << ")" << G4endl;
+         << G4BestUnit(fEkin,"Energy") << G4endl;
 
   if (numberOfEvent == 0) { G4cout.precision(dfprec);   return;}
              
@@ -276,9 +270,7 @@ void Run::EndOfRun(G4bool print)
   G4cout << "Tgamma = " << Tgamma << G4endl;
   
   if (Tneutron  > 0) {
-    G4cout << "\n Nb of incident neutron surviving after "
-           << G4BestUnit(fDetector->GetSize(),"Length") << " of "
-           << material->GetName() << " : " << Tneutron << G4endl;
+    G4cout << "\n Nb of incident neutron surviving " << Tneutron << G4endl;
   }
   
   if (fTotalCount == 0) fTotalCount = 1;   //force printing anyway
@@ -288,70 +280,19 @@ void Run::EndOfRun(G4bool print)
   G4double MeanFreePath = fSumTrack /fTotalCount;     
   G4double MeanTrack2   = fSumTrack2/fTotalCount;     
   G4double rms = std::sqrt(std::fabs(MeanTrack2 - MeanFreePath*MeanFreePath));
-  G4double CrossSection = 0.0;
+  /*G4double CrossSection = 0.0;
   if(MeanFreePath > 0.0) { CrossSection = 1./MeanFreePath; }
   G4double massicMFP = MeanFreePath*density;
   G4double massicCS  = 0.0;
   if(massicMFP > 0.0) { massicCS = 1./massicMFP; }
-   
+  */
   G4cout << "\n\n MeanFreePath:\t"   << G4BestUnit(MeanFreePath,"Length")
          << " +- "                   << G4BestUnit( rms,"Length")
-         << "\tmassic: "             << G4BestUnit(massicMFP, "Mass/Surface")
-         << "\n CrossSection:\t"     << CrossSection*cm << " cm^-1 "
-         << "\t\tmassic: "           << G4BestUnit(massicCS, "Surface/Mass")
          << G4endl;
          
   //cross section per atom (only for single material)
   //
-  if (material->GetNumberOfElements() == 1) {
-    G4double nbAtoms = material->GetTotNbOfAtomsPerVolume();
-    G4double crossSection = CrossSection/nbAtoms;
-    G4cout << " crossSection per atom:\t"
-           << G4BestUnit(crossSection,"Surface") << G4endl;     
-  }         
-  //check cross section from G4HadronicProcessStore
-  //
-  /*G4cout << "\n Verification: "
-         << "crossSections from G4HadronicProcessStore:";
-  
-  G4ProcessTable* processTable  = G4ProcessTable::GetProcessTable();
-  G4HadronicProcessStore* store = G4HadronicProcessStore::Instance();
-  G4double sumc1 = 0.0, sumc2 = 0.0; 
-  if (material->GetNumberOfElements() == 1) {
-    const G4Element* element = material->GetElement(0);
-    for (it = fProcCounter.begin(); it != fProcCounter.end(); it++) {
-      G4String procName = it->first;
-      G4VProcess* process = processTable->FindProcess(procName, fParticle);
-      G4double xs1 =
-      store->GetCrossSectionPerVolume(fParticle,fEkin,process,material);
-      G4double massSigma = xs1/density;
-      sumc1 += massSigma;      
-      G4double xs2 =
-      store->GetCrossSectionPerAtom(fParticle,fEkin,process,element,material);
-      sumc2 += xs2;
-      G4cout << "\n" << std::setw(20) << procName << "= "
-             << G4BestUnit(massSigma, "Surface/Mass") << "\t"
-             << G4BestUnit(xs2, "Surface");
-      
-    }             
-    G4cout << "\n" << std::setw(20) << "total" << "= "
-           << G4BestUnit(sumc1, "Surface/Mass") << "\t" 
-           << G4BestUnit(sumc2, "Surface") << G4endl;  
-  } else {
-    for (it = fProcCounter.begin(); it != fProcCounter.end(); it++) {
-      G4String procName = it->first;
-      G4VProcess* process = processTable->FindProcess(procName, fParticle);
-      G4double xs =
-      store->GetCrossSectionPerVolume(fParticle,fEkin,process,material);
-      G4double massSigma = xs/density;
-      sumc1 += massSigma;
-      G4cout << "\n" << std::setw(20)  << procName << "= " 
-             << G4BestUnit(massSigma, "Surface/Mass");
-    }             
-    G4cout << "\n" << std::setw(20) << "total" << "= " 
-           << G4BestUnit(sumc1, "Surface/Mass") << G4endl;  
-  }
-  */
+
  //nuclear channel count
  //
  G4cout << "\n List of nuclear reactions: \n" << G4endl; 
