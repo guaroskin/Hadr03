@@ -65,13 +65,6 @@ void NeutronHPphysics::ConstructProcess()
   elasticnp->RegisterMe(model1b);
   elasticnp->AddDataSet(new G4ParticleHPThermalScatteringData());         
   model1b->SetMaxEnergy(4.*eV);  
-
-
-  /* Gamma Physics
-     G4PhotoElectricEffect* fPhotoEffect = new G4PhotoElectricEffect();
-     G4ComptonScattering* fComptonEffect = new G4ComptonScattering();
-     G4GammaConversion* fPairProduction = new G4GammaConversion();
-     G4PhotoNuclearProcess* PhotoNuclear = new G4PhotoNuclearProcess();*/
   
   // create process: INELASTIC
   //

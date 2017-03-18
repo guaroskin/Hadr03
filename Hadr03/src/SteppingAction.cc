@@ -73,13 +73,13 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4String PartSubType = particle->GetParticleSubType();
   
   
-  //Si la particula es un nucleo que sea eliminada
-  if(PartType == "nucleus"){    
+  //Si la particula es un nucleo pero no un alpha es eliminada
+  if(PartType == "nucleus" && partName != "alpha"){    
     track->SetTrackStatus(fStopAndKill);
     return;
   }
 
-  // Se suma el proceso, solo para gammas y neutrones
+  // Se suma el proceso
   // 
   run->CountProcesses(process);
 
@@ -205,11 +205,11 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
       //G4cout << "gammas Secunda" << "= " << gammasec << G4endl;
     }
     //ELIMINA LOS GAMMAS FANTASMAS
-    if(gammas > gammasec){
+    /*if(gammas > gammasec){
       track->SetTrackStatus(fStopAndKill);
       //G4cout << "elID" << "= " << track->GetParentID() << G4endl;
       return;
-    }
+      }*/
   }
 }
 

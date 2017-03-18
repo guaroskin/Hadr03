@@ -12,7 +12,7 @@ sudo chgrp -R users examples
 cmake -DGeant4_DIR=/home/nicolas/Path/geant4.10.01.p01-install/lib64/Geant4-10.1.1 /home/nicolas/Path/geant4.10.01.p01-install/share/Geant4-10.1.1/examples/extended/hadronic/Hadr01
 
 
-env | grep G4NEUTRONHP
+env | grep G4(NEUTRONHP)
 export G4FORCENUMBEROFTHREADS=1
 export G4NEUTRONHP_SKIP_MISSING_ISOTOPES=1
 export G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=1 (highly recommended)
@@ -21,8 +21,8 @@ export G4NEUTRON_HP_USE_WENDT_FISSION_MODEL=1
 
 
 #Para ver los planos y utilizar el MT muy bueno*******************************
-cmake -DGEANT4_BUILD_MULTITHREADED=ON -DGeant4_DIR=/usr/share/Geant4-10.1.1 /home/nicolas/Documentos/Geant4/Practice/Examples-Geant4/extended/hadronic/Hadr06
+cmake -DGEANT4_BUILD_MULTITHREADED=ON -DGeant4_DIR=/usr/share/Geant4-10.3.0 /home/nicolas/Documentos/Hadr06
 
 #Otra forma de usar el MT
-cmake -DG4MULTITHREADED=2 -DGeant4_DIR=/usr/share/Geant4-10.1.0 /home/nicolas/Documentos/Geant4/REACTOR/Back_up/16_03_2015/FissionFragment 
+cmake -DG4MULTITHREADED=2 -DGeant4_DIR=/usr/share/Geant4-10.3.0 /home/nicolas/Documentos/FissionFragment 
 

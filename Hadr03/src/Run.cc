@@ -159,6 +159,9 @@ void Run::CountGamma(G4int nGamma)
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
+/*Method to be overwritten by the user for merging local Run object to the global Run object. 
+  At the end of the  implementation, G4Run base-class method for must be invoked for merging data 
+  members in the base class*/
 void Run::Merge(const G4Run* run)
 {
   const Run* localRun = static_cast<const Run*>(run);
@@ -309,49 +312,7 @@ void Run::EndOfRun(G4bool print)
     G4cout << " crossSection per atom:\t"
            << G4BestUnit(crossSection,"Surface") << G4endl;     
   }         
-  //check cross section from G4HadronicProcessStore
-  //
-  /*G4cout << "\n Verification: "
-         << "crossSections from G4HadronicProcessStore:";
-  
-  G4ProcessTable* processTable  = G4ProcessTable::GetProcessTable();
-  G4HadronicProcessStore* store = G4HadronicProcessStore::Instance();
-  G4double sumc1 = 0.0, sumc2 = 0.0; 
-  if (material->GetNumberOfElements() == 1) {
-    const G4Element* element = material->GetElement(0);
-    for (it = fProcCounter.begin(); it != fProcCounter.end(); it++) {
-      G4String procName = it->first;
-      G4VProcess* process = processTable->FindProcess(procName, fParticle);
-      G4double xs1 =
-      store->GetCrossSectionPerVolume(fParticle,fEkin,process,material);
-      G4double massSigma = xs1/density;
-      sumc1 += massSigma;      
-      G4double xs2 =
-      store->GetCrossSectionPerAtom(fParticle,fEkin,process,element,material);
-      sumc2 += xs2;
-      G4cout << "\n" << std::setw(20) << procName << "= "
-             << G4BestUnit(massSigma, "Surface/Mass") << "\t"
-             << G4BestUnit(xs2, "Surface");
-      
-    }             
-    G4cout << "\n" << std::setw(20) << "total" << "= "
-           << G4BestUnit(sumc1, "Surface/Mass") << "\t" 
-           << G4BestUnit(sumc2, "Surface") << G4endl;  
-  } else {
-    for (it = fProcCounter.begin(); it != fProcCounter.end(); it++) {
-      G4String procName = it->first;
-      G4VProcess* process = processTable->FindProcess(procName, fParticle);
-      G4double xs =
-      store->GetCrossSectionPerVolume(fParticle,fEkin,process,material);
-      G4double massSigma = xs/density;
-      sumc1 += massSigma;
-      G4cout << "\n" << std::setw(20)  << procName << "= " 
-             << G4BestUnit(massSigma, "Surface/Mass");
-    }             
-    G4cout << "\n" << std::setw(20) << "total" << "= " 
-           << G4BestUnit(sumc1, "Surface/Mass") << G4endl;  
-  }
-  */
+
  //nuclear channel count
  //
  G4cout << "\n List of nuclear reactions: \n" << G4endl; 
