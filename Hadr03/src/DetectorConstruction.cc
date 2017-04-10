@@ -93,7 +93,8 @@ void DetectorConstruction::DefineMaterials()
   G4NistManager* nist = G4NistManager::Instance();
 
   fAir = nist->FindOrBuildMaterial("G4_AIR");
-  fParaffin = nist->FindOrBuildMaterial("G4_Galactic");
+  // = nist->FindOrBuildMaterial("G4_Galactic");
+  fParaffin = nist->FindOrBuildMaterial("G4_PARAFFIN");
   fStainlessSteel = nist->FindOrBuildMaterial("G4_STAINLESS-STEEL");
   fWater = nist->FindOrBuildMaterial("G4_WATER");
     
@@ -184,7 +185,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructVolumes()
   //
   // Create the tank
   //
-  const G4double tankWallThickness = 0.2* cm;
+  const G4double tankWallThickness = 0.05* cm;
   const G4double tankOR = 48.0 * cm;      // 96 cm de diametro
   const G4double tankH = 62.0 * cm;
 
@@ -284,8 +285,8 @@ G4VPhysicalVolume* DetectorConstruction::ConstructVolumes()
     // TODO create the AmBe material in DefineMaterials() and use it here
     //      For now steel is used, but the logical volume is used in the
     //      PrimaryGeneratorAction to know where to emit the neutrons from
-    const G4double sourceH = 2 * cm;
-    const G4double sourceR = 1 * cm;
+    const G4double sourceH = 10 * cm;
+    const G4double sourceR = 2 * cm;
     G4Tubs* const solidSource
         = new G4Tubs("NeutronSource",                   // the name
                      0.0,                               // inner radius
@@ -295,7 +296,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructVolumes()
                      360.0 * deg);                      // end angle
     G4LogicalVolume* const logicalSource
         = new G4LogicalVolume(solidSource,              // the solid volume
-                              fAir,          // the material
+                              fParaffin,          // the material
                               solidSource->GetName());  // the name
     // La fuente esta a 100cm del tanque y a 20 cm por encima de la capa de aire
     position.set(tankOR + 100*cm , 0.0, - worldHeight + (floorH + 20*cm));
