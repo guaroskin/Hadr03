@@ -30,6 +30,7 @@ Hadr03-build/Hadr03
 *.log
 *.sql
 *.sqlite
+terminal.txt
 
 # Directories #
 ################
