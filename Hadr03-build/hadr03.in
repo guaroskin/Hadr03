@@ -10,9 +10,6 @@
 #/run/numberOfThreads 2
 /run/verbose 1
 #
-/testhadr/det/setMat G4_WATER
-/testhadr/det/setSize 1 m
-#
 /run/initialize
 #
 /process/list
@@ -21,10 +18,10 @@
 #/process/inactivate nCapture
 #
 /gun/particle neutron
-/gun/energy 0.025 eV
+/gun/energy 1 MeV
 #
 # Histogramas
-/analysis/setFileName 1m-Th-2e5
+/analysis/setFileName 1m-1MeV-2e5
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
