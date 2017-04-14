@@ -251,15 +251,9 @@ void Run::EndOfRun(G4bool print)
   
   //run condition
   //
-  G4Material* material = fDetector->GetMaterial();
-  G4double density = material->GetDensity();
-   
   G4String Particle = fParticle->GetParticleName();    
   G4cout << "\n The run is " << numberOfEvent << " "<< Particle << " of "
-         << G4BestUnit(fEkin,"Energy") << " through " 
-         << G4BestUnit(fDetector->GetSize(),"Length") << " of "
-         << material->GetName() << " (density: " 
-         << G4BestUnit(density,"Volumic Mass") << ")" << G4endl;
+         << G4BestUnit(fEkin,"Energy") << G4endl;
 
   if (numberOfEvent == 0) { G4cout.precision(dfprec);   return;}
              
@@ -279,9 +273,7 @@ void Run::EndOfRun(G4bool print)
   G4cout << "Tgamma = " << Tgamma << G4endl;
   
   if (Tneutron  > 0) {
-    G4cout << "\n Nb of incident neutron surviving after "
-           << G4BestUnit(fDetector->GetSize(),"Length") << " of "
-           << material->GetName() << " : " << Tneutron << G4endl;
+    G4cout << "\n Nb of incident neutron surviving " << Tneutron << G4endl;
   }
   
   if (fTotalCount == 0) fTotalCount = 1;   //force printing anyway
@@ -291,28 +283,26 @@ void Run::EndOfRun(G4bool print)
   G4double MeanFreePath = fSumTrack /fTotalCount;     
   G4double MeanTrack2   = fSumTrack2/fTotalCount;     
   G4double rms = std::sqrt(std::fabs(MeanTrack2 - MeanFreePath*MeanFreePath));
-  G4double CrossSection = 0.0;
+  /*G4double CrossSection = 0.0;
   if(MeanFreePath > 0.0) { CrossSection = 1./MeanFreePath; }
   G4double massicMFP = MeanFreePath*density;
   G4double massicCS  = 0.0;
   if(massicMFP > 0.0) { massicCS = 1./massicMFP; }
-   
+  */
   G4cout << "\n\n MeanFreePath:\t"   << G4BestUnit(MeanFreePath,"Length")
          << " +- "                   << G4BestUnit( rms,"Length")
-         << "\tmassic: "             << G4BestUnit(massicMFP, "Mass/Surface")
-         << "\n CrossSection:\t"     << CrossSection*cm << " cm^-1 "
-         << "\t\tmassic: "           << G4BestUnit(massicCS, "Surface/Mass")
          << G4endl;
          
   //cross section per atom (only for single material)
   //
+  /*
   if (material->GetNumberOfElements() == 1) {
     G4double nbAtoms = material->GetTotNbOfAtomsPerVolume();
     G4double crossSection = CrossSection/nbAtoms;
     G4cout << " crossSection per atom:\t"
            << G4BestUnit(crossSection,"Surface") << G4endl;     
-  }         
-
+  } 
+  */
  //nuclear channel count
  //
  G4cout << "\n List of nuclear reactions: \n" << G4endl; 

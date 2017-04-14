@@ -65,7 +65,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
                    const_cast<G4VProcess*>(endPoint->GetProcessDefinedStep());
   G4String procName = process->GetProcessName();
   G4StepStatus stepStatus = endPoint->GetStepStatus();
-  G4bool transmit = (stepStatus==fGeomBoundary || stepStatus==fWorldBoundary);
+  G4bool transmit = (stepStatus==fWorldBoundary);
   G4Track* track = aStep->GetTrack();
   G4ParticleDefinition* particle = track->GetDefinition();
   G4String partName = particle->GetParticleName();
