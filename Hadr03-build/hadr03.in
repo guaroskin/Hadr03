@@ -1,4 +1,4 @@
-# $Id$
+# 30 de mayo - 2017
 #
 # Macro file for "Hadr14.cc"
 # (can be run in batch, without graphic)
@@ -18,10 +18,10 @@
 #/process/inactivate nCapture
 #
 /gun/particle neutron
-/gun/energy 1 MeV
+/gun/energy 25 meV
 #
 # Histogramas
-/analysis/setFileName 1m-1MeV-2e5
+/analysis/setFileName 1m-25meV-2e5
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -35,18 +35,17 @@
 /analysis/h1/setAscii 12
 #
 /analysis/h1/set 1  1500  0  1500 keV	#KineticE of scattered primary particle +/- 1 keV
-/analysis/h1/set 2  1200   0  12 MeV	#gamma  +/- 10 keV
-/analysis/h1/set 3  1000   0  10 MeV	#neutron
-/analysis/h1/set 4  1500   0  15 MeV	#proton
-/analysis/h1/set 5  1200   0  12 MeV	#deuterons
-/analysis/h1/set 6  1600   0  16 MeV	#alpha
-/analysis/h1/set 7  1000   0  10 MeV	#nuclei
-/analysis/h1/set 8  1600   0  16 MeV	#baryons (neutron proton)
-/analysis/h1/set 9  1600   0  16 MeV	#electron
-/analysis/h1/set 10 1500   0  15 MeV	#Q
-/analysis/h1/set 11 500   0  2500 keV	#Pbalance
+/analysis/h1/set 2  12000   0  12 MeV	#gamma  +/- 1 keV
+/analysis/h1/set 3  10000   0  10 MeV	#neutron
+/analysis/h1/set 4  15000   0  15 MeV	#proton
+/analysis/h1/set 5  12000   0  12 MeV	#deuterons
+/analysis/h1/set 6  16000   0  16 MeV	#alpha
+/analysis/h1/set 7  10000   0  10 MeV	#nuclei
+/analysis/h1/set 8  16000   0  16 MeV	#baryons (neutron proton)
+/analysis/h1/set 9  16000   0  16 MeV	#electron
+/analysis/h1/set 10 15000   0  15 MeV	#Q
 /analysis/h1/set 12 240   0  240 none   #A
-/run/printProgress 10000
+/run/printProgress 100000
 #
 /run/beamOn 200000
 #
