@@ -46,8 +46,8 @@
 Run::Run(DetectorConstruction* det)
 : G4Run(),
   fDetector(det), fParticle(0), fEkin(0.),
-  fTotalCount(0), fGammaCount(0),
-  fSumTrack(0.), fSumTrack2(0.), Tneutron(0), Tgamma(0),
+  fTotalCount(0), fGammaCount(0), 
+  fSumTrack(0.), fSumTrack2(0.), Ineutron(0), Tneutron(0), Tgamma(0), Igamma(0),
   fTargetXXX(false)
 {
   for (G4int i=0; i<3; i++) { fPbalance[i] = 0. ; } 
@@ -94,6 +94,14 @@ void Run::SumTrack(G4double trackl)
   fSumTrack += trackl; fSumTrack2 += trackl*trackl;  
 }
 
+
+//Numero de neutrones que llegan al tanque
+void Run::NInside(bool neutron){
+  if(neutron) Ineutron++;
+  else 
+    Igamma++;
+}
+
 //Numero de neutrones y gammas sobrevivientes
 void Run::NSurvive(bool neutron){
   if(neutron) Tneutron++;
@@ -134,6 +142,8 @@ void Run::ParticleCount(G4String name, G4double Ekin)
     if (Ekin > emax) data.fEmax = Ekin; 
   }   
 }
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void Run::Balance(G4double Pbal)
@@ -175,8 +185,10 @@ void Run::Merge(const G4Run* run)
   //
   fTotalCount   += localRun->fTotalCount;
   fGammaCount   += localRun->fGammaCount;
+  Ineutron += localRun->Ineutron;
   Tneutron += localRun->Tneutron;
   Tgamma += localRun->Tgamma;
+  Igamma += localRun->Igamma;
   fSumTrack += localRun->fSumTrack;
   fSumTrack2 += localRun->fSumTrack2;    
 
@@ -269,12 +281,10 @@ void Run::EndOfRun(G4bool print)
      //if (procName == "Transportation") survive = count;
   }
   G4cout << G4endl;
-  G4cout << "Tneutron = " << Tneutron << G4endl;
-  G4cout << "Tgamma = " << Tgamma << G4endl;
-  
-  if (Tneutron  > 0) {
-    G4cout << "\n Nb of incident neutron surviving " << Tneutron << G4endl;
-  }
+  G4cout << "In_neutron = " << Ineutron << G4endl;
+  G4cout << "Out_neutron = " << Tneutron << G4endl;
+  G4cout << "In_gamma = " << Igamma << G4endl;
+  G4cout << "Out_gamma = " << Tgamma << G4endl;
   
   if (fTotalCount == 0) fTotalCount = 1;   //force printing anyway
   

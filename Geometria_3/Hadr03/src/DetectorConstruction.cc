@@ -67,7 +67,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction()
-  :G4VUserDetectorConstruction()
+  :G4VUserDetectorConstruction(),
+   fScoringVolume(0)
 {
   DefineMaterials();  
 }
@@ -168,7 +169,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructVolumes()
 				      floorH * 0.5);  // z/2 size
   G4LogicalVolume* const logicalFloor
     = new G4LogicalVolume(solidFloor,               // the solid volume
-			  fAir,                // the material
+			  fWater,                // the material
 			  solidFloor->GetName());   // the name
   // La base del piso está en el fondo del mundo Z:(-100 - 60 cm)
   // position.set(0.0, 0.0, -floorH * 0.5); 
@@ -278,7 +279,9 @@ G4VPhysicalVolume* DetectorConstruction::ConstructVolumes()
                       overlapChecking);                 // check for overlaps
 
 
-     
+
+     fScoringVolume = logicalTankH2O;
+    
     //
     // Neutron Source
     //

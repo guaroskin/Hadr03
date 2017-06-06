@@ -32,18 +32,24 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "SteppingAction.hh"
+//#include "B1EventAction.hh"
 #include "Run.hh"
+#include "DetectorConstruction.hh"
+
 #include "HistoManager.hh"
 
 #include "G4ParticleTypes.hh"
 #include "G4RunManager.hh"
+#include "G4LogicalVolume.hh"
 #include "G4HadronicProcess.hh"
 #include "G4UnitsTable.hh"
-                           
+#include "G4SystemOfUnits.hh"
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 SteppingAction::SteppingAction()
-  : G4UserSteppingAction(), gammas(0), gammasec(0), contador(0)
+  : G4UserSteppingAction(), gammas(0), gammasec(0), Neutrones_vol(0), Camino(0),
+    E_dep(0), fScoringVolume(0)
 { }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -55,23 +61,79 @@ SteppingAction::~SteppingAction()
 
 void SteppingAction::UserSteppingAction(const G4Step* aStep)
 {
- Run* run 
-   = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
 
+  Run* run 
+    = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
+
+  G4StepPoint* startPoint = aStep->GetPreStepPoint();
+  G4StepPoint* endPoint = aStep->GetPostStepPoint();
+
+  
+  if (!fScoringVolume) { 
+    const DetectorConstruction* detectorConstruction
+      = static_cast<const DetectorConstruction*>
+      (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+    fScoringVolume = detectorConstruction->GetScoringVolume();   
+  }
+  
+  //Get volume of the current step
+  //Hereafter we call current volume the volume where the step has just gone through.
+  //Geometrical informations are available from preStepPoint.
+  G4LogicalVolume* volume  = startPoint->GetTouchableHandle()
+    ->GetVolume()->GetLogicalVolume();
+
+  // check if we are in scoring volume
+  if (volume != fScoringVolume) return;
+  
+
+  // ******************************* //
+  // ******************************* //
+  // ******************************* //
+  // ******************************* //
+
+  
   //Algunas definiciones
- //
- const G4StepPoint* endPoint = aStep->GetPostStepPoint();
+  //
   G4VProcess* process   = 
-                   const_cast<G4VProcess*>(endPoint->GetProcessDefinedStep());
+    const_cast<G4VProcess*>(endPoint->GetProcessDefinedStep());
   G4String procName = process->GetProcessName();
-  G4StepStatus stepStatus = endPoint->GetStepStatus();
-  G4bool transmit = (stepStatus==fWorldBoundary);
+  //G4bool transmit = (stepStatus==fWorldBoundary);
   G4Track* track = aStep->GetTrack();
+  G4double stepLength = aStep->GetStepLength();
   G4ParticleDefinition* particle = track->GetDefinition();
   G4String partName = particle->GetParticleName();
   G4String PartType = particle->GetParticleType();
   G4String PartSubType = particle->GetParticleSubType();
+
   
+  /*To check that the particle has just entered in the current volume
+  (i.e. it is at the first step in the volume; the preStepPoint is at the boundary):*/
+  if (startPoint->GetStepStatus() == fGeomBoundary){
+
+    //aseguro que son neutrones que ingresan al tanque Y no fueron creados en su proximidad
+    if(partName == "neutron" && track->GetTrackLength()/m > 1.0 ){
+      run->NInside(true);
+      Camino = 0.;
+    }
+    
+    if(partName == "gamma" ){
+      run->NInside(false);
+    }  
+  }
+
+    
+
+
+  
+  
+  //(creo que debe ir despues del endPoint->GetStepStatus() == fGeomBoundary para que no cuente el step en el aire, aunque se pierde un poco de informacion de los que salen
+  if (partName == "neutron"){
+    Camino += stepLength;
+    if(track->GetTrackStatus () == fStopAndKill){
+      run->SumTrack(Camino);
+      Camino = 0.;
+    }
+  }
   
   //Si la particula es un nucleo pero no un alpha es eliminada
   if(PartType == "nucleus" && partName != "alpha"){    
@@ -83,20 +145,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   // 
   run->CountProcesses(process);
 
-  // Suma los neutrones que sobrevivieron
-  if (transmit){
-    if(partName == "neutron") { run->NSurvive(true); }
-    if (partName == "gamma") {
-      gammas ++;
-      run->NSurvive(false); }
-    return;
-  }                  
-  //real processes : sum track length of neutron
-  if(partName == "neutron"){
-    G4double stepLength = aStep->GetStepLength();
-    run->SumTrack(stepLength);
-  }
-  
+
   //energy-momentum balance initialisation
   //CREO QUE ES INUTIL, REVISAR DESPUES
   const G4StepPoint* prePoint = aStep->GetPreStepPoint();
@@ -211,6 +260,17 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
       return;
       }*/
   }
+
+  /*To check that the particle is leaving the current volume (i.e. it is at the last step in the volume; the postStepPoint is at the boundary):*/
+  if (endPoint->GetStepStatus() == fGeomBoundary){
+    if(partName == "neutron") {
+      run->NSurvive(true);
+    }
+    if (partName == "gamma" ) {
+      run->NSurvive(false); }
+    return;
+  }
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -237,4 +297,40 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 	   << std::setw(6) << G4BestUnit(aStep->GetStepLength(),"Length")
 	   << std::setw(6) << G4BestUnit(track->GetTrackLength(),"Length")
 	   << std::setw(10) << track->GetVolume()->GetName()
-      	   << std::setw(6) << track->GetParentID() << G4endl;*/
+      	   << std::setw(6) << track->GetParentID() << G4endl;
+
+
+
+    
+
+    G4cout << "PROCESO" << procName << G4endl; 
+    G4cout << std::setw( 5) << "#Step#"     << " "
+	   << std::setw( 6) << "X"          << "    "
+	   << std::setw( 6) << "Y"          << "    "  
+	   << std::setw( 6) << "Z"          << "    "
+	   << std::setw( 9) << "TotalE"     << " "
+	   << std::setw( 9) << "KineE"      << " "
+	   << std::setw( 9) << "Camino"     << " "    //dEStep
+	   << std::setw(10) << "StepLeng"   << "  "  
+	   << std::setw(10) << "TrakLeng"   << "  "
+	   << std::setw(10) << "Volume"     << "  "
+           << std::setw(10) << "TrackID"    << "  "
+	   << std::setw(10) << "ParentID"   << "  "
+	   << std::setw(10) << "Status"   << G4endl;                  
+    
+    
+    G4cout << std::setw( 5) << track->GetCurrentStepNumber() << " "
+	   << std::setw(6) << G4BestUnit(track->GetPosition().x(),"Length")
+	   << std::setw(6) << G4BestUnit(track->GetPosition().y(),"Length")
+	   << std::setw(6) << G4BestUnit(track->GetPosition().z(),"Length")
+	   << std::setw(6) << G4BestUnit(track->GetTotalEnergy(),"Energy")
+	   << std::setw(6) << G4BestUnit(track->GetKineticEnergy(),"Energy")
+      //<< std::setw(6) << G4BestUnit(aStep->GetTotalEnergyDeposit(),"Energy")
+	   << std::setw(6) << G4BestUnit(Camino,"Length")
+	   << std::setw(6) << G4BestUnit(stepLength,"Length")
+	   << std::setw(6) << G4BestUnit(track->GetTrackLength(),"Length")
+	   << std::setw(10)<< track->GetVolume()->GetName()
+	   << std::setw(6) << track->GetTrackID() 
+	   << std::setw(6) << track->GetParentID()
+	   << std::setw(6) << track->GetTrackStatus ()  << G4endl;
+*/

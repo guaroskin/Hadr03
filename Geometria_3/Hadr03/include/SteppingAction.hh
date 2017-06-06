@@ -38,22 +38,31 @@
 #include "globals.hh"
 #include <map>
 
+//class B1EventAction;
+
 class G4ParticleDefinition;
+
+class G4LogicalVolume;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class SteppingAction : public G4UserSteppingAction
 {
   public:
+    //SteppingAction(B1EventAction* eventAction);
     SteppingAction();
    ~SteppingAction();
 
+    // method from the base class
     virtual void UserSteppingAction(const G4Step*);
     
   private:
     std::map<G4ParticleDefinition*,G4int> fParticleFlag;
-
-  G4int gammas, gammasec, contador;
+  //B1EventAction*  fEventAction;
+  G4int gammas, gammasec, Neutrones_vol;
+  G4double Camino, E_dep;
+  G4LogicalVolume* fScoringVolume;
+  
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -53,8 +53,12 @@ class DetectorConstruction : public G4VUserDetectorConstruction
    ~DetectorConstruction();
   // Functions
     virtual G4VPhysicalVolume* Construct();       
+   
+    G4LogicalVolume* GetScoringVolume() const { return fScoringVolume; }
 
-                       
+  protected:
+    G4LogicalVolume*  fScoringVolume;
+  
   private:
 
      G4Material* fAir;
