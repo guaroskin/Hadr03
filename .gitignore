@@ -8,7 +8,9 @@
 *.so
 *~
 #executable
-Hadr03-build/Hadr03
+Geometria_1/Hadr03-build/Hadr03
+Geometria_2/Hadr03-build/Hadr03
+Geometria_3/Hadr03-build/Hadr03
 *.root
 *.ascii
 *.txt
@@ -34,4 +36,6 @@ terminal.txt
 
 # Directories #
 ################
-Hadr03-build/CMakeFiles/
+Geometria_1/Hadr03-build/CMakeFiles/
+Geometria_2/Hadr03-build/CMakeFiles/
+Geometria_3/Hadr03-build/CMakeFiles/

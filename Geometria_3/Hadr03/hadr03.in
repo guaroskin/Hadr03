@@ -1,0 +1,56 @@
+# 30 de mayo - 2017
+#
+# Macro file for "Hadr14.cc"
+# (can be run in batch, without graphic)
+#
+# proton 10 MeV; all processes
+#
+/control/verbose 0
+#/control/cout/ignoreThreadsExcept 0
+#/run/numberOfThreads 2
+/run/verbose 1
+#
+/run/initialize
+#
+/process/list
+#/process/inactivate hadElastic
+#/process/inactivate neutronInelastic
+#/process/inactivate nCapture
+#
+/gun/particle neutron
+/gun/energy 25 meV
+#
+# Histogramas
+/analysis/setFileName 1m-25meV-2e5
+/analysis/h1/setAscii 1
+/analysis/h1/setAscii 2
+/analysis/h1/setAscii 3
+/analysis/h1/setAscii 4
+/analysis/h1/setAscii 5
+/analysis/h1/setAscii 6
+/analysis/h1/setAscii 7
+/analysis/h1/setAscii 8
+/analysis/h1/setAscii 9
+/analysis/h1/setAscii 10
+/analysis/h1/setAscii 12
+#
+/analysis/h1/set 1  1500  0  1500 keV	#KineticE of scattered primary particle +/- 1 keV
+/analysis/h1/set 2  12000   0  12 MeV	#gamma  +/- 1 keV
+/analysis/h1/set 3  10000   0  10 MeV	#neutron
+/analysis/h1/set 4  15000   0  15 MeV	#proton
+/analysis/h1/set 5  12000   0  12 MeV	#deuterons
+/analysis/h1/set 6  16000   0  16 MeV	#alpha
+/analysis/h1/set 7  10000   0  10 MeV	#nuclei
+/analysis/h1/set 8  16000   0  16 MeV	#baryons (neutron proton)
+/analysis/h1/set 9  16000   0  16 MeV	#electron
+/analysis/h1/set 10 15000   0  15 MeV	#Q
+/analysis/h1/set 12 240   0  240 none   #A
+/run/printProgress 100000
+#
+/run/beamOn 200000
+#
+#
+#/control/execute vis.mac
+#/control/execute hadr03_mod.in
+#
+#./Hadr03 hadr03.in > terminal.txt 
