@@ -59,7 +59,7 @@ DetectorConstruction::DetectorConstruction()
 {
   fBoxSize = 10*m;
   DefineMaterials();
-  SetMaterial("Molybdenum98");  
+  SetMaterial("Salt_water");  
   fDetectorMessenger = new DetectorMessenger(this);
 }
 
@@ -81,8 +81,10 @@ void DetectorConstruction::DefineMaterials()
 {
  // define a Material from isotopes
  //
+
+  
  MaterialWithSingleIsotope("Molybdenum98", "Mo98",  10.28*g/cm3, 42, 98);
- 
+ /*
  //NE213
  G4Element* H  = new G4Element("Hydrogen" ,"H" , 1.,  1.01*g/mole);
  G4Element* C  = new G4Element("Hydrogen" ,"C" , 6., 12.00*g/mole);
@@ -96,28 +98,48 @@ void DetectorConstruction::DefineMaterials()
  G4NistManager* man = G4NistManager::Instance();
  man->FindOrBuildMaterial("G4_B");
 
- ///G4cout << *(G4Material::GetMaterialTable()) << G4endl;
+ ///G4cout << *(G4Material::GetMaterialTable()) << G4endl;*/
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 G4Material* DetectorConstruction::MaterialWithSingleIsotope( G4String name,
-                           G4String symbol, G4double density, G4int Z, G4int A)
+                           G4String symbol, G4double density, G4int z, G4int a)
 {
- // define a material from an isotope
- //
- G4int ncomponents;
- G4double abundance, massfraction;
-
- G4Isotope* isotope = new G4Isotope(symbol, Z, A);
- 
- G4Element* element  = new G4Element(name, symbol, ncomponents=1);
- element->AddIsotope(isotope, abundance= 100.*perCent);
- 
- G4Material* material = new G4Material(name, density, ncomponents=1);
- material->AddElement(element, massfraction=100.*perCent);
-
- return material;
+  // define a material from an isotope
+  //
+  G4int ncomponents, natoms;
+  G4double fracMass; //,abundance;
+  
+  /*G4Isotope* isotope = new G4Isotope(symbol, Z, A);
+    
+    G4Element* element  = new G4Element(name, symbol, ncomponents=1);
+    element->AddIsotope(isotope, abundance= 100.*perCent);
+    
+    G4Material* material = new G4Material(name, density, ncomponents=1);
+    material->AddElement(element, massfraction=100.*perCent);*/
+  
+  //WATER
+  G4Element* elH  = new G4Element(name="Hydrogen", symbol="H" , z= 1, 1.008 * (g/mole));
+  G4Element* elO  = new G4Element(name="Oxygen", symbol="O", z= 8, 16.00 * (g/mole));
+  
+  G4Material* H2O = new G4Material("fWater", density =1.000 * (g/cm3), ncomponents=2);
+  H2O->AddElement(elH, natoms=2);
+  H2O->AddElement(elO, natoms=1);
+  
+  //SALT
+  G4Element* elCl  = new G4Element(name="Chlorine", symbol="Cl" , z= 17, 22.98 * (g/mole));
+  G4Element* elNa  = new G4Element(name="Sodium", symbol="Na" , z= 11, 35.45 * (g/mole));
+  
+  G4Material*NaCl = new G4Material("fSalt", density =2.165 * (g/cm3), ncomponents=2);
+  NaCl->AddElement(elCl, natoms=1);
+  NaCl->AddElement(elNa, natoms=1);
+  
+  G4Material* material = new G4Material("Salt_water", density = 1.006 * (g/cm3), ncomponents=2);
+  material->AddMaterial(H2O,fracMass=99.4*perCent);
+  material->AddMaterial(NaCl,fracMass=0.6*perCent);	
+   
+  return material;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

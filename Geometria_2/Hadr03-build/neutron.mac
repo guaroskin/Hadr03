@@ -7,18 +7,18 @@
 /run/verbose 2
 #
 #/testhadr/det/setIsotopeMat B10 5 10 2.46 g/cm3
-/testhadr/det/setMat G4_WATER
+#/testhadr/det/setMat G4_WATER
 /testhadr/det/setSize 1 m
 #
 /run/initialize
 #
 /gun/particle neutron
-/gun/energy 19 MeV
+/gun/energy 1 eV
 #
 /process/list
 #/process/inactivate hadElastic
 #
-/analysis/setFileName neutron
+/analysis/setFileName Salt_3kg_1eV
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -35,6 +35,6 @@
 /analysis/h1/set 6  1000   -50  50 cm	#Edep z
 /analysis/h1/set 7  10000   0  10 MeV	#Q
 #
-/run/printProgress 100
+/run/printProgress 10000
 #
-/run/beamOn 1000
+/run/beamOn 100000
