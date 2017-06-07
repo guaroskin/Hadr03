@@ -13,7 +13,7 @@
 /run/initialize
 #
 /gun/particle neutron
-/gun/energy 1 MeV
+/gun/energy 19 MeV
 #
 /process/list
 #/process/inactivate hadElastic
@@ -27,12 +27,12 @@
 /analysis/h1/setAscii 6
 /analysis/h1/setAscii 7
 #
-/analysis/h1/set 1  1000   0  100 cm	#Capture Z
+/analysis/h1/set 1  1000   -50  50 cm	#Capture Z
 /analysis/h1/set 2  12000   0  12 MeV	#gamma  +/- 1 keV
 /analysis/h1/set 3  10000   0  10 MeV	#neutron
 /analysis/h1/set 4  15000   0  15 MeV	#proton
 /analysis/h1/set 5  12000   0  12 MeV	#electron
-/analysis/h1/set 6  1000   0  100 cm	#Edep z
+/analysis/h1/set 6  1000   -50  50 cm	#Edep z
 /analysis/h1/set 7  10000   0  10 MeV	#Q
 #
 /run/printProgress 100

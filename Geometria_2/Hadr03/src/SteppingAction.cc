@@ -55,20 +55,31 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
   //Si la particula NO es un neutron ni un gamma
-  if(partName != "neutron" && partName != "gamma" && partName != "e-"){
+  if(partName != "neutron" && partName != "gamma" && partName != "e-" && partName != "proton"){
     track->SetTrackStatus(fStopAndKill);
     return;
   }
   
   G4bool transmit = (stepStatus==fWorldBoundary);
   if (transmit){
-    if(partName == "neutron") { run->NSurvive(true); }
-    if (partName == "gamma") { run->NSurvive(false); }
+    G4ThreeVector posT = track->GetPosition();
+    G4ThreeVector dirT = track->GetMomentumDirection();
+    
+    G4double x = posT.x()/cm;
+    
+    if(partName == "neutron") {
+      /*G4cout << "\n\n X:\t" << G4BestUnit(posT.x(),"Length");
+      G4cout << "\n Y:\t" << G4BestUnit(posT.y(),"Length");
+      G4cout << "\n Z:\t" << G4BestUnit(posT.z(),"Length");*/
+      if(x <= -50 && dirT.x() < 0.0) { run->NSurvive(false);}
+      else run->NSurvive(true);
+    }
+    if (partName == "gamma") { run->GSurvive(); }
     return;
   }
 
   run->CountProcesses(process);
-  run->SumTrack(stepLength);
+  if(partName == "neutron") {   run->SumTrack(stepLength); }
   G4double stepEdep = aStep->GetTotalEnergyDeposit();
   if(stepEdep != 0) run->SumEdep(stepEdep);
 

@@ -47,7 +47,7 @@ Run::Run(DetectorConstruction* det)
 : G4Run(),
   fDetector(det), fParticle(0), fEkin(0.),
   fTotalCount(0), fGammaCount(0),
-  fSumTrack(0.), fSumTrack2(0.), fSumEdep(0.), Tneutron(0), Tgamma(0),
+  fSumTrack(0.), fSumTrack2(0.), fSumEdep(0.), Tneutron_forw(0), Tneutron_back(0), Tgamma(0),
   fTargetXXX(false)
 {
   for (G4int i=0; i<3; i++) { fPbalance[i] = 0. ; } 
@@ -101,13 +101,20 @@ void Run::SumEdep(G4double edepl)
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void Run::NSurvive(bool neutron){
-  //Numero de neutrones y gammas sobrevivientes
-  if(neutron) Tneutron++;
+void Run::NSurvive(bool Front){
+  //Numero de neutrones sobrevivientes
+  if(Front) Tneutron_forw++;
   else 
-    Tgamma++;
+    Tneutron_back++;
 }
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void Run::GSurvive(){
+  //Numero de gammas sobrevivientes
+  Tgamma++;
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
 void Run::CountNuclearChannel(G4String name, G4double Q)
 {
   std::map<G4String, NuclChannel>::iterator it = fNuclChannelMap.find(name);
@@ -178,7 +185,8 @@ void Run::Merge(const G4Run* run)
   //
   fTotalCount   += localRun->fTotalCount;
   fGammaCount   += localRun->fGammaCount;
-  Tneutron += localRun->Tneutron;
+  Tneutron_forw += localRun->Tneutron_forw;
+  Tneutron_back += localRun->Tneutron_back;
   Tgamma += localRun->Tgamma; 
   fSumTrack += localRun->fSumTrack;
   fSumTrack2 += localRun->fSumTrack2;    
@@ -280,8 +288,9 @@ void Run::EndOfRun(G4bool print)
   G4cout << G4endl;
 
 
-  if (Tgamma > 0 || Tneutron > 0) {
-    G4cout << "\n Neutrones que abandonan el volumen: " << Tneutron
+  if (Tgamma > 0 || Tneutron_forw + Tneutron_back > 0) {
+    G4cout << "\n Neutrones dispersados Forward: " << Tneutron_forw
+	   << "\n Neutrones BACKscattering: " << Tneutron_back
 	   << "\n Gammas que abandonan el volumen: " << Tgamma << G4endl;
   }
   
@@ -295,9 +304,9 @@ void Run::EndOfRun(G4bool print)
   
   //compute mean free path and related quantities
   //
-  G4double MeanFreePath = fSumTrack ;     
-  G4double MeanTrack2   = fSumTrack2/fTotalCount;     
-  G4double rms = std::sqrt(std::fabs(MeanTrack2 - MeanFreePath*MeanFreePath));
+  G4double MeanFreePath = fSumTrack/numberOfEvent;     
+  G4double MFP2   = MeanFreePath*MeanFreePath;     
+  G4double rms = std::sqrt(std::fabs(fSumTrack2 - fTotalCount*MFP2)/(fTotalCount-1));
   G4double CrossSection = 0.0;
   if(MeanFreePath > 0.0) { CrossSection = 1./MeanFreePath; }
   G4double massicMFP = MeanFreePath*density;
@@ -306,7 +315,7 @@ void Run::EndOfRun(G4bool print)
    
   G4cout << "\n\n MeanFreePath:\t"   << G4BestUnit(MeanFreePath,"Length")
          << " +- "                   << G4BestUnit( rms,"Length")
-	 << "Energia Depositada:\t"  << G4BestUnit(fSumEdep,"Energy")
+	 << "Energia Depositada por evento:\t"  << fSumEdep/MeV/numberOfEvent << "MeV"
          << "\tmassic: "             << G4BestUnit(massicMFP, "Mass/Surface")
          << "\n CrossSection:\t"     << CrossSection*cm << " cm^-1 "
          << "\t\tmassic: "           << G4BestUnit(massicCS, "Surface/Mass")
