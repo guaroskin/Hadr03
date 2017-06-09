@@ -80,25 +80,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 void DetectorConstruction::DefineMaterials()
 {
  // define a Material from isotopes
- //
-
-  
+ //  
  MaterialWithSingleIsotope("Molybdenum98", "Mo98",  10.28*g/cm3, 42, 98);
- /*
- //NE213
- G4Element* H  = new G4Element("Hydrogen" ,"H" , 1.,  1.01*g/mole);
- G4Element* C  = new G4Element("Hydrogen" ,"C" , 6., 12.00*g/mole);
- G4Material* ne213 = 
- new G4Material("NE213", 0.874*g/cm3, 2);
- ne213->AddElement(H,    9.2*perCent);
- ne213->AddElement(C,   90.8*perCent);   
-    
- // or use G4-NIST materials data base
- //
- G4NistManager* man = G4NistManager::Instance();
- man->FindOrBuildMaterial("G4_B");
 
- ///G4cout << *(G4Material::GetMaterialTable()) << G4endl;*/
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -110,14 +94,6 @@ G4Material* DetectorConstruction::MaterialWithSingleIsotope( G4String name,
   //
   G4int ncomponents, natoms;
   G4double fracMass; //,abundance;
-  
-  /*G4Isotope* isotope = new G4Isotope(symbol, Z, A);
-    
-    G4Element* element  = new G4Element(name, symbol, ncomponents=1);
-    element->AddIsotope(isotope, abundance= 100.*perCent);
-    
-    G4Material* material = new G4Material(name, density, ncomponents=1);
-    material->AddElement(element, massfraction=100.*perCent);*/
   
   //WATER
   G4Element* elH  = new G4Element(name="Hydrogen", symbol="H" , z= 1, 1.008 * (g/mole));
