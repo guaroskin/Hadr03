@@ -23,61 +23,34 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-// $Id: ActionInitialization.cc 68058 2013-03-13 14:47:43Z gcosmo $
+// $Id: B1EventAction.cc 93886 2015-11-03 08:28:26Z gcosmo $
 //
-/// \file ActionInitialization.cc
-/// \brief Implementation of the ActionInitialization class
+/// \file B1EventAction.cc
+/// \brief Implementation of the B1EventAction class
 
-#include "ActionInitialization.hh"
-#include "PrimaryGeneratorAction.hh"
-#include "RunAction.hh"
 #include "EventAction.hh"
-#include "SteppingAction.hh"
-#include "SteppingVerbose.hh"
+#include "HistoManager.hh"
+
+#include "G4Event.hh"
+#include "G4SystemOfUnits.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ActionInitialization::ActionInitialization(DetectorConstruction* detector)
- : G4VUserActionInitialization(),
-   fDetector(detector)
+EventAction::EventAction()
+: G4UserEventAction()
+{} 
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+EventAction::~EventAction()
 {}
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-ActionInitialization::~ActionInitialization()
-{}
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-void ActionInitialization::BuildForMaster() const
-{
-  RunAction* runAction = new RunAction(fDetector);
-  SetUserAction(runAction);
+void EventAction::BeginOfEventAction(const G4Event*)
+{    
+  New_neutron = true;
 }
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void ActionInitialization::Build() const
-{
-  
-  RunAction* runAction = new RunAction(fDetector);
-  SetUserAction(runAction);
-
-  PrimaryGeneratorAction* primary = new PrimaryGeneratorAction(fDetector);
-  SetUserAction(primary);    
-  
-  EventAction* eventAction = new EventAction();
-  SetUserAction(eventAction);
-  
-  SteppingAction* steppingAction = new SteppingAction();
-  SetUserAction(steppingAction);
-}  
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-G4VSteppingVerbose* ActionInitialization::InitializeSteppingVerbose() const
-{
-  return new SteppingVerbose();
-}  
+void EventAction::EndOfEventAction(const G4Event*) {}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -148,7 +148,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     fParticleFlag[particle]++;
   }
   
-  analysis->FillH1(7,Q);
+  //analysis->FillH1(7,Q);
   // nuclear channel
   const G4int kMax = 16;  
   const G4String conver[] = {"0","","2 ","3 ","4 ","5 ","6 ","7 ","8 ","9 ",
@@ -172,6 +172,4 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
   fParticleFlag.clear();
 }
-
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-

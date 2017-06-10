@@ -60,11 +60,11 @@ Run::~Run()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void Run::SetPrimary(G4ParticleDefinition* particle, G4double energy)
+/*void Run::SetPrimary(G4ParticleDefinition* particle, G4double energy)
 { 
   fParticle = particle;
   fEkin = energy;
-} 
+  } */
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -178,8 +178,8 @@ void Run::Merge(const G4Run* run)
   
   //primary particle info
   //
-  fParticle = localRun->fParticle;
-  fEkin     = localRun->fEkin;
+  //fParticle = localRun->fParticle;
+  //fEkin     = localRun->fEkin;
   
   // accumulate sums
   //
@@ -265,9 +265,9 @@ void Run::EndOfRun(G4bool print)
   G4Material* material = fDetector->GetMaterial();
   G4double density = material->GetDensity();
    
-  G4String Particle = fParticle->GetParticleName();    
-  G4cout << "\n The run is " << numberOfEvent << " "<< Particle << " of "
-         << G4BestUnit(fEkin,"Energy") << " through " 
+  //G4String Particle = fParticle->GetParticleName();    
+  G4cout << "\n The run is " << numberOfEvent << " "<< "neutron" << " of 1 MeV"
+    //<< G4BestUnit(fEkin,"Energy") << " through " 
          << G4BestUnit(fDetector->GetSize(),"Length") << " of "
          << material->GetName() << " (density: " 
          << G4BestUnit(density,"Volumic Mass") << ")" << G4endl;

@@ -35,9 +35,11 @@
 
 #include "DetectorConstruction.hh"
 
+#include "HistoManager.hh"
 #include "G4Event.hh"
 #include "G4GeneralParticleSource.hh"
 #include "G4ParticleTable.hh"
+
 #include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
@@ -50,12 +52,12 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* det)
 {
   fParticleSource = new G4GeneralParticleSource ();
   fParticleGun  = new G4ParticleGun(1);
-  G4ParticleDefinition* particle
+  /*G4ParticleDefinition* particle
            = G4ParticleTable::GetParticleTable()->FindParticle("neutron");
   fParticleGun->SetParticleDefinition(particle);
   fParticleSource->SetParticleDefinition(particle);
   fParticleGun->SetParticleEnergy(1.5*MeV);    
-  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
+  fParticleGun->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));*/
   //fParticleSource->SetParticleMomentumDirection(G4ThreeVector(1.,0.,0.));
 }
 
@@ -74,19 +76,21 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   //this function is called at the begining of event
   //
   G4double halfSize = 0.5*(fDetector->GetSize());
-  G4double x0 = - halfSize;
+
+  //fParticleGun->SetParticlePosition(G4ThreeVector(x0,0,0));
+  //fParticleSource->SetParticlePosition(G4ThreeVector(x0,y0,z0));
+
+  energy_pri = 0.;
   
-  //randomize (y0,z0)
-  //
-  G4double beam = 0.*halfSize; 
-  G4double y0 = (2*G4UniformRand()-1.)*beam;
-  G4double z0 = (2*G4UniformRand()-1.)*beam;
+  //fParticleGun->GeneratePrimaryVertex(anEvent);
+  fParticleSource->GeneratePrimaryVertex(anEvent);
+
+  //energy_pri = fParticleGun->GetParticleEnergy();
+  energy_pri = fParticleSource->GetParticleEnergy();
   
-  fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
-  fParticleSource->SetParticlePosition(G4ThreeVector(x0,y0,z0));
   
-  fParticleGun->GeneratePrimaryVertex(anEvent);
-  //fParticleSource->GeneratePrimaryVertex(anEvent);
+  G4AnalysisManager* analysis = G4AnalysisManager::Instance();
+  analysis->FillH1(7,energy_pri);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

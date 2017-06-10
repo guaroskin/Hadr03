@@ -59,7 +59,7 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     G4ParticleGun*        fParticleGun;
     G4GeneralParticleSource* fParticleSource;
     DetectorConstruction* fDetector;
-  
+    G4double energy_pri;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -53,7 +53,7 @@ class G4Run;
 class RunAction : public G4UserRunAction
 {
   public:
-    RunAction(DetectorConstruction*, PrimaryGeneratorAction*);
+    RunAction(DetectorConstruction*);
    ~RunAction();
 
   public:
@@ -65,7 +65,7 @@ class RunAction : public G4UserRunAction
                                 
   private:
     DetectorConstruction*      fDetector;
-    PrimaryGeneratorAction*    fPrimary;
+  //PrimaryGeneratorAction*    fPrimary;
     Run*                       fRun;        
     HistoManager*              fHistoManager;
     RunMessenger*              fRunMessenger;
