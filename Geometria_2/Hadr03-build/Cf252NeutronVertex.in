@@ -14,7 +14,7 @@
 #
 #
 #
-/testhadr/det/setMat G4_WATER
+#/testhadr/det/setMat G4_WATER
 /testhadr/det/setSize 1 m
 #
 #
@@ -60,7 +60,7 @@
 # the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Water_1m_252Cf_1e5
+/analysis/setFileName Salt_3kg_1m_252Cf_2e6
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -70,13 +70,13 @@
 /analysis/h1/setAscii 7
 #
 /analysis/h1/set 1  1000   -50  50 cm	#Capture Z
-/analysis/h1/set 2  12000   0  12 MeV	#gamma  +/- 1 keV
+/analysis/h1/set 2  14000   0  14 MeV	#gamma  +/- 1 keV
 /analysis/h1/set 3  10000   0  10 MeV	#neutron
 /analysis/h1/set 4  15000   0  15 MeV	#proton
-/analysis/h1/set 5  12000   0  12 MeV	#electron
+/analysis/h1/set 5  14000   0  14 MeV	#electron
 /analysis/h1/set 6  1000   -50  50 cm	#Edep z
-/analysis/h1/set 7  1000    0  10 MeV	#E_o    +/- 10 keV
+/analysis/h1/set 7  1100    0  11 MeV	#E_o    +/- 10 keV
 #
-/run/printProgress 1000
+/run/printProgress 50000
 
-/run/beamOn 10000
+/run/beamOn 2000000

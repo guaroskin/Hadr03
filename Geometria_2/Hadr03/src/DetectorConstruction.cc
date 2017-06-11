@@ -110,10 +110,14 @@ G4Material* DetectorConstruction::MaterialWithSingleIsotope( G4String name,
   G4Material*NaCl = new G4Material("fSalt", density =2.165 * (g/cm3), ncomponents=2);
   NaCl->AddElement(elCl, natoms=1);
   NaCl->AddElement(elNa, natoms=1);
+
+  // Salt    =  3       10      30      50
+  // density = 1.006 - 1.02  - 1.06  - 1.10
+  // fracMass= 99.40 - 98.04 - 94.34 - 90.91
   
-  G4Material* material = new G4Material("Salt_water", density = 1.006 * (g/cm3), ncomponents=2);
-  material->AddMaterial(H2O,fracMass=99.4*perCent);
-  material->AddMaterial(NaCl,fracMass=0.6*perCent);	
+  G4Material* material = new G4Material("Salt_water", density = 1.10 * (g/cm3), ncomponents=2);
+  material->AddMaterial(H2O,fracMass=90.91*perCent);
+  material->AddMaterial(NaCl,fracMass=9.09*perCent);	
    
   return material;
 }
