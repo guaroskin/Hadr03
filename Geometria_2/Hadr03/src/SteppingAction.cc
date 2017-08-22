@@ -55,7 +55,8 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
   //Si la particula NO es un neutron ni un gamma
-  if(partName != "neutron" && partName != "gamma" && partName != "e-" && partName != "proton"){
+  //if(partName != "neutron" && partName != "gamma" && partName != "e-" && partName != "proton"){
+  if(PartType == "nucleus" && partName != "alpha"){
     track->SetTrackStatus(fStopAndKill);
     return;
   }
@@ -82,6 +83,9 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   if(partName == "neutron") {   run->SumTrack(stepLength); }
   G4double stepEdep = aStep->GetTotalEnergyDeposit();
   if(stepEdep != 0) run->SumEdep(stepEdep);
+  //G4cout << "\n\n Edep:\t"   << stepEdep/eV;
+  //G4cout << "\n\n X:\t" << x;
+  //G4cout << "\n Edep:\t"   << G4BestUnit(stepEdep, "Energy");
 
   G4ThreeVector pos = (r_prePoint + r_postPoint)*0.5;
   //G4ThreeVector pos = r_prePoint + G4UniformRand()*(r_postPoint - r_prePoint);
@@ -89,12 +93,6 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   
 
   G4double x = pos.x()/cm;// + 50;
-  if(stepEdep != 0) {
-    //G4cout << "\n\n Edep:\t"   << stepEdep/eV;
-    //G4cout << "\n\n X:\t" << x;
-    //G4cout << "\n Edep:\t"   << G4BestUnit(stepEdep, "Energy");
-  }
-  
   
   G4double Q = - prePoint->GetKineticEnergy();
 
@@ -122,8 +120,8 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
   //G4cout << "\n X:\t"   << x << G4endl;
-  if (procName == "nCapture")  analysis->FillH1(1, x*cm);
-  if(stepEdep != 0)   analysis->FillH1(6, x*cm, stepEdep/eV);
+  if (procName == "nCapture")  analysis->FillH1(2, x*cm);
+  if(stepEdep != 0)   analysis->FillH1(3, x*cm, stepEdep/eV);
 
 
   //secondaries
@@ -138,10 +136,11 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     run->ParticleCount(name,energy);
     //energy spectrum
  
-    if (particle == G4Gamma::Gamma())            ih = 2;
-    else if (particle == G4Neutron::Neutron())   ih = 3;
-    else if (particle == G4Proton::Proton())     ih = 4;
-    else if (particle == G4Electron::Electron()) ih = 5;
+    if (particle == G4Gamma::Gamma())            ih = 4;
+    else if (particle == G4Neutron::Neutron())   ih = 5;
+    else if (particle == G4Proton::Proton())     ih = 6;
+    else if (particle == G4Electron::Electron()) ih = 7;
+    else if (particle == G4Positron::Positron()) ih = 8;
     if (ih > 0) analysis->FillH1(ih,energy);
     Q += energy;
     //particle flag

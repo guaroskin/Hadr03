@@ -37,30 +37,37 @@
 #
 #                Energy (MeV)  Rel. Yield
 #
-/gps/hist/point  0.03791	32.71076
-/gps/hist/point  0.08301	45.89684
-/gps/hist/point  0.19830	59.07265
-/gps/hist/point  0.34993	68.10622
-/gps/hist/point  0.60544	74.34164
-/gps/hist/point  0.81070	76.17980
-/gps/hist/point  1.08555	73.89820
-/gps/hist/point  1.55102	64.25226
-/gps/hist/point  1.89664	55.40119
-/gps/hist/point  2.39728	45.95365
-/gps/hist/point  2.82949	37.80812
-/gps/hist/point  3.50389	27.66813
-/gps/hist/point  4.40363	17.72709
-/gps/hist/point  5.04448	12.47039
-/gps/hist/point  5.61632	8.97969
-/gps/hist/point  6.24062	6.12068
-/gps/hist/point  7.02125	3.73887
-/gps/hist/point  8.84360	1.12916
+/gps/hist/point  0.015		18.35261	 
+/gps/hist/point  0.03791	28.74111
+/gps/hist/point  0.08301	41.28645
+/gps/hist/point  0.19830	59.12128
+/gps/hist/point  0.34993	70.95657
+/gps/hist/point  0.60544	78.45769
+/gps/hist/point  0.72		79.07363
+/gps/hist/point  0.81070	78.79781
+/gps/hist/point  1.08555	75.22040
+/gps/hist/point  1.55102	64.48666
+/gps/hist/point  1.89664	55.45442
+/gps/hist/point  2.39728	43.04307
+/gps/hist/point  2.82949	33.78419
+/gps/hist/point  3.01		30.38167
+/gps/hist/point  3.50389	22.44736
+/gps/hist/point  3.69		19.94739
+/gps/hist/point  4.40363	12.47463
+/gps/hist/point  5.04448	8.033556
+/gps/hist/point  5.35		6.480031
+/gps/hist/point  5.61632	5.360319
+/gps/hist/point  6.24062	3.409503
+/gps/hist/point  7.02125	1.910758
+/gps/hist/point  8.84360	0.472430
+/gps/hist/point  9.5		0.282002
+/gps/hist/point  10.		0.189635
 #
 # Linear interpolation between the data points is required to obtain
 # the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Salt_3kg_1m_252Cf_2e6
+/analysis/setFileName Salt_50kg_1m_252Cf_1e6
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -68,15 +75,17 @@
 /analysis/h1/setAscii 5
 /analysis/h1/setAscii 6
 /analysis/h1/setAscii 7
+/analysis/h1/setAscii 8
 #
-/analysis/h1/set 1  1000   -50  50 cm	#Capture Z
-/analysis/h1/set 2  14000   0  14 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 3  10000   0  10 MeV	#neutron
-/analysis/h1/set 4  15000   0  15 MeV	#proton
-/analysis/h1/set 5  14000   0  14 MeV	#electron
-/analysis/h1/set 6  1000   -50  50 cm	#Edep z
-/analysis/h1/set 7  1100    0  11 MeV	#E_o    +/- 10 keV
+/analysis/h1/set 1  1100    0  11 MeV	#E_o    +/- 10 keV
+/analysis/h1/set 2  1000   -50  50 cm	#Capture Z
+/analysis/h1/set 3  1000   -50  50 cm	#Edep z
+/analysis/h1/set 4  12000   0  12 MeV	#gamma  +/- 1 keV
+/analysis/h1/set 5  10000   0  10 MeV	#neutron
+/analysis/h1/set 6  15000   0  15 MeV	#proton
+/analysis/h1/set 7  12000   0  12 MeV	#electron
+/analysis/h1/set 8  12000   0  12 MeV	#positron
 #
-/run/printProgress 50000
+/run/printProgress 100
 
-/run/beamOn 2000000
+/run/beamOn 1000

@@ -66,14 +66,14 @@ void HistoManager::Book()
   const G4String id[] = {"0","1","2","3","4","5","6","7","8"};
   const G4String title[] = 
                 { "dummy",                                          //0
-                  "nCapture",                                       //1
-                  "kinetic energy of gamma",                        //2
-                  "kinetic energy of neutrons",                     //3
-                  "kinetic energy of protons",                      //4
-                  "kinetic energy of electrons",                    //5
-                  "stepEdep in z",                                  //6
-                  "Energy incident",                                //7
-                  "kinetic energy of secundaries",                  //8
+                  "Energy incident",                                //1
+		  "nCapture",                                       //2
+		  "stepEdep in x",                                  //3
+                  "kinetic energy of gamma",                        //4
+                  "kinetic energy of neutrons",                     //5
+                  "kinetic energy of protons",                      //6
+                  "kinetic energy of electrons",                    //7
+		  "kinetic energy of positrons",                    //8
                  };  
 
   // Default values (to be reset via /analysis/h1/set command)               

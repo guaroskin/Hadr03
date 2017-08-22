@@ -90,7 +90,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   
   
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
-  analysis->FillH1(7,energy_pri);
+  analysis->FillH1(1,energy_pri);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
