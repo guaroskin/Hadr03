@@ -1,0 +1,4 @@
+/gun/particle mu+
+/gun/energy 200 MeV
+/gun/direction 0 1 0 
+/gun/position 0 0 0  

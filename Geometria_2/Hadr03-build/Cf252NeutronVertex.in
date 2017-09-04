@@ -25,8 +25,8 @@
 /gps/pos/type Point
 /gps/pos/centre -50.0 0.0 0.0 cm
 #
-/gps/ang/type iso
-#/gps/direction 1 0 0
+#/gps/ang/type iso
+/gps/direction 1 0 0
 #
 /gps/ene/type Arb
 /gps/hist/type arb
