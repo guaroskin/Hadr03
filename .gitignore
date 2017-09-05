@@ -7,14 +7,10 @@
 *.[oa]
 *.so
 *~
+
 #executable
-Geometria_1/Hadr03-build/Hadr03
-Geometria_2/Hadr03-build/Hadr03
-Geometria_3/Hadr03-build/Hadr03
-*.root
-*.ascii
-*.txt
-Makefile
+**/*-build/Hadr03
+**/*-build/Makefile
 
 # Packages #
 ############
@@ -34,9 +30,12 @@ Makefile
 *.log
 *.sql
 *.sqlite
+**/*-build/*.txt
+*.root
+*.ascii
 
 # Directories #
 ################
-Geometria_1/Hadr03-build/CMakeFiles/
-Geometria_2/Hadr03-build/CMakeFiles/
-Geometria_3/Hadr03-build/CMakeFiles/
+#**/Hadr03-build/CMakeFiles/
+**/*-build/CMakeFiles/
+
