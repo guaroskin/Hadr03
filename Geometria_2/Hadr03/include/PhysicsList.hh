@@ -35,6 +35,9 @@
 #include "G4VModularPhysicsList.hh"
 #include "globals.hh"
 
+class G4VPhysicsConstructor;
+class OpticalPhysics;
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 class PhysicsList: public G4VModularPhysicsList
@@ -43,9 +46,18 @@ public:
   PhysicsList();
  ~PhysicsList();
 
-public:
+  
+  //virtual void ConstructProcess();
   virtual void ConstructParticle();
   virtual void SetCuts();
+
+  void SetNbOfPhotonsCerenkov(G4int);
+
+  void SetVerbose(G4int);
+
+private:
+
+  OpticalPhysics* fOpticalPhysics;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

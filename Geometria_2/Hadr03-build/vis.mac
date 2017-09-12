@@ -1,12 +1,5 @@
-#
-# Macro file for the initialization phase of "TestEm6.cc"
-#
-# Sets some default verbose
-# and initializes the graphic.
-#
-/control/verbose 2
-/run/verbose 2
-#
+#/control/verbose 2
+#/run/verbose 2
 /run/initialize
 #
 # Use this open statement to create an OpenGL view:
@@ -36,7 +29,7 @@
 #/vis/viewer/set/viewpointThetaPhi 90. 0.
 #
 # Specify zoom value:
-/vis/viewer/zoom 1.4
+/vis/viewer/zoom 1.5
 #
 # Specify style (surface or wireframe):
 #/vis/viewer/set/style surface
@@ -55,6 +48,10 @@
 # Draw hits at end of event:
 #/vis/scene/add/hits
 #
+
+/vis/scene/add/scale
+/vis/scene/add/axes
+
 # To draw only gammas:
 #/vis/filtering/trajectories/create/particleFilter
 #/vis/filtering/trajectories/particleFilter-0/add gamma

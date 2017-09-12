@@ -6,8 +6,7 @@
 #include "G4UnitsTable.hh"
 
 #include "G4HadronElasticPhysicsHP.hh"
-
-#include "G4HadronPhysicsQGSP_BIC_HP.hh"
+//#include "G4HadronPhysicsQGSP_BIC_HP.hh"
 
 #include "G4IonElasticPhysics.hh"
 #include "G4IonPhysics.hh"
@@ -16,10 +15,25 @@
 
 #include "NeutronHPphysics.hh"
 #include "ElectromagneticPhysics.hh"
+#include "OpticalPhysics.hh"
+
+#include "G4LossTableManager.hh"
+
+#include "G4ProcessManager.hh"
+#include "G4ParticleTypes.hh"
+#include "G4ParticleTable.hh"
+
+/*
 #include "G4DecayPhysics.hh"
 #include "G4RadioactiveDecayPhysics.hh"
-//#include "GammaNuclearPhysics.hh"
 
+#include "G4PionDecayMakeSpin.hh"
+#include "G4DecayWithSpin.hh"
+
+#include "G4DecayTable.hh"
+#include "G4MuonDecayChannelWithSpin.hh"
+#include "G4MuonRadiativeDecayChannelWithSpin.hh"
+*/
 // particles
 
 #include "G4BosonConstructor.hh"
@@ -46,7 +60,7 @@ PhysicsList::PhysicsList()
   // neutronHP
   //
   RegisterPhysics( new NeutronHPphysics("neutronHP") );
-
+  ////RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
   
   /*NO ES NECESARIO
   // Hadron Elastic scattering
@@ -70,6 +84,10 @@ PhysicsList::PhysicsList()
   // EM Physics
   //
   RegisterPhysics( new ElectromagneticPhysics("standard EM"));
+
+  // Optic Physics   
+  RegisterPhysics(fOpticalPhysics = new OpticalPhysics("Optical"));
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -81,6 +99,12 @@ PhysicsList::~PhysicsList()
 
 void PhysicsList::ConstructParticle()
 {
+
+  // In this method, static member functions should be called
+  // for all particles which you want to use.
+  // This ensures that objects of these particle types will be
+  // created in the program.
+  
   G4BosonConstructor  pBosonConstructor;
   pBosonConstructor.ConstructParticle();
 
@@ -97,7 +121,25 @@ void PhysicsList::ConstructParticle()
   pIonConstructor.ConstructParticle();
 
   G4ShortLivedConstructor pShortLivedConstructor;
-  pShortLivedConstructor.ConstructParticle();  
+  pShortLivedConstructor.ConstructParticle();
+
+  /*
+  G4VModularPhysicsList::ConstructParticle();
+  
+  G4DecayTable* MuonPlusDecayTable = new G4DecayTable();
+  MuonPlusDecayTable -> Insert(new
+			       G4MuonDecayChannelWithSpin("mu+",0.986));
+  MuonPlusDecayTable -> Insert(new
+			       G4MuonRadiativeDecayChannelWithSpin("mu+",0.014));
+  G4MuonPlus::MuonPlusDefinition() -> SetDecayTable(MuonPlusDecayTable);
+  
+  G4DecayTable* MuonMinusDecayTable = new G4DecayTable();
+  MuonMinusDecayTable -> Insert(new
+				G4MuonDecayChannelWithSpin("mu-",0.986));
+  MuonMinusDecayTable -> Insert(new
+				G4MuonRadiativeDecayChannelWithSpin("mu-",0.014));
+  G4MuonMinus::MuonMinusDefinition() -> SetDecayTable(MuonMinusDecayTable);
+  */  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -106,5 +148,22 @@ void PhysicsList::SetCuts()
 {
   SetCutValue(1*mm, "proton");
 }
+
+
+void PhysicsList::SetNbOfPhotonsCerenkov(G4int maxNumber)
+{
+   fOpticalPhysics->SetNbOfPhotonsCerenkov(maxNumber);
+}
+
+void PhysicsList::SetVerbose(G4int verbose)
+{
+   fOpticalPhysics->GetCerenkovProcess()->SetVerboseLevel(verbose);
+   //fOpticalPhysics->GetScintillationProcess()->SetVerboseLevel(verbose);
+   fOpticalPhysics->GetAbsorptionProcess()->SetVerboseLevel(verbose);
+   //fOpticalPhysics->GetRayleighScatteringProcess()->SetVerboseLevel(verbose);
+   //fOpticalPhysics->GetMieHGScatteringProcess()->SetVerboseLevel(verbose);
+   fOpticalPhysics->GetBoundaryProcess()->SetVerboseLevel(verbose);
+}
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

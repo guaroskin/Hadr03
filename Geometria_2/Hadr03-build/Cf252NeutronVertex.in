@@ -10,12 +10,9 @@
 ##########################################################################
 #
 /control/verbose 0
-/run/verbose 2
+/run/verbose 0
 #
 #
-#
-#/testhadr/det/setMat G4_WATER
-/testhadr/det/setSize 1 m
 #
 #
 /run/initialize
@@ -23,7 +20,7 @@
 /gps/particle neutron
 #
 /gps/pos/type Point
-/gps/pos/centre -50.0 0.0 0.0 cm
+/gps/pos/centre -148.0 0.0 20.0 cm
 #
 #/gps/ang/type iso
 /gps/direction 1 0 0
@@ -67,7 +64,7 @@
 # the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Salt_50kg_1m_252Cf_1e6
+/analysis/setFileName Prueba
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -86,6 +83,6 @@
 /analysis/h1/set 7  12000   0  12 MeV	#electron
 /analysis/h1/set 8  12000   0  12 MeV	#positron
 #
-/run/printProgress 100
+/run/printProgress 1000
 
-/run/beamOn 1000
+/run/beamOn 10000

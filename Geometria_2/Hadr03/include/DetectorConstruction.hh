@@ -37,10 +37,18 @@
 
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
+#include "G4Material.hh"
+#include "G4VUserDetectorConstruction.hh"
+#include "G4Cache.hh"
+#include "globals.hh"
+#include "G4Box.hh"
+#include "G4Ellipsoid.hh"
+#include "G4Tubs.hh"
+#include "G4OpticalSurface.hh"
+
 
 class G4LogicalVolume;
 class G4Material;
-class DetectorMessenger;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -51,35 +59,33 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     DetectorConstruction();
    ~DetectorConstruction();
 
-  public:
-  
     virtual G4VPhysicalVolume* Construct();
-
-    G4Material* 
-    MaterialWithSingleIsotope(G4String, G4String, G4double, G4int, G4int);
-         
-    void SetSize     (G4double);              
-    void SetMaterial (G4String);            
-
-  public:
-  
-     const
-     G4VPhysicalVolume* GetWorld()      {return fPBox;};           
-                    
-     G4double           GetSize()       {return fBoxSize;};      
-     G4Material*        GetMaterial()   {return fMaterial;};
-     
-     void               PrintParameters();
-                       
+    
   private:
   
-     G4VPhysicalVolume*    fPBox;
-     G4LogicalVolume*      fLBox;
-     
-     G4double              fBoxSize;
-     G4Material*           fMaterial;     
-     
-     DetectorMessenger* fDetectorMessenger;
+     // -----------------
+     // *** Materials ***
+     //------------------
+     G4Material* fAir;
+     G4Material* fParaffin;
+     G4Material* fStainlessSteel;
+     G4Material* fWater;
+     G4Material* H2O; 
+     G4Material* fGlass;
+     G4Material* fVoid;
+     G4Material* fSoil;
+     G4Material* SaltWater;
+
+  
+     // *** Geometry ***
+     //
+     G4Ellipsoid* Pmt;
+
+  
+     // *** Logical Volume ***
+     //
+     G4LogicalVolume*  logicalTankH2O;    // pointer to the logical Det
+     G4LogicalVolume* Pmt_log;
 
   private:
     

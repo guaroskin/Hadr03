@@ -74,9 +74,6 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //this function is called at the begining of event
-  //
-  G4double halfSize = 0.5*(fDetector->GetSize());
-
   //fParticleGun->SetParticlePosition(G4ThreeVector(x0,0,0));
   //fParticleSource->SetParticlePosition(G4ThreeVector(x0,y0,z0));
 
