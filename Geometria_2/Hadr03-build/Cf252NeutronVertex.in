@@ -6,13 +6,13 @@
 #
 # This macro file sets G4GPS parameters to produce an isotropic 
 # point source of neutrons with a Cf252 enery spectrum.
-# 
+# The Cf-252 neutron energy spectrum was taken from
+# Figure 2 of A.B. Smith and  P.R. Fields, 
+# Phys Rev 108 (1957) 411.
 ##########################################################################
 #
 /control/verbose 0
 /run/verbose 0
-#
-#
 #
 #
 /run/initialize
@@ -21,18 +21,15 @@
 #
 /gps/pos/type Point
 /gps/pos/centre -148.0 0.0 20.0 cm
-#
 #/gps/ang/type iso
 /gps/direction 1 0 0
+
+#
 #
 /gps/ene/type Arb
 /gps/hist/type arb
 #
-# The Cf-252 neutron energy spectrum was taken from
-# Figure 2 of A.B. Smith and  P.R. Fields, 
-# Phys Rev 108 (1957) 411.
-#
-#                Energy (MeV)  Rel. Yield
+#                E (MeV)      Rel. Yield
 #
 /gps/hist/point  0.015		18.35261	 
 /gps/hist/point  0.03791	28.74111
@@ -64,7 +61,7 @@
 # the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Prueba
+/analysis/setFileName Prueba_Cf252_340k
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -83,6 +80,6 @@
 /analysis/h1/set 7  12000   0  12 MeV	#electron
 /analysis/h1/set 8  12000   0  12 MeV	#positron
 #
-/run/printProgress 1000
+/run/printProgress 10000
 
-/run/beamOn 10000
+/run/beamOn 340000

@@ -78,9 +78,10 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::DetectorConstruction()
-:G4VUserDetectorConstruction()
+  :G4VUserDetectorConstruction(),
+   Tank_log_vol(0), PMT_log_vol(0), Air_log_vol(0)
 {
-  Pmt_log = NULL;
+  
   DefineMaterials();
 }
 
@@ -380,7 +381,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		    0,                                // copy number
 		    overlapChecking);                 // check for overlaps
 
-
+  Air_log_vol = logicalWorld;
   // --------------------
   // *** WCD Detector ***
   // --------------------
@@ -428,7 +429,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		 0.0 * deg,                         // start angle
 		 360.0 * deg);                      // end angle
   
-  logicalTankH2O = new G4LogicalVolume(solidTankH2O,  // the solid volume
+    G4LogicalVolume* const logicalTankH2O
+    = new G4LogicalVolume(solidTankH2O,  // the solid volume
 				       //fWater,                     // the material
 				       H2O,
 				       solidTankH2O->GetName(),0); // the name
@@ -443,7 +445,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		    0,                                // copy number
 		    overlapChecking);                 // check for overlaps
   
-
+  Tank_log_vol = logicalTankH2O;
 
   // -------------------------- 
   // *** Optical Surfaces ***
@@ -525,7 +527,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		      );
 
   
-  Pmt_log
+  G4LogicalVolume* const Pmt_log
     = new G4LogicalVolume(Pmt,
 			  fAir,    //glass,
 			  "pmt_log"
@@ -541,6 +543,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		    false,           //no boolean operation
 		    0);              //copy number
 
+
+  PMT_log_vol = Pmt_log;
   
   G4Color
     green(0.0,1.0,0.0),
@@ -550,7 +554,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   
   logicalFloor -> SetVisAttributes(new G4VisAttributes(brown));
   Pmt_log -> SetVisAttributes(new G4VisAttributes(red));
-  
+  logicalTankH2O -> SetVisAttributes(new G4VisAttributes(blue));
 
   return physicalWorld;
   

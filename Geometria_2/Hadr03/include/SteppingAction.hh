@@ -39,6 +39,7 @@
 #include <map>
 
 class G4ParticleDefinition;
+class G4LogicalVolume;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -51,7 +52,10 @@ class SteppingAction : public G4UserSteppingAction
     virtual void UserSteppingAction(const G4Step*);
     
   private:
-    std::map<G4ParticleDefinition*,G4int> fParticleFlag;    
+    std::map<G4ParticleDefinition*,G4int> fParticleFlag;
+    G4LogicalVolume* Tank_log_vol;
+    G4LogicalVolume* PMT_log_vol;
+    G4LogicalVolume* Air_log_vol;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

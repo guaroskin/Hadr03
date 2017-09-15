@@ -9,6 +9,7 @@
 
 #include "SteppingAction.hh"
 #include "Run.hh"
+#include "DetectorConstruction.hh"
 #include "HistoManager.hh"
 
 #include "G4ParticleTypes.hh"
@@ -20,8 +21,11 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 SteppingAction::SteppingAction()
-: G4UserSteppingAction()
-{ }
+: G4UserSteppingAction(),
+  Tank_log_vol(0), PMT_log_vol(0), Air_log_vol(0)
+{
+  //pmtSD = new PMTSD;
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -43,7 +47,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
                    const_cast<G4VProcess*>(postPoint->GetProcessDefinedStep());
   G4ParticleDefinition* particle = track->GetDefinition();
 
-  G4StepStatus stepStatus = postPoint->GetStepStatus();
+  //G4StepStatus stepStatus = postPoint->GetStepStatus();
   G4double stepLength = aStep->GetStepLength();
   
   G4String procName = process->GetProcessName();
@@ -54,45 +58,69 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4ThreeVector r_postPoint= postPoint->GetPosition();
 
 
+  if (!Tank_log_vol) { 
+    const DetectorConstruction* detectorConstruction
+      = static_cast <const DetectorConstruction*>
+      (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+     Tank_log_vol = detectorConstruction->Get_Tank_log_vol();   
+  }
+  
+  if (!PMT_log_vol) { 
+    const DetectorConstruction* detectorConstruction
+      = static_cast <const DetectorConstruction*>
+      (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+    PMT_log_vol = detectorConstruction->Get_PMT_log_vol();   
+  }
+
+  if (!Air_log_vol) { 
+    const DetectorConstruction* detectorConstruction
+      = static_cast <const DetectorConstruction*>
+      (G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+    Air_log_vol = detectorConstruction->Get_Air_log_vol();   
+  }
+
+  //Get volume of the current step
+  G4LogicalVolume* Log_volume  = prePoint->GetTouchableHandle()
+    ->GetVolume()->GetLogicalVolume();
+
+  // Verificar que la particula está en el tanque de agua o en el PMT
+  if (Log_volume != Tank_log_vol && Log_volume != PMT_log_vol) return;
+
+
+  
   //Si la particula NO es un neutron ni un gamma
   //if(partName != "neutron" && partName != "gamma" && partName != "e-" && partName != "proton"){
   if(PartType == "nucleus" && partName != "alpha"){
     track->SetTrackStatus(fStopAndKill);
     return;
   }
-  
-  G4bool transmit = (stepStatus==fWorldBoundary);
-  if (transmit){
+
+  G4LogicalVolume* Pos_volume  = postPoint->GetTouchableHandle()
+    ->GetVolume()->GetLogicalVolume();
+
+
+  //Contar el numero de gammas y neutrones que escapan del tanque
+  if (Pos_volume == Air_log_vol){
     G4ThreeVector posT = track->GetPosition();
     G4ThreeVector dirT = track->GetMomentumDirection();
-    
-    G4double x = posT.x()/cm;
-    
+    G4double y = posT.y()/cm;
     if(partName == "neutron") {
-      /*G4cout << "\n\n X:\t" << G4BestUnit(posT.x(),"Length");
-      G4cout << "\n Y:\t" << G4BestUnit(posT.y(),"Length");
-      G4cout << "\n Z:\t" << G4BestUnit(posT.z(),"Length");*/
-      if(x <= -50 && dirT.x() < 0.0) { run->NSurvive(false);}
+      if(y <= 0 && dirT.x() < 0.0) { run->NSurvive(false);}
       else run->NSurvive(true);
     }
     if (partName == "gamma") { run->GSurvive(); }
+    track->SetTrackStatus(fStopAndKill);
     return;
   }
-
+  
   run->CountProcesses(process);
+
   if(partName == "neutron") {   run->SumTrack(stepLength); }
-  G4double stepEdep = aStep->GetTotalEnergyDeposit();
-  if(stepEdep != 0) run->SumEdep(stepEdep);
-  //G4cout << "\n\n Edep:\t"   << stepEdep/eV;
-  //G4cout << "\n\n X:\t" << x;
-  //G4cout << "\n Edep:\t"   << G4BestUnit(stepEdep, "Energy");
 
   G4ThreeVector pos = (r_prePoint + r_postPoint)*0.5;
   //G4ThreeVector pos = r_prePoint + G4UniformRand()*(r_postPoint - r_prePoint);
   //G4cout << "\n\n X:\t" << G4BestUnit(pos.x(),"Length");
-  
-
-  G4double x = pos.x()/cm;// + 50;
+  G4double x = pos.x()/cm;//
   
   G4double Q = - prePoint->GetKineticEnergy();
 
@@ -116,14 +144,21 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     Q += energy;
     //
     nuclearChannel += partName + " + ";
-  }  
+  }
+
 
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
-  //G4cout << "\n X:\t"   << x << G4endl;
+  G4double stepEdep = aStep->GetTotalEnergyDeposit();
   if (procName == "nCapture")  analysis->FillH1(2, x*cm);
-  if(stepEdep != 0)   analysis->FillH1(3, x*cm, stepEdep/eV);
+  if(stepEdep != 0){
+    analysis->FillH1(3, x*cm, stepEdep/eV);
+    run->SumEdep(stepEdep);
+  }
 
-
+  //G4cout << "\n\n Edep:\t"   << stepEdep/eV;
+  //G4cout << "\n\n X:\t" << x;
+  //G4cout << "\n Edep:\t"   << G4BestUnit(stepEdep, "Energy");
+  
   //secondaries
   //
   const std::vector<const G4Track*>* secondary 
@@ -161,7 +196,6 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     G4String Nb = conver[nb];    
     if (particle == G4Gamma::Gamma()) {
      run->CountGamma(nb);
-     Nb = "N ";
     } 
     if (ip != fParticleFlag.begin()) nuclearChannel += " + ";
     nuclearChannel += Nb + name;

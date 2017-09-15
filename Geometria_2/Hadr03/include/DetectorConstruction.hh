@@ -59,8 +59,21 @@ class DetectorConstruction : public G4VUserDetectorConstruction
     DetectorConstruction();
    ~DetectorConstruction();
 
-    virtual G4VPhysicalVolume* Construct();
-    
+  virtual G4VPhysicalVolume* Construct();
+  
+    G4LogicalVolume* Get_PMT_log_vol() const { return PMT_log_vol; }
+
+    G4LogicalVolume* Get_Tank_log_vol() const { return Tank_log_vol; }
+
+    G4LogicalVolume* Get_Air_log_vol() const { return Air_log_vol; }
+
+  protected:
+
+    // *** Logical Volume ***
+    G4LogicalVolume* Tank_log_vol;    // pointer to the logical Det
+    G4LogicalVolume* PMT_log_vol;
+    G4LogicalVolume* Air_log_vol;
+  
   private:
   
      // -----------------
@@ -82,10 +95,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4Ellipsoid* Pmt;
 
   
-     // *** Logical Volume ***
-     //
-     G4LogicalVolume*  logicalTankH2O;    // pointer to the logical Det
-     G4LogicalVolume* Pmt_log;
+
 
   private:
     

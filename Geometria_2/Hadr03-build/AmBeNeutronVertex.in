@@ -16,11 +16,6 @@
 /run/verbose 0
 #
 #
-#
-#/testhadr/det/setMat G4_WATER
-#/testhadr/det/setSize 1 m
-#
-#
 /run/initialize
 #
 /gps/particle neutron
@@ -31,12 +26,6 @@
 /gps/direction 1 0 0
 
 #
-# /gps/pos/type Beam
-# /gps/ang/type beam2d
-# /gps/ang/rot1 0 0 1
-# /gps/ang/rot2 1 0 0
-# /gps/ang/sigma_x 2 deg
-# /gps/ang/sigma_y 2 deg
 #
 /gps/ene/type Arb
 /gps/hist/type arb
@@ -98,7 +87,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName Prueba1_1m_agua_AmBe_x
+/analysis/setFileName Prueba_241AmBe_1M
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -108,7 +97,7 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-/analysis/h1/set 1  1400    0  14 MeV	#E_o    +/- 10 keV
+/analysis/h1/set 1  1100    0  11 MeV	#E_o    +/- 10 keV
 /analysis/h1/set 2  1000   -50  50 cm	#Capture Z
 /analysis/h1/set 3  1000   -50  50 cm	#Edep z
 /analysis/h1/set 4  12000   0  12 MeV	#gamma  +/- 1 keV
@@ -117,6 +106,6 @@
 /analysis/h1/set 7  12000   0  12 MeV	#electron
 /analysis/h1/set 8  12000   0  12 MeV	#positron
 #
-/run/printProgress 1000
+/run/printProgress 50000
 
-/run/beamOn 10000
+/run/beamOn 1000000
