@@ -12,8 +12,8 @@
 # 
 ##########################################################################
 #
-/control/verbose 0
-/run/verbose 0
+/control/verbose 2
+/run/verbose 2
 #
 #
 /run/initialize
@@ -87,7 +87,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName Prueba_241AmBe_1M
+/analysis/setFileName Prueba_241AmBe_350k
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -108,4 +108,4 @@
 #
 /run/printProgress 50000
 
-/run/beamOn 1000000
+/run/beamOn 350000

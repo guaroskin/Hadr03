@@ -11,8 +11,8 @@
 # Phys Rev 108 (1957) 411.
 ##########################################################################
 #
-/control/verbose 0
-/run/verbose 0
+/control/verbose 2
+/run/verbose 2
 #
 #
 /run/initialize
@@ -80,6 +80,6 @@
 /analysis/h1/set 7  12000   0  12 MeV	#electron
 /analysis/h1/set 8  12000   0  12 MeV	#positron
 #
-/run/printProgress 10000
+/run/printProgress 50000
 
 /run/beamOn 340000
