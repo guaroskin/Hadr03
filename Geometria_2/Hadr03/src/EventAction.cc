@@ -37,7 +37,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 EventAction::EventAction()
-: G4UserEventAction()
+  : G4UserEventAction(), fSumPhoton(0)
 {} 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -46,11 +46,24 @@ EventAction::~EventAction()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void EventAction::BeginOfEventAction(const G4Event*)
-{    
+{
+  fSumPhoton = 0;
   New_neutron = true;
+  //G4cout << "NEW neutron \n" << G4endl;
+  
 }
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void EventAction::EndOfEventAction(const G4Event*) {}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void EventAction::SumPhoton()
+{
+  fSumPhoton++;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void EventAction::EndOfEventAction(const G4Event*)
+{
+  G4AnalysisManager* analysis = G4AnalysisManager::Instance();
+  if(fSumPhoton != 0) analysis->FillH1(7,fSumPhoton);
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

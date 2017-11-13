@@ -71,9 +71,9 @@ void HistoManager::Book()
 		  "stepEdep in x",                                  //3
                   "kinetic energy of gamma",                        //4
                   "kinetic energy of neutrons",                     //5
-                  "kinetic energy of protons",                      //6
-                  "kinetic energy of electrons",                    //7
-		  "kinetic energy of positrons",                    //8
+                  "kinetic energy of electrons",                    //6
+		  "Number of photons",                              //7
+		  "Local Time Cerenkov",                            //8
                  };  
 
   // Default values (to be reset via /analysis/h1/set command)               

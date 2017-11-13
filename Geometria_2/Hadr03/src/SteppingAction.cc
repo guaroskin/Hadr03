@@ -9,6 +9,8 @@
 
 #include "SteppingAction.hh"
 #include "Run.hh"
+#include "EventAction.hh"
+#include "MyHit.hh"
 #include "DetectorConstruction.hh"
 #include "HistoManager.hh"
 
@@ -20,9 +22,9 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-SteppingAction::SteppingAction()
+SteppingAction::SteppingAction(EventAction* evt)
 : G4UserSteppingAction(),
-  Tank_log_vol(0), PMT_log_vol(0), Air_log_vol(0)
+  Tank_log_vol(0), PMT_log_vol(0), Air_log_vol(0), eventAct(evt)
 {
   //pmtSD = new PMTSD;
 }
@@ -39,10 +41,12 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
  Run* run 
    = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
 
-  
   G4StepPoint* prePoint = aStep->GetPreStepPoint();
   G4StepPoint* postPoint = aStep->GetPostStepPoint();
   G4Track* track = aStep->GetTrack();
+  //G4int TrackID = track->GetTrackID();
+  //G4int CurrentStep = track->GetCurrentStepNumber();
+  
   G4VProcess* process   = 
                    const_cast<G4VProcess*>(postPoint->GetProcessDefinedStep());
   G4ParticleDefinition* particle = track->GetDefinition();
@@ -57,7 +61,14 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4ThreeVector r_prePoint = prePoint-> GetPosition();
   G4ThreeVector r_postPoint= postPoint->GetPosition();
 
+  //G4double globalTime = track->GetGlobalTime();  //time since the beginning of the event
 
+  
+  /*if (partName == "neutron"){
+    G4cout << "Track " << TrackID << "   Step " << CurrentStep << G4endl;; 
+    G4cout << globalTime/ns << "ns" << G4endl;
+    }*/
+      
   if (!Tank_log_vol) { 
     const DetectorConstruction* detectorConstruction
       = static_cast <const DetectorConstruction*>
@@ -126,7 +137,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
   //initialisation of the nuclear channel identification
-  //
+  // SE GUARDA EL NOMBRE DE LA INTERACCION
   G4String nuclearChannel = partName;
   G4HadronicProcess* hproc = dynamic_cast<G4HadronicProcess*>(process);
   const G4Isotope* target = NULL;
@@ -139,10 +150,9 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   //scattered primary particle (if any)
   //
   G4int ih = 0;
+  G4double Post_energy = postPoint->GetKineticEnergy(); 
   if (track->GetTrackStatus() == fAlive) {
-    G4double energy = postPoint->GetKineticEnergy(); 
-    Q += energy;
-    //
+    Q += Post_energy;
     nuclearChannel += partName + " + ";
   }
 
@@ -173,14 +183,27 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
  
     if (particle == G4Gamma::Gamma())            ih = 4;
     else if (particle == G4Neutron::Neutron())   ih = 5;
-    else if (particle == G4Proton::Proton())     ih = 6;
-    else if (particle == G4Electron::Electron()) ih = 7;
-    else if (particle == G4Positron::Positron()) ih = 8;
+    else if (particle == G4Electron::Electron()) ih = 6;
+    //else if (particle == G4Positron::Positron()) ih = 7;
     if (ih > 0) analysis->FillH1(ih,energy);
     Q += energy;
     //particle flag
     fParticleFlag[particle]++;
   }
+
+
+  if ( partName == "opticalphoton" && Pos_volume == PMT_log_vol ){
+    MyHit* PhotonHit = new MyHit();
+    if(PhotonHit->QuantumE(Post_energy)){
+      G4double localTime = track->GetLocalTime();
+      analysis->FillH1(8,localTime/ns);
+      //G4cout << "PMT!! Global " << globalTime/ns << "\t Local " << localTime/ns << "ns" << G4endl;
+      eventAct->SumPhoton();
+      //G4cout << "photon detected on PMT!  " << G4endl;
+    }
+    track->SetTrackStatus(fStopAndKill);
+  }
+  
   
   //analysis->FillH1(7,Q);
   // nuclear channel

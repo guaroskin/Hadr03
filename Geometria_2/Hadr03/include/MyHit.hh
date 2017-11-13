@@ -23,50 +23,37 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file DetectorMessenger.hh
-/// \brief Definition of the DetectorMessenger class
+// $Id: MyHit.hh 69706 2013-05-13 09:12:40Z gcosmo $
 //
-// $Id: DetectorMessenger.hh 98265 2016-07-04 17:47:54Z gcosmo $
-//
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+/// \file MyHit.hh
+/// \brief Definition of the MyHit class
 
-#ifndef DetectorMessenger_h
-#define DetectorMessenger_h 1
+#ifndef MyHit_h
+#define MyHit_h 1
 
-#include "G4UImessenger.hh"
-#include "globals.hh"
+#include "G4VHit.hh"
+#include "G4THitsCollection.hh"
+#include "G4LogicalVolume.hh"
+#include "G4Allocator.hh"
+#include "G4ThreeVector.hh"
+#include "G4VPhysicalVolume.hh"
+#include "tls.hh"
 
-class DetectorConstruction;
-class G4UIdirectory;
-class G4UIcommand;
-class G4UIcmdWithAString;
-class G4UIcmdWithADoubleAndUnit;
-class G4UIcmdWithoutParameter;
-
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-
-class DetectorMessenger: public G4UImessenger
+class MyHit : public G4VHit
 {
   public:
-  
-    DetectorMessenger(DetectorConstruction* );
-   ~DetectorMessenger();
-    
-    virtual void SetNewValue(G4UIcommand*, G4String);
-    
+    MyHit();
+    MyHit(const MyHit&);
+    virtual ~MyHit();
+
+    G4int QuantumE(G4double);
+ 
   private:
-  
-    DetectorConstruction*      fDetector;
-    
-    G4UIdirectory*             fTesthadDir;
-    G4UIdirectory*             fDetDir;
-    G4UIcmdWithAString*        fMaterCmd;
-    G4UIcmdWithADoubleAndUnit* fSizeCmd;
-    G4UIcommand*               fIsotopeCmd;    
+    void GetWavelength(G4double);
+    G4double waveLength;
 };
+
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif
-

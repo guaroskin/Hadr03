@@ -39,6 +39,7 @@
 #include <map>
 
 class G4ParticleDefinition;
+class EventAction;
 class G4LogicalVolume;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -46,7 +47,7 @@ class G4LogicalVolume;
 class SteppingAction : public G4UserSteppingAction
 {
   public:
-    SteppingAction();
+    SteppingAction(EventAction*);
    ~SteppingAction();
 
     virtual void UserSteppingAction(const G4Step*);
@@ -56,6 +57,10 @@ class SteppingAction : public G4UserSteppingAction
     G4LogicalVolume* Tank_log_vol;
     G4LogicalVolume* PMT_log_vol;
     G4LogicalVolume* Air_log_vol;
+
+    G4int contador;
+    EventAction* eventAct;
+  
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

@@ -43,11 +43,13 @@ class EventAction : public G4UserEventAction
     EventAction();
     virtual ~EventAction();
 
+    void SumPhoton();
     virtual void BeginOfEventAction(const G4Event* event);
     virtual void EndOfEventAction(const G4Event* event);
 
   private:
     G4bool       New_neutron;
+    G4int        fSumPhoton;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
