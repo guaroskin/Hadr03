@@ -320,8 +320,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // *** world ***
   // --------------------
   
-  const G4double WorldHalfSize = 200.0 * cm;
-  const G4double WorldHalfHeight = WorldHalfSize/2;  // H = 100 cm
+  const G4double WorldHalfSize = 200.0 * cm;         // L = 400 cm
+  const G4double WorldHalfHeight = WorldHalfSize/2;  // H = 200 cm
   
   G4ThreeVector position;
   
@@ -357,20 +357,20 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // *** Floor ***
   // --------------------
   
-  const G4double floorH = 100.0 * cm;
+  const G4double floorH = 50.0 * cm;
   
   //const G4ThreeVector floorPosition(0.0, 0.0, -floorH * 0.5);
   G4Box* const solidFloor = new G4Box("Floor",         // the name
 				      WorldHalfSize,   // X:(-200 , 200)
 				      WorldHalfSize,   // Y:(-200 , 200)
-				      floorH * 0.5);  // Z:(-100 , 0)
+				      floorH * 0.5);   // Z:(-100 , -50)
   
   G4LogicalVolume* const logicalFloor
     = new G4LogicalVolume(solidFloor,               // the solid volume
 			  fSoil,                // the material
 			  solidFloor->GetName());   // the name
   
-  // La base Floor está en el fondo del World Z =(-100 + 50 cm) = -50 cm +/- 50 => Z:(-100 , 0)
+  // La base Floor está en el fondo del World Z =(-100 + 25 cm) = -75 cm +/- 25 => Z:(-100 , -50)
   position.set(0.0, 0.0, -WorldHalfHeight + floorH*0.5); 
   new G4PVPlacement(NULL,                             // no rotation
 		    position,                         // Z:(-100 , 0)
@@ -387,10 +387,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // --------------------
   
   // Create the tank
-  //
-  const G4double tankWallThickness = 15* mm;
+  // 
+  const G4double tankWallThickness = 0.5* mm;
+  // Tanque pequeno: Tanque Acero Inoxidable 500 Lts 
   const G4double TankOutRadius = 48.0 * cm;      // 96 cm de diametro
   const G4double TankHeight = 62.0 * cm;
+  //Tanque grande: Tanque Acero Inoxidable 1000 Lts 
+  //const G4double TankHeight = 133.0 * cm;
   
   G4Tubs* const solidTank
     = new G4Tubs("Tank_Wall",                       // the name
@@ -405,9 +408,11 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 			  fStainlessSteel,          // the material
 			  solidTank->GetName());    // the name
 
-  // La base SolidTank está encima del Floor Z =(-100 + 100 cm + 62/2) = 31 cm +/- 31 => Z:(0 , 62)
-  // position.set(0.0, 0.0, - WorldHalfHeight + (floorH + TankHeight * 0.5));
-  position.set(0.0, 0.0, TankHeight * 0.5);
+  // La base SolidTank está encima del Floor Z =-100 + 50 cm + 133/2) = 16.5 cm +/- 66.5 => Z:(-50, 83)
+  // La base SolidTank está encima del Floor Z =-100 + 50 cm + 62/2) = -19 cm +/- 31 => Z:(-50, 12)
+  G4double halfZ_det = - WorldHalfHeight + (floorH + TankHeight * 0.5);
+  position.set(0.0, 0.0, halfZ_det);
+  //position.set(0.0, 0.0, TankHeight * 0.5);
   
   new G4PVPlacement(NULL,                             // no rotation
 		    position,                         // Z:(0 , 62)
@@ -420,20 +425,20 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   
 
   
-  // Fill tank area with water  
+  // Fill tank area with water. llena el volumen dentro del tanque de acero
   G4Tubs* const solidTankH2O
     = new G4Tubs("Tank_H2O",                        // the name
 		 0.0,                               // inner radius
 		 TankOutRadius - tankWallThickness, // outer radius
-		 TankHeight * 0.5,               // half height
+		 TankHeight * 0.5,                  // half height
 		 0.0 * deg,                         // start angle
 		 360.0 * deg);                      // end angle
   
-    G4LogicalVolume* const logicalTankH2O
+  G4LogicalVolume* const logicalTankH2O
     = new G4LogicalVolume(solidTankH2O,  // the solid volume
-				       //fWater,                     // the material
-				       H2O,
-				       solidTankH2O->GetName(),0); // the name
+			  //fAir,                     // the material
+			  H2O,
+			  solidTankH2O->GetName(),0); // the name
   
   
   new G4PVPlacement(NULL,                             // no rotation
@@ -472,14 +477,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   
   //
-  // Neutron Source
-  //
-  // TODO create the AmBe material in DefineMaterials() and use it here
-  //      For now steel is used, but the logical volume is used in the
-  //      PrimaryGeneratorAction to know where to emit the neutrons from
-  
-  const G4double sourceH = 20 * cm;
-  const G4double sourceR = 5 * cm;
+  // Tanque de parafina que blinda la fuente de neutrones 
+  // 
+  const G4double sourceH = 20 * cm;    //medidas inventadas, no corresponden al tacho de parafina!!
+  const G4double sourceR = 5 * cm;     //medidas inventadas, no corresponden al tacho de parafina!!
   
   G4Tubs* const solidSource
     = new G4Tubs("NeutronSource",                   // the name
@@ -491,12 +492,14 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   
   G4LogicalVolume* const logicalSource
     = new G4LogicalVolume(solidSource,              // the solid volume
-			  fParaffin,              // the material
-			  //fAir,
+			  //fParaffin,              // the material
+			  fAir,                     // Cuando se usa la fuente desnuda
 			  solidSource->GetName());  // the name
   
-  // La fuente esta a 100cm del tanque y a 20 cm por encima de la capa de aire
-  position.set(-(TankOutRadius + 100*cm), 0.0, 20*cm);
+  // La fuente esta a 100cm del tanque y a la misma altura que el tanque
+  const G4double dist_SD = 30*cm;         // Distancia fuente - detector
+  // X = -(48.0 + 100) = -148.5 cm
+  position.set(-(TankOutRadius + dist_SD), 0.0, halfZ_det); 
   new G4PVPlacement(NULL,                             // no rotation
 		    position,                         // shift to origin
 		    logicalSource,                    // the logical volume
@@ -529,17 +532,21 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   
   G4LogicalVolume* const Pmt_log
     = new G4LogicalVolume(Pmt,
-			  fAir,    //glass,
+			  fAir,       //glass,
 			  "pmt_log"
 			  );
-  
+
+
+    
+  // El PMT esta dentro del agua (que es el volumen madre) 
+  // halfZ = 65*0.4 = 24.8 --> Z = halfZ +/- 5 = [44.6 , 54.6] no estoy seguro de este calculo  
   position.set(0., 0., TankHeight*0.4);
   
   new G4PVPlacement(0,               //no rotation
-		    position,        //at (0,0,0)
+		    position,        //at 
 		    Pmt_log,         //its logical volume
-		    "PMTdet",           //its name
-		    logicalTankH2O,     //its mother  volume
+		    "PMTdet",        //its name
+		    logicalTankH2O,  //its mother  volume
 		    false,           //no boolean operation
 		    0);              //copy number
 

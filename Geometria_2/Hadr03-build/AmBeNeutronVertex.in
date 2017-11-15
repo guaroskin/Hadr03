@@ -19,11 +19,13 @@
 /run/initialize
 #
 /gps/particle neutron
-#
+#-19 cm para chico
 /gps/pos/type Point
-/gps/pos/centre -148.0 0.0 20.0 cm
-#/gps/ang/type iso
-/gps/direction 1 0 0
+/gps/pos/centre -87.0 0.0 16.5 cm
+/gps/ang/type iso
+/gps/ang/minphi 90 deg
+/gps/ang/maxphi 270 deg
+#/gps/direction 1 0 0
 
 #
 #
@@ -87,7 +89,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName Prueba_241AmBe_1M_MT
+/analysis/setFileName 241AmBe_Tgrande_39cm_1_5M_MT
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -108,4 +110,6 @@
 #
 /run/printProgress 50000
 
-/run/beamOn 1000000
+/run/beamOn 1500000
+
+#/control/execute AmBeNeutronVertex.in

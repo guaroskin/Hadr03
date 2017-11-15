@@ -16,13 +16,15 @@
 #
 #
 /run/initialize
-#
+#-19 cm para chico
 /gps/particle neutron
 #
 /gps/pos/type Point
-/gps/pos/centre -148.0 0.0 20.0 cm
-#/gps/ang/type iso
-/gps/direction 1 0 0
+/gps/pos/centre -181.0 0.0 -19 cm
+/gps/ang/type iso
+/gps/ang/minphi 90 deg
+/gps/ang/maxphi 270 deg
+#/gps/direction 1 0 0
 
 #
 #
@@ -61,7 +63,7 @@
 # the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Prueba_252Cf_1M_MT
+/analysis/setFileName 252Cf_Tchico_133cm_1_5M_MT
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -82,4 +84,4 @@
 #
 /run/printProgress 50000
 
-/run/beamOn 1000000
+/run/beamOn 1500000
