@@ -9,7 +9,6 @@
 # spectrum. The neutron energy spectrum was taken from
 # ISO Report 8529-1 (March 2000), Table 3
 # http://dpnc.unige.ch/~rapin/AmBe/Neutron-ISO-DIS-8529-1.pdf
-# 
 ##########################################################################
 #
 /control/verbose 2
@@ -17,9 +16,10 @@
 #
 #
 /run/initialize
-#
 /gps/particle neutron
-#-19 cm para chico
+#z = 16.5 cm para grande / -19 cm para chico
+#Distancia S-D = 39 cm -> -48-39 = -87 cm
+#Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
 /gps/pos/type Point
 /gps/pos/centre -87.0 0.0 16.5 cm
 /gps/ang/type iso
@@ -89,7 +89,8 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName 241AmBe_Tgrande_39cm_1_5M_MT
+/analysis/setFileName Prueba241AmBe_Tgrande_39cm_1_5M
+/analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -99,17 +100,16 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-/analysis/h1/set 1  1100    0  11 MeV	#E_o    +/- 10 keV
-/analysis/h1/set 2  1000   -50  50 cm	#Capture Z
-/analysis/h1/set 3  1000   -50  50 cm	#Edep z
-/analysis/h1/set 4  12000   0  12 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 5  10000   0  10 MeV	#neutron
-/analysis/h1/set 6  15000   0  15 MeV	#electon
-/analysis/h1/set 7  150   0  150 	#fotones
-/analysis/h1/set 8  16      0  400 ns	#LocalTime
+/analysis/h1/set 0  1100    0  11 MeV	#E_o    +/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#Capture x
+/analysis/h1/set 2  1000   -50  50 cm	#Edep x [de todas las particulas]
+/analysis/h1/set 3  12000   0  12 MeV	#gamma  +/- 1 keV
+/analysis/h1/set 4  10000   0  10 MeV	#neutron
+/analysis/h1/set 5  15000   0  15 MeV	#electon
+/analysis/h1/set 6  600     0  600 	#fotones
+/analysis/h1/set 7  80      0  2000 ns	#LocalTime
+/analysis/h1/set 8  80      0  2000 ns	#PMT_time
 #
 /run/printProgress 50000
 
 /run/beamOn 1500000
-
-#/control/execute AmBeNeutronVertex.in

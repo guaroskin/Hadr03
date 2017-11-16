@@ -6,7 +6,7 @@
 #include "G4UnitsTable.hh"
 
 #include "G4HadronElasticPhysicsHP.hh"
-//#include "G4HadronPhysicsQGSP_BIC_HP.hh"
+#include "G4HadronPhysicsQGSP_BIC_HP.hh"
 
 #include "G4IonElasticPhysics.hh"
 #include "G4IonPhysics.hh"
@@ -57,10 +57,14 @@ PhysicsList::PhysicsList()
   new G4UnitDefinition( "mm2/g",  "mm2/g", "Surface/Mass", mm2/g);
   new G4UnitDefinition( "um2/mg", "um2/mg","Surface/Mass", um*um/mg);  
 
-  // neutronHP
-  //
+  // NEUTRON:
+  //neutronHP para hacer interacciones con neutrones de 0 < E < 20 MeV
   RegisterPhysics( new NeutronHPphysics("neutronHP") );
-  ////RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
+  
+  //BIC_HP para 0 < E < 10 GeV  pero con baja precision para energias termicas
+  //RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
+  
+  
   
   /*NO ES NECESARIO
   // Hadron Elastic scattering

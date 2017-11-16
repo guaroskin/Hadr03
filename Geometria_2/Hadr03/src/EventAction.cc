@@ -33,23 +33,27 @@
 
 #include "G4Event.hh"
 #include "G4SystemOfUnits.hh"
+#include <vector>
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 EventAction::EventAction()
   : G4UserEventAction(), fSumPhoton(0)
-{} 
+{
+
+} 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 EventAction::~EventAction()
 {}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void EventAction::BeginOfEventAction(const G4Event*)
+void EventAction::BeginOfEventAction(const G4Event* )
 {
   fSumPhoton = 0;
   New_neutron = true;
   //G4cout << "NEW neutron \n" << G4endl;
+  //G4cout << "ID" << evento->GetEventID() <<  G4endl;
   
 }
 
@@ -59,11 +63,25 @@ void EventAction::SumPhoton()
   fSumPhoton++;
 }
 
+void EventAction::Pulso(G4double tiempo)
+{
+  pulso.push_back(tiempo);
+}
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void EventAction::EndOfEventAction(const G4Event*)
 {
+  //G4cout << "pulso size " << pulso.size() << G4endl;
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
-  if(fSumPhoton != 0) analysis->FillH1(7,fSumPhoton);
+  if(fSumPhoton != 0) analysis->FillH1(6,fSumPhoton);
+  if(pulso.size() != 0){
+    std::sort(pulso.begin(), pulso.end());
+    G4double Offset = pulso[0];
+    for (int i=0; i < pulso.size() ; i++){
+      analysis->FillH1(8,(pulso[i]-Offset)/ns);
+      //G4cout << "globalTime Ordenado " << (pulso[i]-Offset)/ns << G4endl;
+    }
+  }
+  pulso.clear();
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

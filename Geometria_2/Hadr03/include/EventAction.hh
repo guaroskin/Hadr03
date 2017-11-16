@@ -33,7 +33,7 @@
 
 #include "G4UserEventAction.hh"
 #include "globals.hh"
-
+#include <vector>
 /// Event action class
 ///
 
@@ -42,14 +42,14 @@ class EventAction : public G4UserEventAction
   public:
     EventAction();
     virtual ~EventAction();
-
     void SumPhoton();
+    void Pulso(G4double tiempo);
     virtual void BeginOfEventAction(const G4Event* event);
     virtual void EndOfEventAction(const G4Event* event);
-
+    G4bool  New_neutron;
   private:
-    G4bool       New_neutron;
     G4int        fSumPhoton;
+    std::vector <double> pulso;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

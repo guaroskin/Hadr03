@@ -60,6 +60,7 @@ class SteppingAction : public G4UserSteppingAction
 
     G4int contador;
     EventAction* eventAct;
+    G4double Trigger;
   
 };
 

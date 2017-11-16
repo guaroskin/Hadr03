@@ -288,12 +288,10 @@ void DetectorConstruction::DefineMaterials()
     ->AddConstProperty("MIEHG_FORWARD_RATIO",mie_water_const[2]);
   //*/
 
-  
   G4cout << "Water G4MaterialPropertiesTable" << G4endl;
   myMPT1->DumpTable();
 
   H2O->SetMaterialPropertiesTable(myMPT1);
-  
 }
 
 
@@ -389,17 +387,17 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Create the tank
   // 
   const G4double tankWallThickness = 0.5* mm;
-  // Tanque pequeno: Tanque Acero Inoxidable 500 Lts 
   const G4double TankOutRadius = 48.0 * cm;      // 96 cm de diametro
-  const G4double TankHeight = 62.0 * cm;
+  // Tanque pequeno: Tanque Acero Inoxidable 500 Lts 
+  //const G4double TankHeight = 62.0 * cm;
   //Tanque grande: Tanque Acero Inoxidable 1000 Lts 
-  //const G4double TankHeight = 133.0 * cm;
+  const G4double TankHeight = 133.0 * cm;
   
   G4Tubs* const solidTank
     = new G4Tubs("Tank_Wall",                       // the name
-		 TankOutRadius- tankWallThickness,                               // inner radius
-		 TankOutRadius,                     // outer radius
-		 TankHeight * 0.5,                  // half height
+		 0.*cm,                             // inner radius
+		 TankOutRadius + tankWallThickness, // outer radius
+		 TankHeight*0.5,// half height
 		 0.0 * deg,                         // start angle
 		 360.0 * deg);                      // end angle
 
@@ -412,9 +410,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // La base SolidTank está encima del Floor Z =-100 + 50 cm + 62/2) = -19 cm +/- 31 => Z:(-50, 12)
   G4double halfZ_det = - WorldHalfHeight + (floorH + TankHeight * 0.5);
   position.set(0.0, 0.0, halfZ_det);
-  //position.set(0.0, 0.0, TankHeight * 0.5);
   
-  new G4PVPlacement(NULL,                             // no rotation
+  G4VPhysicalVolume* phys_Tank
+    = new G4PVPlacement(NULL,                             // no rotation
 		    position,                         // Z:(0 , 62)
 		    logicalTank,                      // the logical volume
 		    logicalTank->GetName(),           // the name
@@ -428,9 +426,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Fill tank area with water. llena el volumen dentro del tanque de acero
   G4Tubs* const solidTankH2O
     = new G4Tubs("Tank_H2O",                        // the name
-		 0.0,                               // inner radius
-		 TankOutRadius - tankWallThickness, // outer radius
-		 TankHeight * 0.5,                  // half height
+		 0.*cm,                              // inner radius
+		 TankOutRadius,                     // outer radius
+		 TankHeight*0.5 - tankWallThickness,// half height
 		 0.0 * deg,                         // start angle
 		 360.0 * deg);                      // end angle
   
@@ -439,13 +437,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 			  //fAir,                     // the material
 			  H2O,
 			  solidTankH2O->GetName(),0); // the name
+
+  position.set(0.0, 0.0, 0.0);
   
-  
-  new G4PVPlacement(NULL,                             // no rotation
+  G4VPhysicalVolume* phys_TankH2O
+    = new G4PVPlacement(NULL,                             // no rotation
 		    position,                         // shift to origin
 		    logicalTankH2O,                   // the logical volume
 		    logicalTankH2O->GetName(),        // the name
-		    logicalWorld,                      // the mother volume
+		    logicalTank,                      // the mother volume
 		    false,                            // no boolean ops
 		    0,                                // copy number
 		    overlapChecking);                 // check for overlaps
@@ -460,6 +460,19 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   //
 
   
+  G4OpticalSurface* opWaterSurface 
+    = new G4OpticalSurface("Tyvek");
+
+  opWaterSurface->SetType(dielectric_LUT);
+  opWaterSurface->SetFinish(groundtyvekair);
+  opWaterSurface->SetModel(LUT);
+  
+  new G4LogicalBorderSurface("WaterSurface",
+      phys_TankH2O,
+      phys_Tank, //expHall_phys, //wcd_thickness_phys,
+      opWaterSurface
+      );
+  /*
   G4OpticalSurface* opTyvekSurface 
     = new G4OpticalSurface("Tyvek");
 
@@ -474,7 +487,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
     (airSurface->GetSurface(logicalTankH2O)->GetSurfaceProperty());
   
   if (opticalSurface) opticalSurface->DumpInfo();
-
+  */
   
   //
   // Tanque de parafina que blinda la fuente de neutrones 
@@ -548,7 +561,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		    "PMTdet",        //its name
 		    logicalTankH2O,  //its mother  volume
 		    false,           //no boolean operation
-		    0);              //copy number
+		    0,              //copy number
+		    overlapChecking);
 
 
   PMT_log_vol = Pmt_log;

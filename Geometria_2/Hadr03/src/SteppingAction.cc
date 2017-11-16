@@ -9,6 +9,7 @@
 
 #include "SteppingAction.hh"
 #include "Run.hh"
+#include "G4Event.hh"
 #include "EventAction.hh"
 #include "MyHit.hh"
 #include "DetectorConstruction.hh"
@@ -20,12 +21,19 @@
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
 
+
+//supuesta linea para quitar el warning del supuesto overlap
+#include "G4TransportationManager.hh"
+
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 SteppingAction::SteppingAction(EventAction* evt)
 : G4UserSteppingAction(),
-  Tank_log_vol(0), PMT_log_vol(0), Air_log_vol(0), eventAct(evt)
+  Tank_log_vol(0), PMT_log_vol(0), Air_log_vol(0), eventAct(evt), Trigger(0.0)
 {
+  //supuesta linea para quitar el warning del supuesto overlap
+  G4TransportationManager::GetTransportationManager()->GetNavigatorForTracking()->SetPushVerbosity(0);
   //pmtSD = new PMTSD;
 }
 
@@ -43,6 +51,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
   G4StepPoint* prePoint = aStep->GetPreStepPoint();
   G4StepPoint* postPoint = aStep->GetPostStepPoint();
+  G4StepStatus stepStatus = postPoint->GetStepStatus();
   G4Track* track = aStep->GetTrack();
   //G4int TrackID = track->GetTrackID();
   //G4int CurrentStep = track->GetCurrentStepNumber();
@@ -111,7 +120,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
   //Contar el numero de gammas y neutrones que escapan del tanque
-  if (Pos_volume == Air_log_vol){
+  if (Pos_volume == Air_log_vol || stepStatus==fWorldBoundary){
     G4ThreeVector posT = track->GetPosition();
     G4ThreeVector dirT = track->GetMomentumDirection();
     G4double y = posT.y()/cm;
@@ -159,9 +168,9 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
   G4double stepEdep = aStep->GetTotalEnergyDeposit();
-  if (procName == "nCapture")  analysis->FillH1(2, x*cm);
+  if (procName == "nCapture")  analysis->FillH1(1, x*cm);
   if(stepEdep != 0){
-    analysis->FillH1(3, x*cm, stepEdep/eV);
+    analysis->FillH1(2, x*cm, stepEdep/eV);
     run->SumEdep(stepEdep);
   }
 
@@ -181,25 +190,30 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     run->ParticleCount(name,energy);
     //energy spectrum
  
-    if (particle == G4Gamma::Gamma())            ih = 4;
-    else if (particle == G4Neutron::Neutron())   ih = 5;
-    else if (particle == G4Electron::Electron()) ih = 6;
-    //else if (particle == G4Positron::Positron()) ih = 7;
+    if (particle == G4Gamma::Gamma())            ih = 3;
+    else if (particle == G4Neutron::Neutron())   ih = 4;
+    else if (particle == G4Electron::Electron()) ih = 5;
+    //else if (particle == G4Positron::Positron()) ih = 6;
     if (ih > 0) analysis->FillH1(ih,energy);
     Q += energy;
     //particle flag
     fParticleFlag[particle]++;
   }
 
-
   if ( partName == "opticalphoton" && Pos_volume == PMT_log_vol ){
     MyHit* PhotonHit = new MyHit();
     if(PhotonHit->QuantumE(Post_energy)){
-      G4double localTime = track->GetLocalTime();
-      analysis->FillH1(8,localTime/ns);
-      //G4cout << "PMT!! Global " << globalTime/ns << "\t Local " << localTime/ns << "ns" << G4endl;
+      G4double localTime = track->GetLocalTime(); //Tiempo desde que nace la particula
+      analysis->FillH1(7,localTime/ns);
+      if(eventAct->New_neutron){
+	Trigger = track->GetGlobalTime();      //tiempo desde que llega el primer foton al PMT
+	eventAct->New_neutron = false;
+      }
       eventAct->SumPhoton();
-      //G4cout << "photon detected on PMT!  " << G4endl;
+      G4double globalTime = track->GetGlobalTime();
+      eventAct->Pulso(globalTime);
+      //G4double PMT_time = globalTime - Trigger;
+      //G4cout << "LocalTime  " << localTime/ns << G4endl;
     }
     track->SetTrackStatus(fStopAndKill);
   }

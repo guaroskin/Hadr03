@@ -1,7 +1,6 @@
 mkdir Hadr03-build
 cd Hadr03-build/
-cmake -DGeant4_DIR=/usr/share/Geant4-10.3.3 ../Hadr03
-make -j4
+cmake -DGeant4_DIR=/usr/share/Geant4-10.3.3 ../Hadr03; make -j4
 
 
 sudo cp -r examples /home/nicolas/Documentos/Programacion-Simulacion/Geant4/ejemplos/
@@ -11,11 +10,11 @@ sudo chgrp -R users examples
 
 cmake -DGeant4_DIR=/home/nicolas/Path/geant4.10.01.p01-install/lib64/Geant4-10.1.1 /home/nicolas/Path/geant4.10.01.p01-install/share/Geant4-10.1.1/examples/extended/hadronic/Hadr01
 
+(highly recommended)
+
+export G4FORCENUMBEROFTHREADS=4; export G4NEUTRONHP_SKIP_MISSING_ISOTOPES=1; export G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=1; env | grep G4    
 
 env | grep G4(NEUTRONHP)
-export G4FORCENUMBEROFTHREADS=4
-export G4NEUTRONHP_SKIP_MISSING_ISOTOPES=1
-export G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=1 (highly recommended)
 export G4NEUTRONHP_PRODUCE_FISSION_FRAGMENTS=1
 export G4NEUTRON_HP_USE_WENDT_FISSION_MODEL=1
 

@@ -1,5 +1,5 @@
-#/control/verbose 2
-#/run/verbose 2
+/control/verbose 2
+/run/verbose 2
 /run/initialize
 #
 # Use this open statement to create an OpenGL view:
@@ -45,16 +45,16 @@
 ###/vis/modeling/trajectories/create/drawByCharge
 # To select colour by particle ID:
 /vis/modeling/trajectories/create/drawByParticleID
-#/vis/modeling/trajectories/drawByParticleID-0/set e- blue
+/vis/modeling/trajectories/drawByParticleID-0/set opticalphoton green
 ###/vis/modeling/trajectories/drawByCharge-0/default/setDrawStepPts true
 /vis/modeling/trajectories/drawByParticleID-0/default/setDrawStepPts true
 ###/vis/modeling/trajectories/drawByCharge-0/default/setStepPtsSize 2
 /vis/modeling/trajectories/drawByParticleID-0/default/setStepPtsSize 2
 /vis/modeling/trajectories/drawByParticleID-0/default/setAuxPtsSize 3
-/vis/modeling/trajectories/drawByParticleID-0/default/setTimeSliceInterval 0.1 ns
+#/vis/modeling/trajectories/drawByParticleID-0/default/setTimeSliceInterval 0.1 ns
 /vis/modeling/trajectories/list
-/vis/ogl/set/startTime 0.0 ns
-/vis/ogl/set/endTime 2.5 ns
+#/vis/ogl/set/startTime 0.0 ns
+#/vis/ogl/set/endTime 2.5 ns
 # (if too many tracks cause core dump => /tracking/storeTrajectory 0)
 #
 # Draw hits at end of event:

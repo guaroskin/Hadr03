@@ -1,25 +1,23 @@
-# $Id$
-#
-# Macro file for "Hadr03.cc"
-# (can be run in batch, without graphic)
-#
-/control/verbose 0
+#Para usar esta macro hay que cambiar la physics list, basta con descomentar el BIC_HP 
+# y comentar neutronHP
+/control/verbose 2
 /run/verbose 2
 #
-#/testhadr/det/setIsotopeMat B10 5 10 2.46 g/cm3
-/testhadr/det/setMat G4_WATER
-/testhadr/det/setSize 1 m
-#
+#TODAS las mediciones son para el detector grande 1000 Lts
 /run/initialize
-#
-/gun/particle neutron
-/gun/energy 1 MeV
-/gun/position -0.5 0 0 m
-#
-/process/list
-#/process/inactivate hadElastic
-#
-/analysis/setFileName neutron
+/gps/particle neutron
+# [-55. 0. 16.5] cm para un costado / [0. 0. 90.] cm <worldZ = +100 cm>
+/gps/pos/type Point
+# Desde un costado
+/gps/pos/centre -55.0 0.0 16.5 cm
+/gps/direction 1 0 0
+# Desde arriba
+#/gps/pos/centre 0.0 0.0 83.0 cm
+#/gps/direction 0 0 -1
+/gps/energy 500 MeV
+
+/analysis/setFileName pruebamono_Tgrande_7cm_250kn_500MeV_XY
+/analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -27,15 +25,20 @@
 /analysis/h1/setAscii 5
 /analysis/h1/setAscii 6
 /analysis/h1/setAscii 7
+/analysis/h1/setAscii 8
 #
-/analysis/h1/set 1  1000   -50  50 cm	#Capture Z
-/analysis/h1/set 2  12000   0  12 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 3  10000   0  10 MeV	#neutron
-/analysis/h1/set 4  15000   0  15 MeV	#proton
-/analysis/h1/set 5  12000   0  12 MeV	#electron
-/analysis/h1/set 6  1000   -50  50 cm	#Edep z
-/analysis/h1/set 7  10000   0  10 MeV	#Q
+/analysis/h1/set 0  1100    0  11 MeV	#E_o    +/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#Capture x
+/analysis/h1/set 2  1000   -50  50 cm	#Edep x [de todas las particulas]
+/analysis/h1/set 3  20000   0  20 MeV	#gamma  +/- 1 keV
+/analysis/h1/set 4  50000   0  50 MeV	#neutron
+/analysis/h1/set 5  20000   0  20 MeV	#electon
+/analysis/h1/set 6  600     0  600 	#fotones
+/analysis/h1/set 7  200     0  5000 ns	#LocalTime
+/analysis/h1/set 8  200     0  5000 ns	#PMT_time
 #
-/run/printProgress 100
-#
-/run/beamOn 1000
+/run/printProgress 50000
+
+/run/beamOn 150000
+
+#/tracking/verbose 1

@@ -65,15 +65,15 @@ void HistoManager::Book()
   const G4int kMaxHisto = 9;
   const G4String id[] = {"0","1","2","3","4","5","6","7","8"};
   const G4String title[] = 
-                { "dummy",                                          //0
-                  "Energy incident",                                //1
-		  "nCapture",                                       //2
-		  "stepEdep in x",                                  //3
-                  "kinetic energy of gamma",                        //4
-                  "kinetic energy of neutrons",                     //5
-                  "kinetic energy of electrons",                    //6
-		  "Number of photons",                              //7
-		  "Local Time Cerenkov",                            //8
+                { "Energy incident",                                //0
+		  "nCapture",                                       //1
+		  "stepEdep in x",                                  //2
+                  "kinetic energy of gamma",                        //3
+                  "kinetic energy of neutrons",                     //4
+                  "kinetic energy of electrons",                    //5
+		  "Number of photons",                              //6
+		  "Local Time Cerenkov",                            //7
+		  "PMT_time"                                        //8
                  };  
 
   // Default values (to be reset via /analysis/h1/set command)               

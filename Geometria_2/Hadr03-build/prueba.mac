@@ -3,12 +3,12 @@
 /vis/drawVolume
 /vis/scene/add/trajectories rich
 /vis/modeling/trajectories/create/drawByParticleID
-/vis/modeling/trajectories/drawByParticleID-0/default/setTimeSliceInterval 0.01 ns
+/vis/modeling/trajectories/drawByParticleID-0/default/setTimeSliceInterval 0.1 ns
 /vis/ogl/set/startTime 0.5 ns
 /vis/ogl/set/endTime 0.8 ns
 /gps/particle neutron
 /gps/pos/type Point
-/gps/pos/centre -7.0 0.0 -19 cm
+/gps/pos/centre -48.0 0.0 16.5 cm
 /gps/direction 1 0 0
 #/run/beamOn 2
 
@@ -31,7 +31,7 @@
 
 /gps/particle neutron
 /gps/pos/type Point
-/gps/pos/centre -7.0 0.0 -19 cm
+/gps/pos/centre -47.0 0.0 -19 cm
 /gps/direction 1 0 0
 #/run/beamOn 2
 
