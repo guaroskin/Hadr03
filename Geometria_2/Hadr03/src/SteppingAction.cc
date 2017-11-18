@@ -169,7 +169,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
   G4double stepEdep = aStep->GetTotalEnergyDeposit();
   if (procName == "nCapture")  analysis->FillH1(1, x*cm);
-  if(stepEdep != 0){
+  if(stepEdep > 0. && partName == "neutron"){
     analysis->FillH1(2, x*cm, stepEdep/eV);
     run->SumEdep(stepEdep);
   }
@@ -233,6 +233,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     G4String Nb = conver[nb];    
     if (particle == G4Gamma::Gamma()) {
      run->CountGamma(nb);
+     Nb = "N ";
     } 
     if (ip != fParticleFlag.begin()) nuclearChannel += " + ";
     nuclearChannel += Nb + name;

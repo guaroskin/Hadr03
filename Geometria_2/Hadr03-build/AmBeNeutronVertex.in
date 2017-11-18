@@ -89,7 +89,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName Prueba241AmBe_Tgrande_39cm_1_5M
+/analysis/setFileName 241AmBe_Tgrande_39cm_1_5M
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
@@ -108,8 +108,9 @@
 /analysis/h1/set 5  15000   0  15 MeV	#electon
 /analysis/h1/set 6  600     0  600 	#fotones
 /analysis/h1/set 7  80      0  2000 ns	#LocalTime
-/analysis/h1/set 8  80      0  2000 ns	#PMT_time
+/analysis/h1/set 8  200     0  5000 ns	#PMT_time
 #
+#/tracking/verbose 2
 /run/printProgress 50000
 
 /run/beamOn 1500000

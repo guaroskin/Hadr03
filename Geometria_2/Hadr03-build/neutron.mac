@@ -14,10 +14,10 @@
 # Desde arriba
 #/gps/pos/centre 0.0 0.0 83.0 cm
 #/gps/direction 0 0 -1
-/gps/energy 500 MeV
+/gps/energy 1 GeV
 
-/analysis/setFileName pruebamono_Tgrande_7cm_250kn_500MeV_XY
-/analysis/h1/setAscii 0
+/analysis/setFileName mono_Tgrande_7cm_150kn_1GeV
+#/analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -27,17 +27,17 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-/analysis/h1/set 0  1100    0  11 MeV	#E_o    +/- 10 keV
-/analysis/h1/set 1  1000   -50  50 cm	#Capture x
-/analysis/h1/set 2  1000   -50  50 cm	#Edep x [de todas las particulas]
-/analysis/h1/set 3  20000   0  20 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 4  50000   0  50 MeV	#neutron
-/analysis/h1/set 5  20000   0  20 MeV	#electon
-/analysis/h1/set 6  600     0  600 	#fotones
-/analysis/h1/set 7  200     0  5000 ns	#LocalTime
-/analysis/h1/set 8  200     0  5000 ns	#PMT_time
+#/analysis/h1/set 0  11      0  11 MeV	#E_o     +/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#Capture x +/- 0.1 cm
+/analysis/h1/set 2  1000   -50  50 cm	#Edep x  [de todas las particulas]
+/analysis/h1/set 3  25000   0  25 MeV	#gamma   +/- 1 keV
+/analysis/h1/set 4  10000   0  100 MeV	#neutron +/- 10 keV
+/analysis/h1/set 5  25000   0  25 MeV	#electon +/- 1 keV
+/analysis/h1/set 6  1200    0  1200	#fotones
+/analysis/h1/set 7  100     0  2500 ns	#LocalTime +/-25ns
+/analysis/h1/set 8  400     0  10000 ns	#PMT_time  +/-25ns
 #
-/run/printProgress 50000
+/run/printProgress 25000
 
 /run/beamOn 150000
 

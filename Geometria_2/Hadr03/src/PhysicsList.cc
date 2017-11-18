@@ -13,7 +13,8 @@
 #include "G4IonPhysicsPHP.hh"
 #include "G4IonINCLXXPhysics.hh"
 
-#include "NeutronHPphysics.hh"
+//#include "NeutronHPphysics.hh"
+//#include "G4EmPenelopePhysics.hh"
 #include "ElectromagneticPhysics.hh"
 #include "OpticalPhysics.hh"
 
@@ -23,10 +24,10 @@
 #include "G4ParticleTypes.hh"
 #include "G4ParticleTable.hh"
 
-/*
+//#include "GammaPhysics.hh"
 #include "G4DecayPhysics.hh"
 #include "G4RadioactiveDecayPhysics.hh"
-
+/*
 #include "G4PionDecayMakeSpin.hh"
 #include "G4DecayWithSpin.hh"
 
@@ -57,38 +58,35 @@ PhysicsList::PhysicsList()
   new G4UnitDefinition( "mm2/g",  "mm2/g", "Surface/Mass", mm2/g);
   new G4UnitDefinition( "um2/mg", "um2/mg","Surface/Mass", um*um/mg);  
 
+  // Decay
+  RegisterPhysics(new G4DecayPhysics());
+  
+  // Radioactive decay
+  RegisterPhysics(new G4RadioactiveDecayPhysics());
+            
+  // Hadron Elastic scattering
+  RegisterPhysics( new G4HadronElasticPhysicsHP(verb) );
+  
   // NEUTRON:
   //neutronHP para hacer interacciones con neutrones de 0 < E < 20 MeV
-  RegisterPhysics( new NeutronHPphysics("neutronHP") );
-  
+  //RegisterPhysics( new NeutronHPphysics("neutronHP") );
   //BIC_HP para 0 < E < 10 GeV  pero con baja precision para energias termicas
-  //RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
-  
-  
-  
-  /*NO ES NECESARIO
-  // Hadron Elastic scattering
-  //
-  RegisterPhysics( new G4HadronElasticPhysicsHP(verb));
-
-  // Hadron Inelastic physics
-  //
   RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
-  */
-
   
+
   // Ion Elastic scattering
-  //
   RegisterPhysics( new G4IonElasticPhysics(verb));
   
   // Ion Inelastic physics
-  //
   RegisterPhysics( new G4IonPhysics(verb));
     
   // EM Physics
-  //
   RegisterPhysics( new ElectromagneticPhysics("standard EM"));
-
+  //RegisterPhysics( new G4EmPenelopePhysics() );
+ 
+  // Gamma-Nuclear Physics
+  //RegisterPhysics( new GammaPhysics("gamma"));
+  
   // Optic Physics   
   RegisterPhysics(fOpticalPhysics = new OpticalPhysics("Optical"));
   
@@ -127,6 +125,8 @@ void PhysicsList::ConstructParticle()
   G4ShortLivedConstructor pShortLivedConstructor;
   pShortLivedConstructor.ConstructParticle();
 
+
+  
   /*
   G4VModularPhysicsList::ConstructParticle();
   
