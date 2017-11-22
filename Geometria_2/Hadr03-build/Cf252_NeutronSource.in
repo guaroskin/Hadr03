@@ -60,11 +60,10 @@
 /gps/hist/point  9.5		0.282002
 /gps/hist/point  10.		0.189635
 #
-# Linear interpolation between the data points is required to obtain
-# the smooth energy spectrum
+# Linear interpolation between the data points is required to obtain the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName 252Cf_Tgrande_133cm_1_5M
+/analysis/setFileName Cf252_Tgrande_133cm_1_5M
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
@@ -75,16 +74,15 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-/analysis/h1/set 0  1100    0  11 MeV	#E_o    +/- 10 keV
-/analysis/h1/set 1  1000   -50  50 cm	#Capture x
-/analysis/h1/set 2  1000   -50  50 cm	#Edep x [de todas las particulas]
-/analysis/h1/set 3  12000   0  12 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 4  10000   0  10 MeV	#neutron
-/analysis/h1/set 5  15000   0  15 MeV	#electon
+/analysis/h1/set 0  1100    0  11 MeV	#E_o       +/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#nCaptureX +/- 0.1 cm
+/analysis/h1/set 2  1000   -50  50 cm	#nEdepX    +/- 0.1 cm
+/analysis/h1/set 3  12000   0  12 MeV	#gamma     +/- 1 keV
+/analysis/h1/set 4  10000   0  10 MeV	#neutron   +/- 1 keV
+/analysis/h1/set 5  15000   0  15 MeV	#electon   +/- 1 keV
 /analysis/h1/set 6  600     0  600 	#fotones
-/analysis/h1/set 7  80      0  2000 ns	#LocalTime
-/analysis/h1/set 8  80      0  2000 ns	#PMT_time
-#
+/analysis/h1/set 7  400     0  2000 ns	#LocalTime +/- 5 ns
+/analysis/h1/set 8  1000    0  5000 ns	#PMT_time  +/- 5 ns
+#/tracking/verbose 2
 /run/printProgress 50000
-
 /run/beamOn 1500000

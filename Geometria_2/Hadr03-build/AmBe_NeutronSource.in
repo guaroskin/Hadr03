@@ -17,7 +17,7 @@
 #
 /run/initialize
 /gps/particle neutron
-#z = 16.5 cm para grande / -19 cm para chico
+#z = 16.5 cm para GRANDE   /  -19 cm para CHICO
 #Distancia S-D = 39 cm -> -48-39 = -87 cm
 #Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
 /gps/pos/type Point
@@ -89,7 +89,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName 241AmBe_Tgrande_39cm_1_5M
+/analysis/setFileName AmBe_Tgrande_39cm_1_5M
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
@@ -100,17 +100,15 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-/analysis/h1/set 0  1100    0  11 MeV	#E_o    +/- 10 keV
-/analysis/h1/set 1  1000   -50  50 cm	#Capture x
-/analysis/h1/set 2  1000   -50  50 cm	#Edep x [de todas las particulas]
-/analysis/h1/set 3  12000   0  12 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 4  10000   0  10 MeV	#neutron
-/analysis/h1/set 5  15000   0  15 MeV	#electon
+/analysis/h1/set 0  1100    0  11 MeV	#E_o       +/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#nCaptureX +/- 0.1 cm
+/analysis/h1/set 2  1000   -50  50 cm	#nEdepX    +/- 0.1 cm
+/analysis/h1/set 3  12000   0  12 MeV	#gamma     +/- 1 keV
+/analysis/h1/set 4  10000   0  10 MeV	#neutron   +/- 1 keV
+/analysis/h1/set 5  15000   0  15 MeV	#electon   +/- 1 keV
 /analysis/h1/set 6  600     0  600 	#fotones
-/analysis/h1/set 7  80      0  2000 ns	#LocalTime
-/analysis/h1/set 8  200     0  5000 ns	#PMT_time
-#
+/analysis/h1/set 7  400     0  2000 ns	#LocalTime +/- 5 ns
+/analysis/h1/set 8  1000    0  5000 ns	#PMT_time  +/- 5 ns
 #/tracking/verbose 2
 /run/printProgress 50000
-
 /run/beamOn 1500000

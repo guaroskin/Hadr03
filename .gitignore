@@ -29,6 +29,7 @@
 ######################
 *.log
 *.sql
+*.mtd
 *.sqlite
 **/*-build/*.txt
 *.root
