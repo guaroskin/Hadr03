@@ -100,8 +100,8 @@ void DetectorConstruction::DefineMaterials()
   //
   G4String name;
   G4String symbol;
-  G4double density;
   G4int z;  
+  G4double density;
   G4int ncomponents, natoms;
   G4double fracMass; //,abundance;
    
@@ -113,9 +113,10 @@ void DetectorConstruction::DefineMaterials()
   G4Element* elH  = new G4Element(name="Hydrogen", symbol="H", z=1,  1.008 * (g/mole));
   G4Element* elO  = new G4Element(name="Oxygen",  symbol="O" , z=8,  16.00 * (g/mole));
   G4Element* elC  = new G4Element(name="Carbon" , symbol="C" , z=6,  12.01 * (g/mole));
-  G4Element* elNa = new G4Element(name="Sodium",  symbol="Na", z=11, 35.45 * (g/mole));
+  G4Element* elNa = new G4Element(name="Sodium",  symbol="Na", z=11, 22.98 * (g/mole));
   G4Element* elSi = new G4Element(name="Silicon", symbol="Si", z=14, 28.01 * (g/mole));
-  G4Element* elCl = new G4Element(name="Chlorine",symbol="Cl", z=17, 22.98 * (g/mole));
+  G4Element* elCl = new G4Element(name="Chlorine",symbol="Cl", z=17, 35.45 * (g/mole));
+
   
 
   // -----------------
@@ -311,15 +312,17 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4LogicalVolumeStore::GetInstance()->Clean();
   G4SolidStore::GetInstance()->Clean();
 
-
+  G4NistManager* nist = G4NistManager::Instance();
+  G4Material* elCd = nist->FindOrBuildMaterial("G4_Cd");
+  G4Material* elPb = nist->FindOrBuildMaterial("G4_Pb");
   G4bool const overlapChecking = true;
   
   // --------------------
   // *** world ***
   // --------------------
   
-  const G4double WorldHalfSize = 200.0 * cm;         // L = 400 cm
-  const G4double WorldHalfHeight = WorldHalfSize/2;  // H = 200 cm
+  const G4double WorldHalfSize = 200.0 * cm;       // L = 400 cm
+  const G4double WorldHalfHeight = 150.0 * cm;     // H = 300 cm
   
   G4ThreeVector position;
   
@@ -327,7 +330,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4Box* const solidWorld = new G4Box("World",        // the name
 				      WorldHalfSize,      // X:(-200 , 200)
 				      WorldHalfSize,      // Y:(-200 , 200)
-				      WorldHalfHeight);   // Z:(-100 , 100)
+				      WorldHalfHeight);   // Z:(-150 , 150)
 
   
   //Puede ser creado en DetectorConstruction.hh
@@ -337,7 +340,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 			  solidWorld->GetName());   // the name
   
   position.set(0.0, 0.0, 0.0);
-  // Centrado para que el fondo quede en (Z = -100 cm) =>  Z:(-100 , 100)
+  // Centrado para que el fondo quede en (Z = -150 cm) =>  Z:(-150 , 150)
   
   G4VPhysicalVolume* const physicalWorld
     = new G4PVPlacement(NULL,                       // no rotation
@@ -352,7 +355,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
 
   // --------------------
-  // *** Floor ***
+  //    *** Floor ***
   // --------------------
   
   const G4double floorH = 50.0 * cm;
@@ -361,14 +364,14 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4Box* const solidFloor = new G4Box("Floor",         // the name
 				      WorldHalfSize,   // X:(-200 , 200)
 				      WorldHalfSize,   // Y:(-200 , 200)
-				      floorH * 0.5);   // Z:(-100 , -50)
+				      floorH * 0.5);   // Z:(-150 ,-100)
   
   G4LogicalVolume* const logicalFloor
     = new G4LogicalVolume(solidFloor,               // the solid volume
 			  fSoil,                // the material
 			  solidFloor->GetName());   // the name
   
-  // La base Floor está en el fondo del World Z =(-100 + 25 cm) = -75 cm +/- 25 => Z:(-100 , -50)
+  // La base Floor está en el fondo del World Z =(-150 + 25 cm) = -125 cm +/- 25 => Z:(-150 , -100)
   position.set(0.0, 0.0, -WorldHalfHeight + floorH*0.5); 
   new G4PVPlacement(NULL,                             // no rotation
 		    position,                         // Z:(-100 , 0)
@@ -392,11 +395,12 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   //const G4double TankHeight = 62.0 * cm;
   //Tanque grande: Tanque Acero Inoxidable 1000 Lts 
   const G4double TankHeight = 133.0 * cm;
+  const G4double Platform = 46.0 * cm;
   
   G4Tubs* const solidTank
     = new G4Tubs("Tank_Wall",                       // the name
 		 0.*cm,                             // inner radius
-		 TankOutRadius + tankWallThickness, // outer radius
+		 TankOutRadius, // outer radius
 		 TankHeight*0.5,// half height
 		 0.0 * deg,                         // start angle
 		 360.0 * deg);                      // end angle
@@ -406,13 +410,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 			  fStainlessSteel,          // the material
 			  solidTank->GetName());    // the name
 
-  // La base SolidTank está encima del Floor Z =-100 + 50 cm + 133/2) = 16.5 cm +/- 66.5 => Z:(-50, 83)
-  // La base SolidTank está encima del Floor Z =-100 + 50 cm + 62/2) = -19 cm +/- 31 => Z:(-50, 12)
-  G4double halfZ_det = - WorldHalfHeight + (floorH + TankHeight * 0.5);
+  // La base SolidTank está en Z =-150 + 50 + 46 + 133/2) =  12.5 cm +/- 66.5 => Z:(-54,79)
+  // La base SolidTank está en Z =-150 + 50 + 46 + 62/2)  = -23.0 cm +/- 31 => Z:(-54,8)
+  G4double halfZ_det = - WorldHalfHeight + floorH + Platform + (TankHeight * 0.5);
   position.set(0.0, 0.0, halfZ_det);
   
   G4VPhysicalVolume* phys_Tank
-    = new G4PVPlacement(NULL,                             // no rotation
+    = new G4PVPlacement(NULL,                         // no rotation
 		    position,                         // Z:(0 , 62)
 		    logicalTank,                      // the logical volume
 		    logicalTank->GetName(),           // the name
@@ -426,8 +430,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   // Fill tank area with water. llena el volumen dentro del tanque de acero
   G4Tubs* const solidTankH2O
     = new G4Tubs("Tank_H2O",                        // the name
-		 0.*cm,                              // inner radius
-		 TankOutRadius,                     // outer radius
+		 0.*cm,                             // inner radius
+		 TankOutRadius  - tankWallThickness,// outer radius
 		 TankHeight*0.5 - tankWallThickness,// half height
 		 0.0 * deg,                         // start angle
 		 360.0 * deg);                      // end angle
@@ -469,31 +473,128 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   
   new G4LogicalBorderSurface("WaterSurface",
       phys_TankH2O,
-      phys_Tank, //expHall_phys, //wcd_thickness_phys,
+      phys_Tank,
       opWaterSurface
       );
-  /*
-  G4OpticalSurface* opTyvekSurface 
-    = new G4OpticalSurface("Tyvek");
 
-  opTyvekSurface->SetType(dielectric_LUT);
-  opTyvekSurface->SetFinish(groundtyvekair);
-  opTyvekSurface->SetModel(LUT);
 
+  /*NO
   G4LogicalSkinSurface* airSurface =
-    new G4LogicalSkinSurface("Tyvek", logicalTankH2O, opTyvekSurface);
-
+    new G4LogicalSkinSurface("Tyvek", logicalTankH2O, opWaterSurface);
   G4OpticalSurface* opticalSurface = dynamic_cast <G4OpticalSurface*>
     (airSurface->GetSurface(logicalTankH2O)->GetSurfaceProperty());
-  
   if (opticalSurface) opticalSurface->DumpInfo();
   */
+
+
   
-  //
-  // Tanque de parafina que blinda la fuente de neutrones 
-  // 
-  const G4double sourceH = 20 * cm;    //medidas inventadas, no corresponden al tacho de parafina!!
-  const G4double sourceR = 5 * cm;     //medidas inventadas, no corresponden al tacho de parafina!!
+  // --------------------
+  //   *** Plomo ***
+  // --------------------
+
+  const G4double Plomo_x = 10.0 * cm;
+  const G4double Plomo_y = 60.0 * cm;
+  const G4double Plomo_z = 35.0 * cm;
+
+
+  G4Box* const Sol_Plomo = new G4Box("Plomo",   // the name
+				     Plomo_x/2.,   // X:(-200 , 200)
+				     Plomo_y/2.,   // Y:(-200 , 200)
+				     Plomo_z/2.);  // Z:(-150 ,-100)
+  
+  G4LogicalVolume* const logicalPlomo
+    = new G4LogicalVolume(Sol_Plomo,               // the solid volume
+			  elPb,                    // the material
+			  Sol_Plomo->GetName());   // the name
+
+  //Tiene que estar a la mitad de la altura del tanque
+  // La base está en Z = -150 + 50 + 46 + 62/2)  = -23.0 cm +/- 35/2 => Z:()
+  // La base está en Z = -150 + 50 + 46 + 133/2) =  12.5 cm +/- 35/2 => Z:()
+  // La base está en X = -48 - 10/2) =  -53.0 cm +/- 5 => X:(-58 , -48)
+  G4double Pb_posX = -TankOutRadius - Plomo_x;     //-48-10 = -58
+  position.set(Pb_posX + Plomo_x/2, 0.0, halfZ_det);
+  new G4PVPlacement(NULL,                             // no rotation
+		    position,                         // Z:(-100 , 0)
+		    logicalPlomo,                     // the logical volume
+		    logicalPlomo->GetName(),          // the name
+		    logicalWorld,                     // the mother volume
+		    false,                            // no boolean ops
+		    0,                                // copy number
+		    overlapChecking);                 // check for overlaps
+
+  /*
+  // --------------------
+  //   *** Cadmio ***
+  // --------------------
+
+  const G4double Cadmio_x = 1.35 * mm;
+  const G4double Cadmio_y = 47.0 * cm;
+  const G4double Cadmio_z = 19.0 * cm;
+  
+  G4Box* const Sol_Cadmio = new G4Box("Cadmio",   // the name
+				      Cadmio_x/2.,   // X:(-200 , 200)
+				      Cadmio_y/2.,   // Y:(-200 , 200)
+				      Cadmio_z/2.);  // Z:(-150 ,-100)
+  
+  G4LogicalVolume* const logicalCadmio
+    = new G4LogicalVolume(Sol_Cadmio,               // the solid volume
+			  elCd,                // the material
+			  Sol_Cadmio->GetName());   // the name
+  
+  //Tiene que estar a la mitad de la altura del tanque
+  // La base está en Z = -150 + 50 + 46 + 62/2)  = -23.0 cm +/- 39/2 => Z:(-42.5,-3.5)
+  // La base está en Z = -150 + 50 + 46 + 133/2) =  12.5 cm +/- 39/2 => Z:(-7,32)
+  G4double Cadmio_posX = Pb_posX - Cadmio_x;     //-69.6 -0.135/2
+  position.set(Cadmio_posX + Cadmio_x/2, 0.0, halfZ_det);
+  new G4PVPlacement(NULL,                             // no rotation
+		    position,                         // Z:(-100 , 0)
+		    logicalCadmio,                     // the logical volume
+		    logicalCadmio->GetName(),          // the name
+		    logicalWorld,                     // the mother volume
+		    false,                            // no boolean ops
+		    0,                                // copy number
+		    overlapChecking);                 // check for overlaps
+  
+  //G4double Cadmio_posX = Pb_posX - Cadmio_x;     //-69.6 -0.135/2
+  // --------------------
+  //   *** Parafina ***
+  // --------------------
+
+  const G4double Parafina_x = 11.6 * cm;
+  const G4double Parafina_y = 47.0 * cm;
+  const G4double Parafina_z = 39.0 * cm;
+  
+  G4Box* const Sol_parafina = new G4Box("Parafina",   // the name
+					Parafina_x/2.,   // X:(-200 , 200)
+					Parafina_y/2.,   // Y:(-200 , 200)
+					Parafina_z/2.);  // Z:(-150 ,-100)
+  
+  G4LogicalVolume* const logicalParafina
+    = new G4LogicalVolume(Sol_parafina,               // the solid volume
+			  fParaffin,                // the material
+			  Sol_parafina->GetName());   // the name
+
+  //Tiene que estar a la mitad de la altura del tanque
+  // La base está en Z = -150 + 50 + 46 + 62/2)  = -23.0 cm +/- 39/2 => Z:(-42.5,-3.5)
+  // La base está en Z = -150 + 50 + 46 + 133/2) =  12.5 cm +/- 39/2 => Z:(-7,32)
+  // La base está en X = -48 - 10 -11.6/2) =  -53.0 cm +/- 5 => X:(-58 , -48)
+  G4double Para_posX = Cadmio_posX - Parafina_x;     //-58 - 11.6 = -69.6
+  position.set(Para_posX + Parafina_x/2, 0.0, halfZ_det);
+  new G4PVPlacement(NULL,                             // no rotation
+		    position,                         // Z:(-100 , 0)
+		    logicalParafina,                     // the logical volume
+		    logicalParafina->GetName(),          // the name
+		    logicalWorld,                     // the mother volume
+		    false,                            // no boolean ops
+		    0,                                // copy number
+		    overlapChecking);                 // check for overlaps
+
+  
+
+  
+  /*
+  const G4double sourceH = 20 * cm;    //
+  const G4double sourceR = 5 * cm;     //
   
   G4Tubs* const solidSource
     = new G4Tubs("NeutronSource",                   // the name
@@ -521,7 +622,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		    false,                            // no boolean ops
 		    0,                                // copy number
 		    overlapChecking);                 // check for overlaps
-
+  */
   
   // -----------
   // *** PMT ***
@@ -568,15 +669,16 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   PMT_log_vol = Pmt_log;
   
   G4Color
-    green(0.0,1.0,0.0),
-    blue(0.0,0.0,1.0),
+    green(0.,1.,0.),
+    blue(0.,0.,1.),
     brown(0.4,0.4,0.1),
-    red(1.0,0.0,0.0);
+    red(1.,0.,0.),
+    grey(0.,0.2,0.37);
   
   logicalFloor -> SetVisAttributes(new G4VisAttributes(brown));
   Pmt_log -> SetVisAttributes(new G4VisAttributes(red));
   logicalTankH2O -> SetVisAttributes(new G4VisAttributes(blue));
-
+  //logicalPlomo -> SetVisAttributes(new G4VisAttributes(grey));
   return physicalWorld;
   
 }

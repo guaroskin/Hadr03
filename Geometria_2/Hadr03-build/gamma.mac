@@ -14,7 +14,7 @@
 /gps/direction 1 0 0
 /gps/energy 661.66 keV
 
-/analysis/setFileName Cs_Tgrande_39cm_1_5M
+/analysis/setFileName Cs137_Tgrande_39cm_1_5M
 #/analysis/h1/setAscii 0
 #/analysis/h1/setAscii 1
 /analysis/h1/setAscii 2

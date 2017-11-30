@@ -53,7 +53,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4StepPoint* postPoint = aStep->GetPostStepPoint();
   G4StepStatus stepStatus = postPoint->GetStepStatus();
   G4Track* track = aStep->GetTrack();
-  //G4int TrackID = track->GetTrackID();
+  G4int TrackID = track->GetTrackID();
   //G4int CurrentStep = track->GetCurrentStepNumber();
   
   G4VProcess* process   = 
@@ -108,34 +108,38 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
 
   
-  //Si la particula NO es un neutron ni un gamma
-  //if(partName != "neutron" && partName != "gamma" && partName != "e-" && partName != "proton"){
+  //Si la particula es un nucleo
   if(PartType == "nucleus" && partName != "alpha"){
     track->SetTrackStatus(fStopAndKill);
     return;
   }
 
+  G4String Pos_volume_name  = postPoint->GetTouchableHandle()
+    ->GetVolume()->GetName();
+  
   G4LogicalVolume* Pos_volume  = postPoint->GetTouchableHandle()
     ->GetVolume()->GetLogicalVolume();
 
 
   //Contar el numero de gammas y neutrones que escapan del tanque
-  if (Pos_volume == Air_log_vol || stepStatus==fWorldBoundary){
-    G4ThreeVector posT = track->GetPosition();
-    G4ThreeVector dirT = track->GetMomentumDirection();
-    G4double y = posT.y()/cm;
-    if(partName == "neutron") {
-      if(y <= 0 && dirT.x() < 0.0) { run->NSurvive(false);}
-      else run->NSurvive(true);
+  if(partName == "neutron" || partName == "gamma"){
+    if (Pos_volume_name == "Tank_Wall" || Pos_volume_name == "World" ){
+      G4ThreeVector posT = track->GetPosition();
+      G4ThreeVector dirT = track->GetMomentumDirection();
+      G4double y = posT.y()/cm;
+      //G4cout << "\n X:\t" << G4BestUnit(posT.x(),"Length");
+      if(partName == "neutron") {
+	if(y <= 0 && dirT.x() < 0.0) { run->NSurvive(false);}
+	else run->NSurvive(true);
+      }
+      if (partName == "gamma") { run->GSurvive(); }
+      //track->SetTrackStatus(fStopAndKill);
+      return;
     }
-    if (partName == "gamma") { run->GSurvive(); }
-    track->SetTrackStatus(fStopAndKill);
-    return;
   }
-  
   run->CountProcesses(process);
 
-  if(partName == "neutron") {   run->SumTrack(stepLength); }
+  if(partName == "neutron" && TrackID == 1) {   run->SumTrack(stepLength); }
 
   G4ThreeVector pos = (r_prePoint + r_postPoint)*0.5;
   //G4ThreeVector pos = r_prePoint + G4UniformRand()*(r_postPoint - r_prePoint);

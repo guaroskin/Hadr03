@@ -17,11 +17,11 @@
 #
 /run/initialize
 /gps/particle neutron
-#z = 16.5 cm para GRANDE   /  -19 cm para CHICO
+#z = 12.5 cm para GRANDE   /  -23 cm para CHICO
 #Distancia S-D = 39 cm -> -48-39 = -87 cm
 #Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
 /gps/pos/type Point
-/gps/pos/centre -87.0 0.0 16.5 cm
+/gps/pos/centre -48.1 0.0 -23.0 cm
 /gps/ang/type iso
 /gps/ang/minphi 90 deg
 /gps/ang/maxphi 270 deg
@@ -89,7 +89,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName AmBe_Tgrande_39cm_1_5M
+/analysis/setFileName AmBe_Tchico_pegada_1_5M
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2

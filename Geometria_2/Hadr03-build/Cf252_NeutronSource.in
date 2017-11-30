@@ -17,11 +17,11 @@
 #
 /run/initialize
 /gps/particle neutron
-#z = 16.5 cm para grande / -19 cm para chico
+#z = 12.5 cm para GRANDE   /  -23 cm para CHICO
 #Distancia S-D = 39 cm -> -48-39 = -87 cm
 #Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
 /gps/pos/type Point
-/gps/pos/centre -181.0 0.0 16.5 cm
+/gps/pos/centre -181.0 0.0 12.5 cm
 /gps/ang/type iso
 /gps/ang/minphi 90 deg
 /gps/ang/maxphi 270 deg
@@ -63,7 +63,7 @@
 # Linear interpolation between the data points is required to obtain the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Cf252_Tgrande_133cm_1_5M
+/analysis/setFileName Cf252_Pb_Tgrande_133cm_1_5M
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2

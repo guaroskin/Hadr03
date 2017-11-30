@@ -13,8 +13,8 @@
 #include "G4IonPhysicsPHP.hh"
 #include "G4IonINCLXXPhysics.hh"
 
-//#include "NeutronHPphysics.hh"
-//#include "G4EmPenelopePhysics.hh"
+#include "NeutronHPphysics.hh"
+#include "G4EmPenelopePhysics.hh"
 #include "ElectromagneticPhysics.hh"
 #include "OpticalPhysics.hh"
 

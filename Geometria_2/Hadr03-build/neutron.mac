@@ -16,7 +16,7 @@
 #/gps/direction 0 0 -1
 /gps/energy 1 GeV
 
-/analysis/setFileName mono_Tgrande_7cm_150kn_1GeV
+/analysis/setFileName neutron_Tgrande_7cm_150kn_1GeV
 #/analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
