@@ -36,7 +36,9 @@
 #include "DetectorConstruction.hh"
 
 #include "G4Event.hh"
+#include "G4GeneralParticleSource.hh"
 #include "G4ParticleTable.hh"
+
 #include "G4ParticleDefinition.hh"
 #include "G4SystemOfUnits.hh"
 #include "Randomize.hh"
@@ -47,6 +49,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* det)
 :G4VUserPrimaryGeneratorAction(),
  fParticleGun(0), fDetector(det)                                               
 {
+  fParticleSource = new G4GeneralParticleSource ();
   fParticleGun  = new G4ParticleGun(1);
   G4ParticleDefinition* particle
            = G4ParticleTable::GetParticleTable()->FindParticle("neutron");
@@ -60,6 +63,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* det)
 PrimaryGeneratorAction::~PrimaryGeneratorAction()
 {
   delete fParticleGun;
+  delete fParticleSource;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -67,7 +71,7 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //this function is called at the begining of event
-  //
+  /*
   G4double halfSize = 0.5*(fDetector->GetSize());
   G4double x0 = - halfSize;
   
@@ -76,11 +80,10 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   G4double beam = 0.8*halfSize; 
   G4double y0 = (2*G4UniformRand()-1.)*beam;
   G4double z0 = (2*G4UniformRand()-1.)*beam;
-  
+  */
+  fParticleSource->GeneratePrimaryVertex(anEvent);
   //fParticleGun->SetParticlePosition(G4ThreeVector(x0,y0,z0));
-  //empieza desde el centro del cubo
-  fParticleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));  
-  fParticleGun->GeneratePrimaryVertex(anEvent);
+  //fParticleGun->GeneratePrimaryVertex(anEvent);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

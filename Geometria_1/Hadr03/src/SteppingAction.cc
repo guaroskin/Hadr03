@@ -57,42 +57,49 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
  Run* run 
    = static_cast<Run*>(G4RunManager::GetRunManager()->GetNonConstCurrentRun());
 
+
+  G4StepPoint* prePoint = aStep->GetPreStepPoint();
+  G4StepPoint* postPoint = aStep->GetPostStepPoint();
+  G4StepStatus stepStatus = postPoint->GetStepStatus();
   G4Track* track = aStep->GetTrack();
-  G4ParticleDefinition* particle = aStep->GetTrack()->GetDefinition();
+  G4int TrackID = track->GetTrackID();
+
+    
+  G4VProcess* process   = 
+                   const_cast<G4VProcess*>(postPoint->GetProcessDefinedStep());
+  G4ParticleDefinition* particle = track->GetDefinition();
+
+  //G4StepStatus stepStatus = postPoint->GetStepStatus();
+  G4double stepLength = aStep->GetStepLength();
+  
+  G4String procName = process->GetProcessName();
   G4String partName = particle->GetParticleName();
 
-  
+  if (partName != "neutron" ){
+    track->SetTrackStatus(fStopAndKill);
+    return;
+  }
 
-   if(partName != "neutron"){
-     track->SetTrackStatus(fStopAndKill);
-     return;
-   }
-  // count processes
-  // 
-  const G4StepPoint* endPoint = aStep->GetPostStepPoint();
-  G4VProcess* process   = 
-                   const_cast<G4VProcess*>(endPoint->GetProcessDefinedStep());
   run->CountProcesses(process);
   
   // check that an real interaction occured (eg. not a transportation)
-  G4StepStatus stepStatus = endPoint->GetStepStatus();
   G4bool transmit = (stepStatus==fGeomBoundary || stepStatus==fWorldBoundary);
   if (transmit) return;
                       
   //real processes : sum track length
   //
-  G4double stepLength = aStep->GetStepLength();
   run->SumTrack(stepLength);
-  
+
+  G4ThreeVector r_prePoint = prePoint-> GetPosition();
+  G4ThreeVector r_postPoint= postPoint->GetPosition();
   //energy-momentum balance initialisation
   //
-  const G4StepPoint* prePoint = aStep->GetPreStepPoint();
   G4double Q             = - prePoint->GetKineticEnergy();
   G4ThreeVector Pbalance = - prePoint->GetMomentum();
   
   //initialisation of the nuclear channel identification
   //
-    G4String nuclearChannel = partName;
+  G4String nuclearChannel = partName;
   G4HadronicProcess* hproc = dynamic_cast<G4HadronicProcess*>(process);
   const G4Isotope* target = NULL;
   if (hproc) target = hproc->GetTargetIsotope();
@@ -106,10 +113,10 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   G4AnalysisManager* analysis = G4AnalysisManager::Instance();
   G4int ih = 1;
   if (aStep->GetTrack()->GetTrackStatus() == fAlive) {
-    G4double energy = endPoint->GetKineticEnergy();      
+    G4double energy = postPoint->GetKineticEnergy();      
     analysis->FillH1(ih,energy);
     //
-    G4ThreeVector momentum = endPoint->GetMomentum();
+    G4ThreeVector momentum = postPoint->GetMomentum();
     Q        += energy;
     Pbalance += momentum;
     //

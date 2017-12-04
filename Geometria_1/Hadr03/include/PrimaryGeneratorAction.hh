@@ -40,6 +40,8 @@
 
 class G4Event;
 class DetectorConstruction;
+class G4GeneralParticleSource;
+class G4VPrimaryGenerator;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -55,6 +57,7 @@ class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 
   private:
     G4ParticleGun*        fParticleGun;
+    G4GeneralParticleSource* fParticleSource;  
     DetectorConstruction* fDetector;
 };
 

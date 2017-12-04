@@ -3,45 +3,39 @@
 # Macro file for "Hadr03.cc"
 # (can be run in batch, without graphic)
 #
-/control/verbose 0
-/run/verbose 2   # cuts
+/control/verbose 2
+/run/verbose 2
 #
-###/testhadr/det/setIsotopeMat B10 5 10 2.46 g/cm3
+##/testhadr/det/setIsotopeMat B10 5 10 2.46 g/cm3
 /testhadr/det/setMat G4_WATER
 /testhadr/det/setSize 1000 m
 #
 /run/initialize
 #
-/gun/particle neutron
-/gun/energy 0.001 eV
+/gps/particle neutron
+/gps/pos/type Point
+/gps/pos/centre -10.0 0. 0. cm
+/gps/direction 1 0 0
+/gps/energy 10 MeV
 #
-#/process/list
+/process/list
 #/process/inactivate hadElastic
 #
+/analysis/setFileName Cubo_infinito_15MeV_1_5M
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
-/analysis/h1/setAscii 4
-/analysis/h1/setAscii 5
 /analysis/h1/setAscii 6
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 10
 /analysis/h1/setAscii 12
 #
-/analysis/setFileName Vol_inf_1meV_1e6n
-/analysis/h1/set 2  12000  0. 12 MeV	#gamma
-/analysis/h1/set 3  10000  0. 10 MeV	#neutron
-/analysis/h1/set 4  15000  0. 15 MeV	#proton
-/analysis/h1/set 5  12000  0. 12 MeV	#deuterons
-/analysis/h1/set 6  16000  0. 16 MeV	#alpha
-/analysis/h1/set 7  10000  0. 10 MeV	#nuclei
-/analysis/h1/set 10 15000  0. 15 MeV	#Q
-/analysis/h1/set 12 240   0  240 none   #A
+/analysis/h1/set 2  12000   0.  12 MeV	#gamma     +/- 1 keV
+/analysis/h1/set 3  10000   0.  10 MeV	#neutron   +/- 1 keV
+/analysis/h1/set 6  5000    0.  5 MeV	#alpha
+/analysis/h1/set 7  5000    0.  5 MeV	#nuclei
+/analysis/h1/set 10 5000    0.  5 MeV	#Q
+/analysis/h1/set 12 200  1   200 none   #A
 #
-/run/printProgress 100000
+/run/printProgress 50000
 #
-/run/beamOn 1000000
-#
-#/control/execute vis.mac
-#/control/execute neutron.mac
-#
-#./Hadr03 neutron.mac > terminal.txt 
+/run/beamOn 200000
