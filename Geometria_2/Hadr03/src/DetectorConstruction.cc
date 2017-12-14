@@ -392,9 +392,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   const G4double tankWallThickness = 0.5* mm;
   const G4double TankOutRadius = 48.0 * cm;      // 96 cm de diametro
   // Tanque pequeno: Tanque Acero Inoxidable 500 Lts 
-  //const G4double TankHeight = 62.0 * cm;
+  const G4double TankHeight = 62.0 * cm;
   //Tanque grande: Tanque Acero Inoxidable 1000 Lts 
-  const G4double TankHeight = 133.0 * cm;
+  //const G4double TankHeight = 133.0 * cm;
   const G4double Platform = 46.0 * cm;
   
   G4Tubs* const solidTank

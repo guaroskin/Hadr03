@@ -193,7 +193,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
     G4double energy = (*secondary)[lp]->GetKineticEnergy();
     run->ParticleCount(name,energy);
     //energy spectrum
- 
+    ih = 0;
     if (particle == G4Gamma::Gamma())            ih = 3;
     else if (particle == G4Neutron::Neutron())   ih = 4;
     else if (particle == G4Electron::Electron()) ih = 5;
