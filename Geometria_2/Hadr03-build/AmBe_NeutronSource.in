@@ -21,7 +21,7 @@
 #Distancia S-D = 39 cm -> -48-39 = -87 cm
 #Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
 /gps/pos/type Point
-/gps/pos/centre -87 0.0 -23.0 cm
+/gps/pos/centre -87 0.0 12.5 cm
 /gps/ang/type iso
 /gps/ang/minphi 90 deg
 /gps/ang/maxphi 270 deg
@@ -89,7 +89,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName AmBe_Tchico_Pb_39cm_1_5M
+/analysis/setFileName AmBe_Pb_39cm_1_5M
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
@@ -111,4 +111,4 @@
 /analysis/h1/set 8  1000    0  5000 ns	#PMT_time  +/- 5 ns
 #/tracking/verbose 2
 /run/printProgress 50000
-/run/beamOn 1500000
+/run/beamOn 150000

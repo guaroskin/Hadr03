@@ -21,7 +21,7 @@
 #Distancia S-D = 39 cm -> -48-39 = -87 cm
 #Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
 /gps/pos/type Point
-/gps/pos/centre -87 0.0 -23.0 cm
+/gps/pos/centre -87 0.0 12.5 cm
 /gps/ang/type iso
 /gps/ang/minphi 90 deg
 /gps/ang/maxphi 270 deg
@@ -63,7 +63,7 @@
 # Linear interpolation between the data points is required to obtain the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Cf252_Pb_Tchico_39cm_1_5M
+/analysis/setFileName Cf252_Pb_39cm_1_5M
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2

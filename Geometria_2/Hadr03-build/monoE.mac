@@ -1,0 +1,42 @@
+#
+/control/verbose 2
+/run/verbose 2
+#
+#
+/run/initialize
+/gps/particle neutron
+#z = 12.5 cm para GRANDE   /  -23 cm para CHICO
+#Distancia S-D = 39 cm -> -48-39 = -87 cm
+#Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
+/gps/pos/type Point
+/gps/pos/centre -87 0.0 12.5 cm
+/gps/direction 1 0 0
+
+#
+/analysis/setFileName 500MeV_Pb_39cm_1_5M
+/analysis/h1/setAscii 0
+/analysis/h1/setAscii 1
+/analysis/h1/setAscii 2
+/analysis/h1/setAscii 3
+/analysis/h1/setAscii 4
+/analysis/h1/setAscii 5
+/analysis/h1/setAscii 6
+/analysis/h1/setAscii 7
+/analysis/h1/setAscii 8
+#
+/analysis/h1/set 0  1100    0  11 MeV	#E_o       +/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#nCaptureX +/- 0.1 cm
+/analysis/h1/set 2  1000   -50  50 cm	#nEdepX    +/- 0.1 cm
+/analysis/h1/set 3  12000   0  12 MeV	#gamma     +/- 1 keV
+/analysis/h1/set 4  10000   0  10 MeV	#neutron   +/- 1 keV
+/analysis/h1/set 5  15000   0  15 MeV	#electon   +/- 1 keV
+/analysis/h1/set 6  600     0  600 	#fotones
+/analysis/h1/set 7  400     0  2000 ns	#LocalTime +/- 5 ns
+/analysis/h1/set 8  1000    0  5000 ns	#PMT_time  +/- 5 ns
+#/tracking/verbose 2
+/run/printProgress 5000
+/run/beamOn 50000
+
+
+
+
