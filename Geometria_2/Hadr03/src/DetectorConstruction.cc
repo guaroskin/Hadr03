@@ -292,7 +292,7 @@ void DetectorConstruction::DefineMaterials()
   G4cout << "Water G4MaterialPropertiesTable" << G4endl;
   myMPT1->DumpTable();
 
-  H2O->SetMaterialPropertiesTable(myMPT1);
+  SaltWater->SetMaterialPropertiesTable(myMPT1);
 }
 
 
@@ -439,7 +439,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4LogicalVolume* const logicalTankH2O
     = new G4LogicalVolume(solidTankH2O,  // the solid volume
 			  //fAir,                     // the material
-			  H2O,
+			  SaltWater,
 			  solidTankH2O->GetName(),0); // the name
 
   position.set(0.0, 0.0, 0.0);
