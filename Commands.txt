@@ -1,6 +1,6 @@
 mkdir Hadr03-build
 cd Hadr03-build/
-cmake -DGeant4_DIR=/usr/share/Geant4-10.4.2 ../Hadr03; make -j4
+cmake -DGeant4_DIR=/usr/share/Geant4-10.5.0 ../Hadr03; make -j4
 
 
 sudo cp -r examples /home/nicolas/Documentos/Programacion-Simulacion/Geant4/ejemplos/
