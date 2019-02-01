@@ -74,11 +74,17 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
   
   G4String procName = process->GetProcessName();
   G4String partName = particle->GetParticleName();
-
-  if (partName != "neutron" ){
+  G4String PartType = particle->GetParticleType();
+  
+  if (PartType == "nucleus"){
     track->SetTrackStatus(fStopAndKill);
     return;
   }
+  
+  /*if (partName != "neutron" ){
+    track->SetTrackStatus(fStopAndKill);
+    return;
+    }*/
 
   run->CountProcesses(process);
   

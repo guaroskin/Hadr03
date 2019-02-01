@@ -6,13 +6,14 @@ cmake -DGeant4_DIR=/usr/share/Geant4-10.4.2 ../Hadr03; make -j4
 sudo cp -r examples /home/nicolas/Documentos/Programacion-Simulacion/Geant4/ejemplos/
 sudo chown -R nicolas examples
 sudo chgrp -R users examples
+sudo chown -R root:root Directory
 
 
 cmake -DGeant4_DIR=/home/nicolas/Path/geant4.10.01.p01-install/lib64/Geant4-10.1.1 /home/nicolas/Path/geant4.10.01.p01-install/share/Geant4-10.1.1/examples/extended/hadronic/Hadr01
 
 (highly recommended)
 
-export G4FORCENUMBEROFTHREADS=4; export G4NEUTRONHP_SKIP_MISSING_ISOTOPES=1; export G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=1; env | grep G4    
+export G4FORCENUMBEROFTHREADS=4; export G4NEUTRONHP_SKIP_MISSING_ISOTOPES=1; export G4NEUTRONHP_DO_NOT_ADJUST_FINAL_STATE=1; env | grep G4
 
 env | grep G4(NEUTRONHP)
 export G4NEUTRONHP_PRODUCE_FISSION_FRAGMENTS=1

@@ -163,9 +163,9 @@ void DetectorConstruction::DefineMaterials()
   fSoil->AddMaterial(H2O,fracMass=25.0*perCent);
 
   
-  // Salt    =  3       10      30      50   [kg]
-  // density = 1.006 - 1.02  - 1.06  - 1.10  [g/cm3]
-  // fracMass= 99.40 - 98.04 - 94.34 - 90.91 [%]
+  // Salt    =  3       25      50      100   [kg]
+  // density = 1.003 - 1.025 - 1.05  - 1.10  [g/cm3]
+  // fracMass= 99.40 - 97.56 - 95.24 - 90.91 [%]
   
   SaltWater = new G4Material("Salt_water", density = 1.1 * (g/cm3), ncomponents=2);
   SaltWater->AddMaterial(H2O,fracMass=90.91*perCent);
@@ -392,9 +392,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   const G4double tankWallThickness = 0.5* mm;
   const G4double TankOutRadius = 48.0 * cm;      // 96 cm de diametro
   // Tanque pequeno: Tanque Acero Inoxidable 500 Lts 
-  const G4double TankHeight = 62.0 * cm;
+  //const G4double TankHeight = 62.0 * cm;
   //Tanque grande: Tanque Acero Inoxidable 1000 Lts 
-  //const G4double TankHeight = 133.0 * cm;
+  const G4double TankHeight = 133.0 * cm;
   const G4double Platform = 46.0 * cm;
   
   G4Tubs* const solidTank

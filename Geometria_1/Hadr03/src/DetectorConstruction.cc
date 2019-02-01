@@ -57,9 +57,9 @@ DetectorConstruction::DetectorConstruction()
 :G4VUserDetectorConstruction(),
  fPBox(0), fLBox(0), fMaterial(0), fDetectorMessenger(0)
 {
-  fBoxSize = 10*m;
+  fBoxSize = 1*m;
   DefineMaterials();
-  SetMaterial("Molybdenum98");  
+  SetMaterial("G4_WATER");  
   fDetectorMessenger = new DetectorMessenger(this);
 }
 
