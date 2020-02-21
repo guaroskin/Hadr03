@@ -32,11 +32,12 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-#ifdef G4MULTITHREADED
+/*#ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
 #else
 #include "G4RunManager.hh"
-#endif
+#endif*/
+#include "G4MTRunManager.hh"
 
 #include "G4UImanager.hh"
 #include "Randomize.hh"
