@@ -1,7 +1,6 @@
 # Para correr el código
-mkdir Hadr03-build
-cd Hadr03-build/
-cmake -DGeant4_DIR=/opt/applications/share/Geant4-10.6.1 ../Hadr03; make -j4
+mkdir Hadr03-build; cd Hadr03-build/
+cmake -DGeant4_DIR=/opt/applications/share/Geant4-10.6.1 ../Hadr03; make -j6
 
 
 sudo cp -r examples /home/nicolas/Documentos/Programacion-Simulacion/Geant4/ejemplos/
@@ -23,3 +22,29 @@ cmake -DGEANT4_BUILD_MULTITHREADED=ON -DGeant4_DIR=/usr/share/Geant4-10.3.0 /hom
 #Otra forma de usar el MT
 cmake -DG4MULTITHREADED=2 -DGeant4_DIR=/usr/share/Geant4-10.3.0 /home/nicolas/Documentos/FissionFragment 
 
+
+# GIT
+------
+# Mirar el status
+git status
+
+# Nice log
+git log --oneline --decorate --graph --all
+
+# Update from the remote
+git pull origin master
+
+# remote's URL
+git remote -v
+
+# Clonar un repo
+git clone https://github.com/guaroskin/Hadr03.git
+
+# Make un commit
+git commit
+
+# Modificación de archivos confirmados
+git commit --amend --no-edit
+
+# Push the commit to remote
+git push origin master

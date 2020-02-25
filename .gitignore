@@ -7,6 +7,7 @@
 *.[oa]
 *.so
 *~
+*.cmake
 
 #executable
 **/*-build/Hadr03
