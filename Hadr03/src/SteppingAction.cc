@@ -51,7 +51,7 @@ void SteppingAction::UserSteppingAction(const G4Step* aStep)
 
   G4StepPoint* prePoint = aStep->GetPreStepPoint();
   G4StepPoint* postPoint = aStep->GetPostStepPoint();
-  G4StepStatus stepStatus = postPoint->GetStepStatus();
+  //G4StepStatus stepStatus = postPoint->GetStepStatus();
   G4Track* track = aStep->GetTrack();
   G4int TrackID = track->GetTrackID();
   //G4int CurrentStep = track->GetCurrentStepNumber();

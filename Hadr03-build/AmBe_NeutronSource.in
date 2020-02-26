@@ -28,6 +28,12 @@
 #/gps/direction 1 0 0
 
 #
+# /gps/pos/type Beam
+# /gps/ang/type beam2d
+# /gps/ang/rot1 0 0 1
+# /gps/ang/rot2 1 0 0
+# /gps/ang/sigma_x 2 deg
+# /gps/ang/sigma_y 2 deg
 #
 /gps/ene/type Arb
 /gps/hist/type arb

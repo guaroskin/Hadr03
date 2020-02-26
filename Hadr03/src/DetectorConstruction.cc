@@ -112,7 +112,7 @@ void DetectorConstruction::DefineMaterials()
   
   G4Element* elH  = new G4Element(name="Hydrogen", symbol="H", z=1,  1.008 * (g/mole));
   G4Element* elO  = new G4Element(name="Oxygen",  symbol="O" , z=8,  16.00 * (g/mole));
-  G4Element* elC  = new G4Element(name="Carbon" , symbol="C" , z=6,  12.01 * (g/mole));
+  //G4Element* elC  = new G4Element(name="Carbon" , symbol="C" , z=6,  12.01 * (g/mole));
   G4Element* elNa = new G4Element(name="Sodium",  symbol="Na", z=11, 22.98 * (g/mole));
   G4Element* elSi = new G4Element(name="Silicon", symbol="Si", z=14, 28.01 * (g/mole));
   G4Element* elCl = new G4Element(name="Chlorine",symbol="Cl", z=17, 35.45 * (g/mole));
@@ -313,7 +313,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   G4SolidStore::GetInstance()->Clean();
 
   G4NistManager* nist = G4NistManager::Instance();
-  G4Material* elCd = nist->FindOrBuildMaterial("G4_Cd");
+  //G4Material* elCd = nist->FindOrBuildMaterial("G4_Cd");
   G4Material* elPb = nist->FindOrBuildMaterial("G4_Pb");
   G4bool const overlapChecking = true;
   
@@ -556,6 +556,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		    overlapChecking);                 // check for overlaps
   
   //G4double Cadmio_posX = Pb_posX - Cadmio_x;     //-69.6 -0.135/2
+  */
+  /*
   // --------------------
   //   *** Parafina ***
   // --------------------
@@ -591,8 +593,12 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 
   
 
-  
+  */
   /*
+  // --------------------
+  //   *** Source's Volume  ***
+  // --------------------
+
   const G4double sourceH = 20 * cm;    //
   const G4double sourceR = 5 * cm;     //
   

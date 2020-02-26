@@ -19,18 +19,18 @@
 #TODAS las mediciones son para el detector grande 1000 Lts.
 /run/initialize
 /gps/particle neutron
-# [-55. 0. 16.5] cm para un costado / [0. 0. 90.] cm <worldZ = +100 cm>
+# [S-D 0. 16.5] cm para un costado / [0. 0. 90.] cm <worldZ = +100 cm>
+# Distancia S-D: 39 cm -> -48-39 = -87 cm  /// S-D: 7 cm -> -48-7 = -55 cm
 /gps/pos/type Point
 # Desde un costado
-/gps/pos/centre -55.0 0.0 16.5 cm
+/gps/pos/centre -87.0 0.0 16.5 cm
 /gps/direction 1 0 0
 # Desde arriba
 #/gps/pos/centre 0.0 0.0 83.0 cm
 #/gps/direction 0 0 -1
 /gps/energy 500 MeV
 
-/analysis/setFileName neutron_Tgrande_7cm_150kn_500MeV
-#/analysis/h1/setAscii 0
+/analysis/setFileName Neutron_naked_39cm_150kn_500MeV
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
