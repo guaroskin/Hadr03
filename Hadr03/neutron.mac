@@ -1,15 +1,30 @@
 #
+#
+################################################################################
+#
+# Esta macro está hecha para correr neutrones monoenergéticos de alta energía
+# Para usar esta macro hay que cambiar la physics list, basta con descomentar el BIC_HP 
+# y comentar neutronHP
+################################################################################
+#
 /control/verbose 2
 /run/verbose 2
 #
 #
+#Para usar esta macro hay que cambiar la physics list, basta con descomentar el BIC_HP 
+# y comentar neutronHP
+/control/verbose 2
+/run/verbose 2
+#
+#TODAS las mediciones son para el detector grande 1000 Lts.
 /run/initialize
-#16.5 cm para grande
 /gps/particle neutron
-#-19 cm para chico
+#16.5 cm para grande. Distancia S-D = 39 cm -> -48-39 = -87 cm
 /gps/pos/type Point
+# Desde un costado
 #/gps/pos/centre -87.0 0.0 16.5 cm
 #/gps/direction 1 0 0
+# Desde arriba
 /gps/pos/centre 0.0 0.0 83.0 cm
 /gps/direction 0 0 -1
 /gps/energy 500 MeV
@@ -24,17 +39,16 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-/analysis/h1/set 1  1100    0  11 MeV	#E_o    +/- 10 keV
-/analysis/h1/set 2  1000   -50  50 cm	#Capture Z
-/analysis/h1/set 3  1000   -50  50 cm	#Edep z
-/analysis/h1/set 4  20000   0  20 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 5  50000   0  50 MeV	#neutron
-/analysis/h1/set 6  20000   0  20 MeV	#electon
-/analysis/h1/set 7  500     0  500 	#fotones
-/analysis/h1/set 8  20      0  500 ns	#LocalTime
+#/analysis/h1/set 0  11      0  11 MeV	#E_o		+/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#nCaptureZ	+/- 0.1 cm
+/analysis/h1/set 2  1000   -50  50 cm	#nEdepZ		+/- 0.1 cm
+/analysis/h1/set 3  25000   0  25 MeV	#gamma		+/- 1 keV
+/analysis/h1/set 4  10000   0  100 MeV	#neutron	+/- 10 keV
+/analysis/h1/set 5  25000   0  25 MeV	#electon	+/- 1 keV
+/analysis/h1/set 6  1200    0  1200	#fotones
+/analysis/h1/set 7  100     0  2500 ns	#LocalTime	+/-25ns
+/analysis/h1/set 8  400     0  10000 ns	#PMT_time	+/-25ns
 #
-/run/printProgress 50000
-
-/run/beamOn 250000
-
+/run/printProgress 25000
+/run/beamOn 150000
 #/tracking/verbose 1

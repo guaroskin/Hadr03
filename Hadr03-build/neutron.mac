@@ -1,9 +1,22 @@
+#
+#
+################################################################################
+#
+# Esta macro está hecha para correr neutrones monoenergéticos de alta energía
+# Para usar esta macro hay que cambiar la physics list, basta con descomentar el BIC_HP 
+# y comentar neutronHP
+################################################################################
+#
+/control/verbose 2
+/run/verbose 2
+#
+#
 #Para usar esta macro hay que cambiar la physics list, basta con descomentar el BIC_HP 
 # y comentar neutronHP
 /control/verbose 2
 /run/verbose 2
 #
-#TODAS las mediciones son para el detector grande 1000 Lts
+#TODAS las mediciones son para el detector grande 1000 Lts.
 /run/initialize
 /gps/particle neutron
 # [-55. 0. 16.5] cm para un costado / [0. 0. 90.] cm <worldZ = +100 cm>
@@ -14,9 +27,9 @@
 # Desde arriba
 #/gps/pos/centre 0.0 0.0 83.0 cm
 #/gps/direction 0 0 -1
-/gps/energy 1 GeV
+/gps/energy 500 MeV
 
-/analysis/setFileName neutron_Tgrande_7cm_150kn_1GeV
+/analysis/setFileName neutron_Tgrande_7cm_150kn_500MeV
 #/analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
@@ -27,7 +40,7 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-#/analysis/h1/set 0  11      0  11 MeV	#E_o       +/- 10 keV
+#/analysis/h1/set 0  11      0  11 MeV	#E_o	   +/- 10 keV
 /analysis/h1/set 1  1000   -50  50 cm	#nCaptureX +/- 0.1 cm
 /analysis/h1/set 2  1000   -50  50 cm	#nEdepX    +/- 0.1 cm
 /analysis/h1/set 3  25000   0  25 MeV	#gamma     +/- 1 keV
@@ -38,7 +51,5 @@
 /analysis/h1/set 8  400     0  10000 ns	#PMT_time  +/-25ns
 #
 /run/printProgress 25000
-
 /run/beamOn 150000
-
 #/tracking/verbose 1

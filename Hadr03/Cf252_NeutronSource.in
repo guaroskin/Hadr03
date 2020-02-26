@@ -6,33 +6,33 @@
 #
 # This macro file sets G4GPS parameters to produce an isotropic 
 # point source of neutrons with a Cf252 enery spectrum.
-# 
+# The Cf-252 neutron energy spectrum was taken from
+# Figure 2 of A.B. Smith and  P.R. Fields, 
+# Phys Rev 108 (1957) 411.
 ##########################################################################
 #
-/control/verbose 0
-/run/verbose 0
-#
-#
+/control/verbose 2
+/run/verbose 2
 #
 #
 /run/initialize
-#
 /gps/particle neutron
-#
+#z = 12.5 cm para GRANDE   /  -23 cm para CHICO
+#Distancia S-D = 39 cm -> -48-39 = -87 cm
+#Distancia S-D = 133 cm -> -48-133 = -181 cm IAEA
 /gps/pos/type Point
-/gps/pos/centre -148.0 0.0 20.0 cm
+/gps/pos/centre -87 0.0 12.5 cm
+/gps/ang/type iso
+/gps/ang/minphi 90 deg
+/gps/ang/maxphi 270 deg
+#/gps/direction 1 0 0
+
 #
-#/gps/ang/type iso
-/gps/direction 1 0 0
 #
 /gps/ene/type Arb
 /gps/hist/type arb
 #
-# The Cf-252 neutron energy spectrum was taken from
-# Figure 2 of A.B. Smith and  P.R. Fields, 
-# Phys Rev 108 (1957) 411.
-#
-#                Energy (MeV)  Rel. Yield
+#                E (MeV)      Rel. Yield
 #
 /gps/hist/point  0.015		18.35261	 
 /gps/hist/point  0.03791	28.74111
@@ -60,11 +60,11 @@
 /gps/hist/point  9.5		0.282002
 /gps/hist/point  10.		0.189635
 #
-# Linear interpolation between the data points is required to obtain
-# the smooth energy spectrum
+# Linear interpolation between the data points is required to obtain the smooth energy spectrum
 /gps/hist/inter Lin
 #
-/analysis/setFileName Prueba
+/analysis/setFileName Cf252_Pb_39cm_1_5M
+/analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
 /analysis/h1/setAscii 3
@@ -74,15 +74,15 @@
 /analysis/h1/setAscii 7
 /analysis/h1/setAscii 8
 #
-/analysis/h1/set 1  1100    0  11 MeV	#E_o    +/- 10 keV
-/analysis/h1/set 2  1000   -50  50 cm	#Capture Z
-/analysis/h1/set 3  1000   -50  50 cm	#Edep z
-/analysis/h1/set 4  12000   0  12 MeV	#gamma  +/- 1 keV
-/analysis/h1/set 5  10000   0  10 MeV	#neutron
-/analysis/h1/set 6  15000   0  15 MeV	#proton
-/analysis/h1/set 7  12000   0  12 MeV	#electron
-/analysis/h1/set 8  12000   0  12 MeV	#positron
-#
-/run/printProgress 1000
-
-/run/beamOn 10000
+/analysis/h1/set 0  1100    0  11 MeV	#E_o       +/- 10 keV
+/analysis/h1/set 1  1000   -50  50 cm	#nCaptureX +/- 0.1 cm
+/analysis/h1/set 2  1000   -50  50 cm	#nEdepX    +/- 0.1 cm
+/analysis/h1/set 3  12000   0  12 MeV	#gamma     +/- 1 keV
+/analysis/h1/set 4  10000   0  10 MeV	#neutron   +/- 1 keV
+/analysis/h1/set 5  15000   0  15 MeV	#electon   +/- 1 keV
+/analysis/h1/set 6  600     0  600 	#fotones
+/analysis/h1/set 7  400     0  2000 ns	#LocalTime +/- 5 ns
+/analysis/h1/set 8  1000    0  5000 ns	#PMT_time  +/- 5 ns
+#/tracking/verbose 2
+/run/printProgress 50000
+/run/beamOn 1500000

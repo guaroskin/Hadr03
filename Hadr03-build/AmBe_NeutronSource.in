@@ -89,7 +89,7 @@
 # Interpolation type must be set after specification of data points
 /gps/hist/inter Spline
 #
-/analysis/setFileName AmBe_Pb_39cm_1_5M
+/analysis/setFileName AmBe_Pb_39cm_1_5M_grande
 /analysis/h1/setAscii 0
 /analysis/h1/setAscii 1
 /analysis/h1/setAscii 2
