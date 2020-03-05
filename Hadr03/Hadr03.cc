@@ -101,6 +101,7 @@ int main(int argc,char** argv) {
 
 #ifdef G4UI_USE
       G4UIExecutive * ui = new G4UIExecutive(argc,argv);
+      UI->ApplyCommand("/control/execute vis.mac");
       ui->SessionStart();
       delete ui;
 #endif
