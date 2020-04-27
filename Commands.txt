@@ -48,3 +48,12 @@ git commit --amend --no-edit
 
 # Push the commit to remote
 git push origin master
+
+# Duplicate git repository
+First create a repo: 
+	https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-new-repository
+git clone --bare https://github.com/guaroskin/My_firstG4.git
+cd My_firstG4.git/
+git push --mirror https://github.com/guaroskin/My_G4example01.git
+cd ..
+rm -rf My_firstG4.git
