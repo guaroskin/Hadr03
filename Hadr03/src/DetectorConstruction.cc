@@ -487,7 +487,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
   */
 
 
-  
+  /*
   // --------------------
   //   *** Plomo ***
   // --------------------
@@ -521,7 +521,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
 		    false,                            // no boolean ops
 		    0,                                // copy number
 		    overlapChecking);                 // check for overlaps
-
+  */
   /*
   // --------------------
   //   *** Cadmio ***
